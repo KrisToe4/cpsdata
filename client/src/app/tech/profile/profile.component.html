@@ -1,0 +1,93 @@
+<div class="view">
+  <div class="view-header">
+    <span>General Information</span>
+  </div>
+  <div class="view-contents">
+    <form [formGroup]="profileForm" novalidate>
+      <div formGroupName="profile">
+        <div class="section">
+          <div class="section-element">
+            <label>Email: <input type="email" id="email" formControlName="email"></label>
+          </div>
+          <div class="section-element">
+            <label>Name: <input type="text" id="name" formControlName="name"></label>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-title"><span>Certification</span></div>
+          <div class="section-element">
+            <label> Organization:
+              <select formControlName="certOrg">
+                <option *ngFor="let org of certList.orgs" [value]="org">{{org}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="section-element">
+            <label>Certificate:
+              <select formControlName="certType">
+                <option *ngFor="let type of certList.types" [value]="type">{{type}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="section-element">
+            <label>Expiry Date:<input type="date" formControlName="certDate"></label>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="mapEntry">
+        <div class="section">
+          <div class="section-title"><span>Map Entry</span></div>
+          <div class="section-element">
+            <input type="checkbox" formControlName="public">
+            <label>Display on Map:</label>   
+          </div>
+          <div class="section-element section-element-indented">
+            <input type="checkbox" formControlName="displayEmail">
+            <label>Email: <input id="map_email" type="text" formControlName="email"></label>
+          </div>
+          <div class="section-element section-element-indented">
+            <input type="checkbox" formControlName="displayPhone">
+            <label>Phone: <input id="phone" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone"></label>
+            <label>Alt:<input id="phone2" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone2"></label>
+          </div>
+          <div class="section-element section-element-indented">
+            <div>
+              <input type="checkbox" formControlName="displayWebsite">
+              <label>Website: <input id="website" type="url" formControlName="websiteURL"></label>
+            </div>
+            <div id="website-name-div">
+              <label>Site Name: <input id="website-name" type="text" formControlName="websiteName"></label>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-element">
+              <label>Location: 
+                <input #mapSearch id="profile-map-address" type="textbox" placeholder="Search" (keyup.enter)="searchAddress(mapSearch.value)">
+              </label> 
+              <input type="button" value="Go!" (click)="searchAddress(mapSearch.value)">
+            </div>
+            <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
+              <agm-marker [latitude]="currentPosition.lat" [longitude]="currentPosition.lng"></agm-marker>
+            </agm-map>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="view-footer">
+    <div class="section section-inline">
+      <div class="section-element">
+        <div class="ctrl-btn">
+          <div class="noselect" [class.ctrl-btn-enabled]="unsavedChanges == true" 
+                                [class.ctrl-btn-disabled]="unsavedChanges == false"
+                                (click)="saveBtnClicked()">Save</div>
+        </div>
+      </div>
+      <div class="section-element">
+        <div class="ctrl-btn">
+          <div class="noselect ctrl-btn-enabled" (click)="revertBtnClicked()">Revert</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.menu {
+	height: 100%;
+	background-color: #CC5555;
+}
+
+.menu-btn {
+	position: absolute;
+	top: 50px;
+	left: 5px
+}
+
+.menu-btn-hidden {
+	display: none;
+}
+
+.menu-btn img {
+	max-height: 20px;
+	max-width: 20px;
+}
+
+.menu-item {
+	height: 44px;
+
+
+	border-bottom: 1px solid black;
+	background-color: #CC7777;
+}
+
+.menu-item:hover {
+	background-color: #CCAAAA;
+
+	cursor: pointer;
+}
+
+.menu-item-active {
+	background-color: #FF0000;
+}
+
+.menu-item-active:hover {
+	background-color: #CCAAAA;
+}
+
+.menu-item span {
+	padding-top: 10px;
+	 
+  font-size: 20px;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+
+	display: block;
+}

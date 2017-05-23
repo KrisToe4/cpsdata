@@ -1,0 +1,28 @@
+.view {
+	grid-template-rows: auto;
+	grid-template-areas: 
+		"view-contents";
+}
+
+.view-contents {
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+}
+
+.section-element input {
+	width: 200px;
+}
+
+
+#forgot-lnk {
+	margin-left: 15px;
+
+	font-size: 12px;
+	color: #FF3333;
+	cursor: pointer;
+}
+
+#forgot-lnk:hover {
+	color: #FF0000;
+	text-decoration: underline;
+}

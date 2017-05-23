@@ -1,0 +1,131 @@
+.controls {
+	background-color: #CCCCCC;
+	width: 802px; 
+	height: 75px;
+
+	text-align: center;
+	position: relative;
+}
+
+.control-div {
+	width:  140px; 
+	height: 60px;
+
+	display: inline-block;
+	vertical-align: bottom;
+
+	position: relative;
+	top: 10px;
+}
+
+.profile-save-active {
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+	border: #777777 1px solid;
+	
+	-webkit-box-shadow: 0 3px 0 #84261a;
+	-moz-box-shadow: 0 3px 0 #84261a;
+	box-shadow: 0 3px 0 #84261a;
+
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 17px;
+
+	background: #ff3333;
+	padding: 6px 10px 6px 10px;
+	text-decoration: none;
+
+	cursor: pointer;
+	
+	position: relative;
+}
+
+.profile-save-active:hover {
+	background: #ff6666;
+	text-decoration: none;
+}
+
+.profile-save-active:active {
+	-webkit-box-shadow: 0 1px 0 #84261a;
+	-moz-box-shadow: 0 1px 0 #84261a;
+	box-shadow: 0 1px 0 #84261a;
+	
+	top: 2px;
+}
+
+.profile-save-inactive {
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+	border: solid #777777 1px;  
+
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 17px;
+	cursor: default;
+	background: #ff6666;
+	padding: 6px 10px 6px 10px;
+	text-decoration: none;
+}
+
+#profile-save-div {
+	float: left;
+	left: 25px;
+}
+
+.profile-cancel-active {
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+	border: solid #777777 1px;
+
+	-webkit-box-shadow: 0 3px 0 #84261a;
+	-moz-box-shadow: 0 3px 0 #84261a;
+	box-shadow: 0 3px 0 #84261a;
+
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 17px;
+
+	background: #ff3333;
+	padding: 6px 25px 6px 25px;
+	text-decoration: none;
+
+	cursor: pointer;
+	
+	position: relative;
+}
+
+.profile-cancel-active:hover {
+	background: #ff6666;
+	text-decoration: none;
+}
+
+.profile-cancel-active:active {
+	-webkit-box-shadow: 0 1px 0 #84261a;
+	-moz-box-shadow: 0 1px 0 #84261a;
+	box-shadow: 0 1px 0 #84261a;
+	
+	top: 2px;
+}
+
+.profile-cancel-inactive {
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+	border: solid #777777 1px;
+	cursor: default;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 17px;
+
+	background: #ff6666;
+	padding: 6px 25px 6px 25px;
+	text-decoration: none;
+}
+
+#profile-cancel-div {
+	float: left;
+	left: 30px;
+}

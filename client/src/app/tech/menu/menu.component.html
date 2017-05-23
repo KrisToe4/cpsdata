@@ -1,0 +1,11 @@
+<nav class="menu">
+  <div class="menu-btn" [class.menu-btn-hidden]="showMenuBtn == false" (click)="menuBtnClicked()">
+    <img src="/assets/menu-btn.png" alt="menu"/>
+  </div>
+  <div class="menu-item" 
+       *ngFor="let Action of actions.authorizedActions" 
+       routerLink="{{Action.route}}" 
+       routerLinkActive="menu-item-active">
+    <span>{{Action.name}}</span>
+  </div>
+</nav>

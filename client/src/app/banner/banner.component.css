@@ -1,0 +1,30 @@
+#banner {
+	height: 100%;
+	width: 100%;
+
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+#banner-logo {
+	max-height: 60px;
+	max-width: 60px;
+
+	padding-left: 30px;	
+	padding-right: 10px;
+}
+
+#banner-name {
+	font-size: 20px;	
+	letter-spacing: -1px;
+
+	color: white;
+	text-shadow: 2px 2px #000000;
+}
