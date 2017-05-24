@@ -19,8 +19,8 @@ export class MySqlConnection {
     if (this.connection == null) {
         this.connection = mysql.createConnection({
           host     : 'localhost',
-          user     : 'c0cpsdata',
-          password : 'obaMBBTs85y@',
+          user     : 'cpsdata',
+          password : 'tT#9HFc5+AufMfk@_$chCqf*9+f$ct!V',
           database : 'cpsdata'
         });
 

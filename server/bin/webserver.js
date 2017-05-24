@@ -10,7 +10,7 @@ var server = require("../dist/server");
 var mysql = require('../dist/data-managers/mysql-connection');
 
 //create http server
-var httpPort = normalizePort(process.env.PORT || 4201);
+var httpPort = normalizePort(process.env.PORT || 3000);
 var app = server.Server.bootstrap().app;
 app.set("port", httpPort);
 var httpServer = http.createServer(app);

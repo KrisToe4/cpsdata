@@ -37,10 +37,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-ts");
 
-  grunt.registerTask("default", [
+  grunt.registerTask("dev", [
     "copy",
     "ts",
     "watch"
   ]);
 
+  grunt.registerTask("prod", [
+    "copy",
+    "ts"
+  ]);
 };

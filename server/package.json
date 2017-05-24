@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "SET NODE_ENV=development && nodemon ./bin/webserver",
     "grunt": "grunt",
-    "start": "node ./bin/webserver",
+    "start": "PORT=3000 node ./bin/webserver",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
   },
