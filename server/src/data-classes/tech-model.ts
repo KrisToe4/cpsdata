@@ -43,9 +43,9 @@ export class TechModel {
             this.mapEntry.phone2 = mapEntry.phone2;
             this.mapEntry.websiteURL = mapEntry.websiteURL;
             this.mapEntry.websiteName = mapEntry.websiteName;
-            this.mapEntry.displayEmail = mapEntry.listEmail;
-            this.mapEntry.displayPhone = mapEntry.listPhone;
-            this.mapEntry.displayWebsite = mapEntry.listWebsite;
+            this.mapEntry.displayEmail = mapEntry.displayEmail;
+            this.mapEntry.displayPhone = mapEntry.displayPhone;
+            this.mapEntry.displayWebsite = mapEntry.displayWebsite;
         }
     }
 
@@ -82,9 +82,9 @@ export class TechModel {
             this.mapEntry.phone2 = json.mapEntry.phone2;
             this.mapEntry.websiteURL = json.mapEntry.websiteURL;
             this.mapEntry.websiteName = json.mapEntry.websiteName;
-            this.mapEntry.displayEmail = (json.mapEntry.listEmail == "Y") ? true : false;
-            this.mapEntry.displayPhone = (json.mapEntry.listPhone == "Y") ? true : false;
-            this.mapEntry.displayWebsite = (json.mapEntry.listWebsite == "Y") ? true : false;
+            this.mapEntry.displayEmail = (json.mapEntry.displayEmail == "true") ? true : false;
+            this.mapEntry.displayPhone = (json.mapEntry.displayPhone == "true") ? true : false;
+            this.mapEntry.displayWebsite = (json.mapEntry.displayWebsite == "true") ? true : false;
         }
         else {
             this.mapEntry = new TechMapEntry();
