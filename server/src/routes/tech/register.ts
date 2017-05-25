@@ -93,7 +93,7 @@ export class RegisterRoute extends BaseRoute {
                 return;
               }
 
-              let smtp = MailManager.sendVerification(techEmail, token);    
+              MailManager.sendVerification(techEmail, token);    
 
               // For now send back confirmation to user with token for R&D
               let respData: ResponseData = new ResponseData(null, "Profile Created");

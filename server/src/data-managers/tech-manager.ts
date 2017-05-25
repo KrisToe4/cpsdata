@@ -7,7 +7,8 @@ const Credentials = require('credentials')();
 import { DatabaseManager } from './db-manager';
 
 import { Tech } from '../data-classes/tech';
-import { TechCredential } from '../data-classes/tech-model';
+import { TechCredential,
+         TechProfile } from '../data-classes/tech-model';
 
 
 /**
@@ -79,6 +80,22 @@ export class TechManager {
 
     }
 
+    public verifyTech(techID: number, callback: (err: any) => void) {
+
+        let db = DatabaseManager.getConnection();
+        db.query("UPDATE tech_profile SET status = 'active' where id = ?", [techID], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+            }
+            else {
+
+                callback(null);
+            }
+        });
+    }
+
     public loadTech(techID: number, callback: (err: any, tech: Tech) => void) {
         console.log("Loading Tech");
 
@@ -130,8 +147,7 @@ export class TechManager {
         });
     }
 
-    public updateTech(techID: number, techJSON: any, callback: (err: any) => void) {
-        console.log("Updating tech. ID: " + techID);
+    public updateTech(techID: number, techJSON: any, callback: (err: any, certConfirmEmail?: string) => void) {
 
         // For now we are not going to allow updates to the registered email and we're 
         // doing this in parts instead of one complicated UPDATE (which might come later)
@@ -142,7 +158,7 @@ export class TechManager {
             }
             else {
                 // Check if this tech already has the indicated certification. IF it does update the certDate otherwise insert
-                db.query('SELECT id, techID FROM ' +
+                db.query('SELECT id, adminEmail, techID FROM ' +
                          'certifications c LEFT JOIN tech_certification tc ON c.id = tc.certID ' +
                          'WHERE c.certOrg = ? and c.certType = ?',
                     [techJSON.certOrg, techJSON.certType], function (error, results, fields) {
@@ -159,8 +175,12 @@ export class TechManager {
                             return;
                         }
 
+                        console.log(results[0]);
+
+                        let certAdmin: string = "";
                         let certSQL: string;
                         let sqlFields = [];
+
                         if (results[0].techID) {
 
                             certSQL = 'UPDATE tech_certification set ? where techID = ?';
@@ -170,6 +190,9 @@ export class TechManager {
 
                             certSQL = 'INSERT INTO tech_certification set ?';
                             sqlFields = [{ techID: techID, certID: results[0].id, certDate: new Date(techJSON.certDate) }];
+
+                            // Also store the admin email to indicate we should send a confirmation email
+                            certAdmin = results[0].adminEmail;
                         }
                         
 
@@ -204,9 +227,6 @@ export class TechManager {
                                         sqlFields = [mapJSON, techID];
                                     }
 
-                                    console.log(mapSQL);
-                                    console.log(sqlFields);
-
                                     db.query(mapSQL, sqlFields, function (error, results, fields) {
                                         if (error) {
 
@@ -214,7 +234,7 @@ export class TechManager {
                                         }
                                         else {
 
-                                            callback(null);
+                                            callback(null, certAdmin);
                                         }
                                     });
                                 });

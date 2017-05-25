@@ -57,7 +57,7 @@ export class PasswordComponent implements OnInit {
       let route: ActivatedRoute = this.route;
       let router: Router = this.router;
 
-      this.techService.storePassword(this.authToken, password, function(error: string, auth: string, redirectUrl: string) {
+      this.techService.storePassword(this.authToken, password, "user", function(error: string, auth: string, redirectUrl: string) {
 
         if (error) {
           alert("Error storing password. Message: " + error);

@@ -62,8 +62,6 @@ export class AuthenticateRoute extends BaseRoute {
 
     let credentials: TechCredential = new TechCredential(req.body);
 
-    console.log(JSON.stringify(credentials));
-
     switch (credentials.type) {
       case "auth":
         credentials.ip = req.connection.remoteAddress;
@@ -78,14 +76,15 @@ export class AuthenticateRoute extends BaseRoute {
         this.localAuthorization(req, res, next, route);
         break;
       case "generate":
-        let token = credentials.value.token;
+        let options = {
 
-        credentials = new TechCredential(credentials.value.credential);
-        credentials.ip = req.connection.remoteAddress;    
-        
-        console.log(JSON.stringify(credentials));
+          token: credentials.value.token,
+          trigger: credentials.value.trigger,
+          credential: new TechCredential(credentials.value.credential)
+        }
+        options.credential.ip = req.connection.remoteAddress;    
 
-        this.generate(token, credentials, res, route);
+        this.generate(options, res, route);
         break;
       default:
         route.sendError(res, "Credentials missing or invalid. Login failed");
@@ -93,19 +92,22 @@ export class AuthenticateRoute extends BaseRoute {
     }
   }
 
-  private generate(token: string, credential: TechCredential, res: Response, route: AuthenticateRoute) {
+  private generate(options: any, res: Response, route: AuthenticateRoute) {
 
     let manager = TechManager.Manager();
 
-    manager.validateAuthToken(token, "*", function (err: any, techID: number) {
+    manager.validateAuthToken(options.token, "*", function (err: any, techID: number) {
 
       if (err) {
         route.sendError(res, "Authentication Token invalid.");
         return;
       }
 
+      let credential: TechCredential = options.credential;
+
       // Currently we only support local credential creation
       switch (credential.type) {
+
         case "local":
           manager.generateLocalCredentials(techID, credential, function (error: string) {
 
@@ -118,11 +120,24 @@ export class AuthenticateRoute extends BaseRoute {
 
             TechManager.Manager().generateAuthToken(techID, credential.ip, function (err: any, token?: string) {
               if (err) {
+
                 route.sendError(res, "Credentials created but auth token failed to generate. Message: " + err);
               }
               else {
+
                 let data: ResponseData = new ResponseData(null, "Credentials created.", { auth: token, actions: new ActionList(true).toJSON() });
                 route.sendJSON(res, data);
+
+                if (options.trigger == "verify") {
+                  
+                  TechManager.Manager().verifyTech(techID, function(error: string) {
+
+                    if (error) {
+
+                      console.log(error);
+                    } 
+                  });
+                }
               }
             });
           });

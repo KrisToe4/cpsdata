@@ -107,13 +107,14 @@ export class TechService extends ApiService {
     });
   }
 
-  public storePassword(auth: string, password: string, callback: (error: string, auth?: string, redirectUrl?: string) => void) {
+  public storePassword(auth: string, password: string, trigger: string, callback: (error: string, auth?: string, redirectUrl?: string) => void) {
     let service: TechService = this;
 
     let authRequest: TechCredential = new TechCredential({
       type: "generate",
       value: {
         token: auth,
+        trigger: trigger,
         credential: new TechCredential({
           type: "local",
           value: password

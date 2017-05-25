@@ -13,6 +13,8 @@ import { Tech } from '../../data-classes/tech'
 import { TechCredential } from '../../data-classes/tech-model';
 import { TechManager } from "../../data-managers/tech-manager";
 
+import { MailManager } from "../../data-managers/mail-manager";
+
 /**
  * / route
  *
@@ -63,6 +65,7 @@ export class UpdateRoute extends BaseRoute {
   public update(req: Request, res: Response, next: NextFunction) {
 
     let route = this;
+    let techJSON = req.body.data;
 
     // Before each request check if the authtoken is valid.
     // This should be turned into a middleware or moved to the baseroute in some way
@@ -115,11 +118,28 @@ export class UpdateRoute extends BaseRoute {
           }
           */
 
-      manager.updateTech(authorizedTech, req.body.data, function (error: string) {
+      manager.updateTech(authorizedTech, techJSON, function (error: string, certConfirmEmail: string) {
         if (error) {
+
           route.sendError(res, "Update failed. Message: " + error);
         }
         else {
+
+          // Send out cert confirmation email if this was a newly added certification
+          if (certConfirmEmail != "") {
+            let details = {
+
+              name: techJSON.name,
+              email: techJSON.email,
+              certOrg: techJSON.certOrg,
+              certType: techJSON.certType,
+              certDate: techJSON.certDate
+            }
+
+            console.log(certConfirmEmail);
+            MailManager.sendCertConfirmation(certConfirmEmail, details);
+          }
+
           let respData: ResponseData = new ResponseData(null, "Profile updated");
           route.sendJSON(res, respData);
         }
