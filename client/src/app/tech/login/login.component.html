@@ -6,7 +6,7 @@
         <input #email id="email" type="email" placeholder="Email">
       </div>
       <div class="section-element">
-        <input #password id="password" type="password" placeholder="Password">
+        <input #password id="password" type="password" placeholder="Password" (keyup.enter)="onLoginClick(email.value, password.value)">
       </div>
     </div>
     <div class="section section-inline">
@@ -23,7 +23,7 @@
     <div class="section">
       <div class="section-title"><span>Or Register</span></div>
       <div class="section-element">
-        <input #regEmail id="login-email" type="email" placeholder="Email">
+        <input #regEmail id="login-email" type="email" placeholder="Email" (keyup.enter)="onRegisterClick(regEmail.value)">
       </div>
       <div class="section-element">
         <div class="ctrl-btn ctrl-btn-enabled">

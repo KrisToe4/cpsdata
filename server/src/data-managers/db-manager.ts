@@ -1,11 +1,14 @@
 import * as mysql from 'mysql';
 
+var config = require('config-json');
+
 /**
  * @class MySqlConnection
  */
-export class MySqlConnection {
+export class DatabaseManager {
 
   private static connection: mysql.IConnection;
+  private static legacyConn: mysql.IConnection;
 
   /**
    * Create connection to our Database if not already connected
@@ -16,12 +19,36 @@ export class MySqlConnection {
    * @return {mysql.IConnection} Returns the mysql connection
    */
   public static getConnection(): mysql.IConnection {
+
+    if (this.connection == null) {
+
+        config.load('settings.json');
+        let db = config.get('db');
+
+        console.log(db);
+
+        this.connection = mysql.createConnection(db);
+        this.connection.connect();
+    }
+
+    return this.connection;
+  }
+
+ /**
+   * Create connection to our Database if not already connected
+   *
+   * @class MySqlConnection
+   * @method getArchiveConnection
+   * @static
+   * @return {mysql.IConnection} Returns the mysql connection
+   */
+  public static getArchiveConnection(): mysql.IConnection {
     if (this.connection == null) {
         this.connection = mysql.createConnection({
           host     : 'localhost',
           user     : 'cpsdata',
           password : 'tT#9HFc5+AufMfk@_$chCqf*9+f$ct!V',
-          database : 'cpsdata'
+          database : 'cpsdata2'
         });
 
         this.connection.connect();

@@ -69,6 +69,7 @@ export class ProfileRoute extends BaseRoute {
         return;
       }
 
+
       if ((authorizedTech == undefined) || (authorizedTech < 0)) {
 
         route.sendError(res, "Login required.");

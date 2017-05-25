@@ -11,7 +11,6 @@ import { Action,
 import { ResponseData } from '../../data-classes/api-model';
 import { TechCredential } from '../../data-classes/tech-model';
 
-
 import { TechManager } from "../../data-managers/tech-manager";
 
 /**
@@ -114,6 +113,8 @@ export class AuthenticateRoute extends BaseRoute {
               route.sendError(res, "Failed to generate credentials.");
               return;
             }
+
+            console.log(techID);
 
             TechManager.Manager().generateAuthToken(techID, credential.ip, function (err: any, token?: string) {
               if (err) {

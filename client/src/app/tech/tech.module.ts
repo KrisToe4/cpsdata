@@ -19,6 +19,7 @@ import { LogoutComponent } from './tech.logout.component';
 import { MenuComponent } from './menu/menu.component';
 import { PasswordComponent } from './password/password.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
 
 import { AuthGuardService } from '@guards/auth-guard.service';
 import { LogoutResolverService } from '@resolvers/logout-resolver.service';
@@ -37,6 +38,7 @@ import { TechService } from '@services/tech.service';
     MenuComponent,
     PasswordComponent,
     ProfileComponent,
+    RegisterComponent,
     TechComponent,
   ],
   imports: [

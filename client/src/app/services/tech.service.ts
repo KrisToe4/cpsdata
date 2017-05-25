@@ -178,7 +178,7 @@ export class TechService extends ApiService {
     this.updateProfile(callback);
   }
 
-  public register(email: string, callback: (error: string, auth?: any) => void) {
+  public register(email: string, callback: (error: string) => void) {
 
     let request: RequestData = new RequestData("register", {
       email: email
@@ -191,7 +191,7 @@ export class TechService extends ApiService {
           callback(response["error"]);
         }
         else {
-          callback(null, response.data);
+          callback(null);
         }
       },
       error => alert("Registration Error. Message: " + error)

@@ -13,6 +13,7 @@ import { LogoutComponent } from './tech.logout.component';
 import { InspectionComponent } from './inspection/inspection.component';
 import { PasswordComponent } from './password/password.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
 
 const techRoutes: Routes = [
   {
@@ -21,6 +22,11 @@ const techRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
+      {
+        path: 'logout',
+        component: LogoutComponent,
+        resolve: [ LogoutResolverService ]
+      },
       { path: 'inspection', component: InspectionComponent, canActivate: [AuthGuardService] },
       { path: 'password/:token', component: PasswordComponent },
       { 
@@ -28,11 +34,7 @@ const techRoutes: Routes = [
         component: ProfileComponent, 
         canActivate: [AuthGuardService],
       },
-      {
-        path: 'logout',
-        component: LogoutComponent,
-        resolve: [ LogoutResolverService ]
-      }
+      { path: 'register/:token', component: RegisterComponent }
     ],
     //resolve: [MenuResolverService]
   }

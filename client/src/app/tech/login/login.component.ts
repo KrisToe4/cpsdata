@@ -53,15 +53,15 @@ export class LoginComponent implements OnInit {
     let route: ActivatedRoute = this.route;
     let router: Router = this.router;
 
-    this.techService.register(email, function(error: string, auth: string) {
+    this.techService.register(email, function(error: string) {
       if (error) {
 
         //Display the error somehow
       }
       else {
 
-        console.log(auth);
-        router.navigate(['password', auth], {relativeTo: route.parent});
+        console.log("Registration sent");
+        alert("Registration sent. Verify your email to complete registration process")
       }
     })
   }

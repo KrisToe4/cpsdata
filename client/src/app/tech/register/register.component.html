@@ -1,0 +1,29 @@
+<div class="view">
+  <div class="view-contents">
+    <div class="section">
+      <div class="section-title"><span>Set Password</span></div>
+      <div class="section-element">
+        <input #password type="password" placeholder="Password" (keyup)="isPasswordValid(password.value)">
+        <img class="indicator" [class.valid]="passwordValid" alt="Password Indicator" />
+      </div>
+      <div class="section-element">
+        <input #confirmation type="password" placeholder="Confirm Password" 
+               (keyup)="isPasswordMatch(password.value, confirmation.value)"
+               (keyup.enter)="onSubmitClick(password.value, confirmation.value)">
+        <img class="indicator" [class.valid]="passwordMatch" alt="Confirmation Indicator" />
+      </div>
+    </div>
+    <div class="section section-inline">
+      <div class="section-element">
+        <div class="ctrl-btn" [ngClass]="{'ctrl-btn-enabled' : passwordMatch, 'ctrl-btn-disabled': !passwordMatch}">
+          <div class="noselect" (click)="onSubmitClick(password.value, confirmation.value)">Submit</div>
+        </div>
+      </div>
+      <div class="section-element">
+        <div class="ctrl-btn ctrl-btn-enabled">
+          <div class="noselect" (click)="onCancelClick()">Cancel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

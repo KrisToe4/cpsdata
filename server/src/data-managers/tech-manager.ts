@@ -4,7 +4,7 @@ import * as FacebookStrategy from 'passport-facebook';
 
 const Credentials = require('credentials')();
 
-import { MySqlConnection } from './mysql-connection';
+import { DatabaseManager } from './db-manager';
 
 import { Tech } from '../data-classes/tech';
 import { TechCredential } from '../data-classes/tech-model';
@@ -44,7 +44,7 @@ export class TechManager {
 
         console.log("Checking for Tech. Email: " + email);
 
-        var db = MySqlConnection.getConnection();
+        let db = DatabaseManager.getConnection();
         db.query('SELECT id from tech_profile where email = ?', [email], function (error, results, fields) {
             if (error) {
                 callback(error);
@@ -66,7 +66,7 @@ export class TechManager {
     public addTech(email: string, callback: (err: any, techID?: number) => void) {
         console.log("Adding tech. email: " + email);
 
-        var db = MySqlConnection.getConnection();
+        let db = DatabaseManager.getConnection();
         db.query('INSERT into tech_profile set ? ', [{"email": email}], function (error, results, fields) {
             if (error) {
                 callback(error);
@@ -88,7 +88,7 @@ export class TechManager {
                                'INNER JOIN certifications c ON tc.certID = c.id) ON p.id = tc.techID ' +
                                'WHERE p.id = ?' ;
 
-        var db = MySqlConnection.getConnection();
+        let db = DatabaseManager.getConnection();
         db.query(sqlQuery, [techID], function (error, techResults, fields) {
             if (error) {
                 callback(error, new Tech());
@@ -135,7 +135,7 @@ export class TechManager {
 
         // For now we are not going to allow updates to the registered email and we're 
         // doing this in parts instead of one complicated UPDATE (which might come later)
-        var db = MySqlConnection.getConnection();
+        let db = DatabaseManager.getConnection();
         db.query('UPDATE tech_profile set name = ? where id = ?', [techJSON.name, techID], function (error, results, fields) {
             if (error) {
                 callback(error);
@@ -243,7 +243,7 @@ export class TechManager {
                 ip: credential.ip
             };
 
-            let db = MySqlConnection.getConnection();
+            let db = DatabaseManager.getConnection();
             db.query('INSERT INTO tech_credentials SET ?', newCredential, function (error, results, fields) {
                 if (error) {
                     callback(error);
@@ -272,7 +272,7 @@ export class TechManager {
             }
 
             // Find the local credentials we've stored in the past
-            var db = MySqlConnection.getConnection();
+            let db = DatabaseManager.getConnection();
             db.query('SELECT value, ip from tech_credentials where techID = ? and type = ? ', [techID, 'local'], function (error, results, fields) {
                 if (error) {
                     return done(error);
@@ -299,11 +299,11 @@ export class TechManager {
 
     public generateAuthToken(techID: number, ip: string, callback: (err: any, token?: string) => void) {
 
+        console.log("Here");
+
         require('crypto').randomBytes(32, function(err: string, buffer: any) {
 
             let tokenExpiry = new Date();
-            console.log(tokenExpiry);
-
             if (ip == '*') {
 
                 tokenExpiry.setTime(tokenExpiry.getTime() + 3600000);
@@ -312,7 +312,6 @@ export class TechManager {
 
                 tokenExpiry.setDate(tokenExpiry.getDate() + 7);
             }
-            console.log(tokenExpiry);
 
             let authToken = {
                 "token": buffer.toString('hex'),
@@ -321,7 +320,9 @@ export class TechManager {
                 "ip": ip
             }
 
-            var db = MySqlConnection.getConnection();
+            console.log(authToken);
+
+            let db = DatabaseManager.getConnection();
              db.query('INSERT INTO auth_tokens SET ?', authToken, function (error, results, fields) {
 
                  if (error) {
@@ -341,10 +342,8 @@ export class TechManager {
 
         console.log("Validating AuthToken. Token: " + token);
 
-        var db = MySqlConnection.getConnection();
+        let db = DatabaseManager.getConnection();
         db.query('SELECT techID, expires, ip FROM auth_tokens where token = ?', [token], function (error, results, fields) {
-
-            console.log(results);
 
             if (error) {
 
@@ -375,7 +374,7 @@ export class TechManager {
 
         console.log("Deleting AuthToken. Token: " + token);
 
-        var db = MySqlConnection.getConnection();
+        let db = DatabaseManager.getConnection();
         db.query('DELETE FROM auth_tokens where token = ?', [token], function (error, results, fields) {
             if (error) {
                 callback(error);

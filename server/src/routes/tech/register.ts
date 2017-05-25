@@ -11,9 +11,9 @@ import { ResponseData } from '../../data-classes/api-model';
 
 import { Tech } from '../../data-classes/tech';
 import { TechCredential } from '../../data-classes/tech-model';
-
 import { TechManager } from "../../data-managers/tech-manager";
 
+import { MailManager } from "../../data-managers/mail-manager";
 
 /**
  * / route
@@ -71,7 +71,9 @@ export class RegisterRoute extends BaseRoute {
 
       if (techID == -1) {
 
-        manager.addTech(req.body.email, function (err: any, techID?: number) {
+        let techEmail = req.body.email;
+
+        manager.addTech(techEmail, function (err: any, techID?: number) {
           if (err) {
 
             route.sendError(res, "Registration failed. Message: " + err);
@@ -91,8 +93,10 @@ export class RegisterRoute extends BaseRoute {
                 return;
               }
 
+              let smtp = MailManager.sendVerification(techEmail, token);    
+
               // For now send back confirmation to user with token for R&D
-              let respData: ResponseData = new ResponseData(null, "Profile Created", token);
+              let respData: ResponseData = new ResponseData(null, "Profile Created");
               route.sendJSON(res, respData);
             });
           }
