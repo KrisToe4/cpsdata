@@ -9,6 +9,13 @@ import { TechModel,
          TechMapEntry } from '@server-src/data-classes/tech-model';
 export class Tech extends TechModel {
 
+    public static fromJSON(json: any) {
+
+        let tech = new Tech();
+        tech.fromJSON(json);
+        return tech;
+    }
+
     menuSubject: BehaviorSubject<ActionList>; 
     profileSubject: BehaviorSubject<TechProfile>;
     mapEntrySubject: BehaviorSubject<TechMapEntry>;
@@ -75,5 +82,21 @@ export class Tech extends TechModel {
         this.fromJSON(profile);
         this.profileSubject.next(this.profile);
         this.mapEntrySubject.next(this.mapEntry);
+    }
+}
+
+export class TechList {
+    
+    techs: Tech[]
+
+    constructor(list?: any) {
+
+        this.techs = [];
+
+        if (list == undefined) {
+            return;
+        }
+
+        list.forEach(techJSON => { this.techs.push(Tech.fromJSON(techJSON)); });     
     }
 }

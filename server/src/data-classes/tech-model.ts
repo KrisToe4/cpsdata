@@ -51,22 +51,14 @@ export class TechModel {
 
     protected fromJSON(json: any): void {
 
-        console.log(json.email);
-
-        if (json.email) {
-            this.profile = new TechProfile(json.email);
-            this.profile.name = json.name;
-            this.profile.certOrg = json.certOrg;
-            this.profile.certType = json.certType;
-            this.profile.certDate = json.certDate;
-            if (this.profile.certDate && (this.profile.certDate.length > 10))
-            {
-                this.profile.certDate = this.profile.certDate.substring(0, 10);
-            }
-
-        }
-        else {
-            this.profile = new TechProfile();
+        this.profile = new TechProfile(json.email);
+        this.profile.name = json.name;
+        this.profile.certOrg = json.certOrg;
+        this.profile.certType = json.certType;
+        this.profile.certDate = json.certDate;
+        if (this.profile.certDate && (this.profile.certDate.length > 10))
+        {
+            this.profile.certDate = this.profile.certDate.substring(0, 10);
         }
 
         if (json.mapEntry) {

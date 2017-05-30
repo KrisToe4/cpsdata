@@ -1,0 +1,6 @@
+<div *ngIf="techDetails.displayEmail"><span>{{techDetails.email}}</span></div>
+<div *ngIf="techDetails.displayPhone">
+  <span>{{techDetails.phone}}</span>
+  <span *ngIf="techDetails.phone2 != ''">({{techDetails.phone2}})</span>
+</div>
+<div *ngIf="techDetails.displayWebsite"><span>{{techDetails.websiteURL}}</span></div>

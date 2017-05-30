@@ -1,0 +1,16 @@
+<div class="title">Tech List</div>
+<div class="sort">
+  <label>Sort:
+    <select>
+      <option *ngFor="let sort of sortOptions" [value]="sort">{{sort}}</option>
+    </select>
+  </label>
+</div>
+<div class="tech-list">
+  <div class="tech" *ngFor="let tech of techList.techs" [class.selected]="selectedTech.profile.name == tech.profile.name" (click)="selectTech(tech);">
+    <span>{{tech.profile.name}}</span>
+    <div class="tech-info" [class.tech-info-visible]="selectedTech.profile.name == tech.profile.name">
+      <app-map-tech-info [selectedTech]="selectedTech"></app-map-tech-info>
+    </div>
+  </div>
+</div>

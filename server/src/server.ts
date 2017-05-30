@@ -11,6 +11,7 @@ import methodOverride = require("method-override");
 
 import { IndexRoute } from "./routes/index";
 import { AuthenticateRoute } from "./routes/tech/authenticate";
+import { ListRoute } from './routes/tech/list';
 import { LogoutRoute } from "./routes/tech/logout";
 import { ProfileRoute } from "./routes/tech/profile";
 import { RegisterRoute } from "./routes/tech/register";
@@ -115,6 +116,7 @@ export class Server {
     //Route List
     IndexRoute.create(router);
     AuthenticateRoute.create(router);
+    ListRoute.create(router);
     LogoutRoute.create(router);
     ProfileRoute.create(router);
     RegisterRoute.create(router);

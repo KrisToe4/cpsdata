@@ -1,0 +1,11 @@
+.title  {
+    margin: 3px 0 0 2px;
+
+	color: #ff6666;
+	text-shadow: 1px 1px #000000;
+	font-size: 18px;
+}
+
+.filter { 
+    margin: 2px;
+}

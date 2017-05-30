@@ -1,3 +1,11 @@
-<p>
-  map works!
-</p>
+<div class="full">
+  <div class="filter left">
+    <app-map-controls></app-map-controls>
+  </div>
+  <div class="list left">
+    <app-map-tech-list [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromList($event)"></app-map-tech-list>
+  </div>
+  <div class="right">
+    <app-map-viewport [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromMap($event)"></app-map-viewport>
+  </div>
+</div>

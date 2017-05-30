@@ -11,7 +11,8 @@ import 'rxjs/add/operator/map';
 
 import { ApiService } from './api.service';
 
-import { Tech } from '../data-classes/tech';
+import { Tech, 
+         TechList } from '../data-classes/tech';
 
 import { TechCredential } from '@server-src/data-classes/tech-model';
 import { RequestData,
@@ -196,6 +197,29 @@ export class TechService extends ApiService {
         }
       },
       error => alert("Registration Error. Message: " + error)
+    );
+  }
+
+  public getTechList(org: string, callback: (error: string, list?: TechList) => void) {
+
+    let request: RequestData = new RequestData("list", {
+      org: org
+    });
+
+    this.techApi(request).subscribe(
+      (response: ResponseData) => {
+
+        if (response["error"]) {
+          callback(response["error"]);
+        }
+        else {
+
+          let techList: TechList = new TechList(response.data);  
+          callback(null, techList);
+        }
+        
+      },
+      error => alert("Error retrieving tech list. Message: " + error)
     );
   }
 

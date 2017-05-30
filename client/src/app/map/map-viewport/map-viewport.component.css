@@ -1,0 +1,33 @@
+.view {
+	height: 100%;
+
+	display: grid;
+	grid-template-rows: 30px auto;
+	grid-row-gap: 2px;
+	grid-template-areas: 
+		"view-header"
+		"view-contents"
+}
+
+.address-bar {
+	margin-top: 5px;
+    margin-left: 10px;
+
+	grid-area: view-header;
+}
+
+#address {
+    width: 200px;
+}
+
+.map {
+    height: 100%;
+
+	grid-area: view-contents;
+
+
+}
+
+.sebm-google-map-container {
+  height: 100%;
+}

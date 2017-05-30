@@ -1,0 +1,29 @@
+.full {
+	height: 100%;
+	background-color: #000000;
+
+	display: grid;
+	grid-template-columns: 150px auto;
+	grid-template-rows: 100px auto;
+	grid-template-areas: 
+		"filter right"
+		"list right"
+}
+
+.left {
+	background-color: #FFFFFF;
+}
+
+.filter {
+	grid-area: filter;
+}
+
+.list {
+	grid-area: list;
+}
+
+.right {
+	background-color: #FFFFFF;
+	
+	grid-area: right;
+}

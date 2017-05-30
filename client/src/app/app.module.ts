@@ -4,7 +4,9 @@ import { FormsModule,
          ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule,
+         MarkerManager } from '@agm/core';
+
 import { LocalStorageModule } from 'angular-2-local-storage';
 
 // App root Components
@@ -12,17 +14,31 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { BannerComponent } from './banner/banner.component';
-import { MapComponent } from './map/map.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
+
+// Map Components
+
+import { MapComponent } from './map/map.component';
+import { MapControlsComponent } from './map/map-controls/map-controls.component';
+import { MapTechListComponent } from './map/map-tech-list/map-tech-list.component';
+import { MapTechInfoComponent } from './map/map-tech-info/map-tech-info.component';
+import { MapViewportComponent } from './map/map-viewport/map-viewport.component';
+import { MapMarkerDirective } from './map/map-viewport/map-marker.directive';
 
 // Tech Components
 import { TechModule } from './tech/tech.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     BannerComponent,
     MapComponent,
+    MapControlsComponent,
+    MapTechListComponent,
+    MapTechInfoComponent,
+    MapViewportComponent,
+    MapMarkerDirective,
     PageNotFoundComponent,
   ],
   imports: [
@@ -40,7 +56,9 @@ import { TechModule } from './tech/tech.module';
     TechModule,
     AppRoutingModule, // ** Must be imported last for routing to work properly!! **
   ],
-  providers: [ ],
+  providers: [
+    MarkerManager
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

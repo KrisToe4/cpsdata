@@ -106,15 +106,16 @@ export class TechManager {
                                'WHERE p.id = ?' ;
 
         let db = DatabaseManager.getConnection();
-        db.query(sqlQuery, [techID], function (error, techResults, fields) {
+        db.query(sqlQuery, [techID], function (error, results, fields) {
+            
             if (error) {
                 callback(error, new Tech());
                 return;
             }
 
-            if (techResults.length > 0) {
+            if (results.length > 0) {
 
-                let techJSON = techResults[0];
+                let techJSON = results[0];
 
                 console.log('Tech Loaded. ID: ' + techID + ' . Results: ' + JSON.stringify(techJSON));
 
@@ -124,15 +125,10 @@ export class TechManager {
                         return;
                     }
 
-                    console.log(mapResults);
-
                     // If we have map entry details add them to the JSON object
-                    if (mapResults) {
-                        console.log("Found tech map entry. Results: " + JSON.stringify(mapResults[0]));
+                    if (mapResults.length > 0) {
 
-                        techJSON.mapEntry = mapResults[0];      
-
-                        console.log("Completed Tech: " + JSON.stringify(techJSON));                  
+                        techJSON.mapEntry = mapResults[0];                    
                     }
 
                     let tech: Tech = new Tech();
@@ -242,6 +238,70 @@ export class TechManager {
                     });
             }
         });
+    }
+
+    public getTechList(options: any, callback: (error: any, list?: any) => void) {
+
+        // Eventually we'll allow admins to load a detailed list for maintenance but for now just ignore the auth value
+        if (options.auth) {
+
+        }
+
+        let sqlQuery: string = 'SELECT name, certType, tcon.* ' +
+                               'FROM tech_profile p ' +
+                               'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
+                               'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
+                               'INNER JOIN certifications c ON tcert.certID = c.id ' +
+                               'WHERE p.status = "active" and tcon.public = "true" AND c.certOrg = ? AND tcert.valid = "true"' ;
+        
+        console.log(sqlQuery);
+
+        let db = DatabaseManager.getConnection();
+        db.query(sqlQuery, [options.org], function (error, results, fields) {
+
+            if (error) {
+                callback(error);
+                return;
+            }
+
+            console.log(results);
+
+            if (results.length > 0) {
+
+                let techList: any = []
+
+                results.forEach((result: any) => {
+                    techList.push({
+                        name: result.name,
+                        certType: result.certType,
+                        mapEntry: {
+                            geoLat: result.geoLat,
+                            geoLng: result.geoLng,
+                            region: result.region,
+                            email: result.email,
+                            phone: result.phone,
+                            phone2: result.phone2,
+                            websiteName: result.websiteName,
+                            websiteURL: result.websiteURL,
+                            displayEmail: result.displayEmail,
+                            displayPhone: result.displayPhone,
+                            displayWebsite: result.displayWebsite
+                        }
+                    });
+                });
+
+                callback(null, techList);
+                
+            }
+            else {
+                callback("No Techs Found.");
+            }
+        });
+    }
+
+    public getDetailedList() {
+
+
     }
 
     //******** Authentication Methods ***********/
