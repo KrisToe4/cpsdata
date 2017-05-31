@@ -1,8 +1,11 @@
 <div class="full">
-  <div class="filter left">
+  <div class="org-logo">
+    <img src="/assets/map/cpsac-logo.png" alt="CPSAC Logo" />
+  </div>
+  <div class="filter">
     <app-map-controls></app-map-controls>
   </div>
-  <div class="list left">
+  <div class="list">
     <app-map-tech-list [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromList($event)"></app-map-tech-list>
   </div>
   <div class="right">

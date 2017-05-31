@@ -1,17 +1,25 @@
 .full {
 	height: 100%;
-	background-color: #000000;
+	background-color: #FFFFFF;
 
 	display: grid;
 	grid-template-columns: 150px auto;
 	grid-template-rows: 100px auto;
 	grid-template-areas: 
 		"filter right"
-		"list right"
+		"list right";
+
+	position: relative;
 }
 
-.left {
-	background-color: #FFFFFF;
+.org-logo {
+	position: absolute;
+	right: 25px;
+	top: -65px;
+}
+
+.org-logo img {
+	max-height: 50px;
 }
 
 .filter {
@@ -23,7 +31,5 @@
 }
 
 .right {
-	background-color: #FFFFFF;
-	
 	grid-area: right;
 }
