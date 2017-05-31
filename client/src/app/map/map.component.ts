@@ -25,7 +25,8 @@ export class MapComponent implements OnInit {
 
     this.techService.getTechList(this.route.snapshot.params['org'], function(error: string, list: TechList) {
       if (error) {
-
+        // ** WIP: Error needs to be handled here ** //
+        return;
       }
 
       component.techList = list;

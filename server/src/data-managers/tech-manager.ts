@@ -64,39 +64,8 @@ export class TechManager {
         });
     }
 
-    public addTech(email: string, callback: (err: any, techID?: number) => void) {
-        console.log("Adding tech. email: " + email);
-
-        let db = DatabaseManager.getConnection();
-        db.query('INSERT into tech_profile set ? ', [{"email": email}], function (error, results, fields) {
-            if (error) {
-                callback(error);
-            }
-            else {      
-                console.log("Registration successful. techID: " + results.insertId);
-                callback(null, results.insertId);
-            }
-        });
-
-    }
-
-    public verifyTech(techID: number, callback: (err: any) => void) {
-
-        let db = DatabaseManager.getConnection();
-        db.query("UPDATE tech_profile SET status = 'active' where id = ?", [techID], function (error, results, fields) {
-
-            if (error) {
-
-                callback(error);
-            }
-            else {
-
-                callback(null);
-            }
-        });
-    }
-
     public loadTech(techID: number, callback: (err: any, tech: Tech) => void) {
+
         console.log("Loading Tech");
 
         let sqlQuery: string = 'SELECT status, email, name, certOrg, certType, certDate ' +
@@ -140,103 +109,6 @@ export class TechManager {
                 callback("Tech Not Found.", new Tech());
             }
 
-        });
-    }
-
-    public updateTech(techID: number, techJSON: any, callback: (err: any, certConfirmEmail?: string) => void) {
-
-        // For now we are not going to allow updates to the registered email and we're 
-        // doing this in parts instead of one complicated UPDATE (which might come later)
-        let db = DatabaseManager.getConnection();
-        db.query('UPDATE tech_profile set name = ? where id = ?', [techJSON.name, techID], function (error, results, fields) {
-            if (error) {
-                callback(error);
-            }
-            else {
-                // Check if this tech already has the indicated certification. IF it does update the certDate otherwise insert
-                db.query('SELECT id, adminEmail, techID FROM ' +
-                         'certifications c LEFT JOIN tech_certification tc ON c.id = tc.certID ' +
-                         'WHERE c.certOrg = ? and c.certType = ?',
-                    [techJSON.certOrg, techJSON.certType], function (error, results, fields) {
-
-                        if (error) {
-
-                            callback(error);
-                            return;
-                        }
-
-                        if (results.length == 0) {
-
-                            callback("Certification Not Found");
-                            return;
-                        }
-
-                        console.log(results[0]);
-
-                        let certAdmin: string = "";
-                        let certSQL: string;
-                        let sqlFields = [];
-
-                        if (results[0].techID) {
-
-                            certSQL = 'UPDATE tech_certification set ? where techID = ?';
-                            sqlFields = [{ certDate: new Date(techJSON.certDate) }, techID];
-                        }
-                        else {
-
-                            certSQL = 'INSERT INTO tech_certification set ?';
-                            sqlFields = [{ techID: techID, certID: results[0].id, certDate: new Date(techJSON.certDate) }];
-
-                            // Also store the admin email to indicate we should send a confirmation email
-                            certAdmin = results[0].adminEmail;
-                        }
-                        
-
-                        db.query(certSQL, sqlFields, function (error, results, fields) {
-                            if (error) {
-
-                                callback(error);
-                                return;
-                            }
-
-                            db.query('SELECT id FROM tech_contact WHERE techID = ?', [techID], function (error, results, fields) {
-
-                                    if (error) {
-
-                                        callback(error);
-                                        return;
-                                    }
-
-                                    let mapJSON = techJSON.mapEntry;
-
-                                    let mapSQL: string;
-                                    let sqlFields = [];
-                                    if (results.length == 0) {
-
-                                        mapJSON['techID'] = techID;
-                                        mapSQL = 'INSERT INTO tech_contact set ?';
-                                        sqlFields = [mapJSON];
-                                    }
-                                    else {
-
-                                        mapSQL = 'UPDATE tech_contact set ? where techID = ?';
-                                        sqlFields = [mapJSON, techID];
-                                    }
-
-                                    db.query(mapSQL, sqlFields, function (error, results, fields) {
-                                        if (error) {
-
-                                            callback(error);
-                                        }
-                                        else {
-
-                                            callback(null, certAdmin);
-                                        }
-                                    });
-                                });
-                        });
-                    });
-            }
         });
     }
 
@@ -299,10 +171,188 @@ export class TechManager {
         });
     }
 
-    public getDetailedList() {
 
+    /* Add/Update Methods */
+
+    public addTech(email: string, callback: (err: any, techID?: number) => void) {
+        console.log("Adding tech. email: " + email);
+
+        let db = DatabaseManager.getConnection();
+        db.query('INSERT into tech_profile set ? ', [{ "email": email }], function (error, results, fields) {
+            if (error) {
+                callback(error);
+            }
+            else {
+                console.log("Registration successful. techID: " + results.insertId);
+                callback(null, results.insertId);
+            }
+        });
 
     }
+
+    public verifyTech(techID: number, callback: (err: any) => void) {
+
+        let db = DatabaseManager.getConnection();
+        db.query("UPDATE tech_profile SET status = 'active' where id = ?", [techID], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+            }
+            else {
+
+                callback(null);
+            }
+        });
+    }
+
+    public updateTech(techID: number, techJSON: any, callback: (err: any, certConfirmEmail?: string) => void) {
+
+        let manager: TechManager = this;
+
+        // For now we are not going to allow updates to the registered email and we're 
+        // doing this in parts instead of one complicated UPDATE (which might come later)
+        let db = DatabaseManager.getConnection();
+        db.query('UPDATE tech_profile set name = ? where id = ?', [techJSON.name, techID], function (error, results, fields) {
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            let cert = { 
+                org: techJSON.certOrg, 
+                type: techJSON.certType, 
+                date: techJSON.certDate 
+            };
+            manager.updateCertifications(techID, cert, function(error: string, certAdmin: string) {
+
+                if (error) {
+
+                    callback(error);
+                    return;
+                }
+
+                manager.updateContactInfo(techID, techJSON.mapEntry, function(error: string) {
+
+                    if (error) {
+
+                        callback(error);
+                    }
+                    else {
+
+                        callback(null, certAdmin);
+                    }
+                });
+            });
+        });
+    }
+
+    private updateCertifications(techID: number, cert: any, callback: (error: any, certAdmin?: string) => void) {
+
+        // Check if this tech already has the indicated certification. If they do update the certDate otherwise insert
+        let db = DatabaseManager.getConnection();
+        db.query('SELECT id, adminEmail FROM certifications ' +
+                 'WHERE certOrg = ? and certType = ?',
+                 [cert.org, cert.type], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            if (results.length == 0) {
+
+                callback("Certification Not Found");
+                return;
+            }
+
+            let certID: number = results[0].id;
+            let certAdmin: string = results[0].adminEmail;
+
+            db.query("SELECT certDate from tech_certification where certID = ? and techID = ?", [certID, techID], function (error, results, fields) {
+
+                if (error) {
+
+                    callback(error);
+                    return;
+                }
+
+                let certDate = new Date(cert.date);
+
+                let sqlQuery = "";
+                let sqlFields = [{}];
+
+                if (results.length == 0) {
+
+                    sqlQuery = 'INSERT INTO tech_certification set ?';
+                    sqlFields = [{ techID: techID, certID: certID, certDate: certDate }];
+                }
+                else {
+
+                    sqlQuery = 'UPDATE tech_certification set ? where techID = ? and certID = ?';
+                    sqlFields = [{ certDate: certDate }, techID, certID];
+
+                    // Reset the certAdmin here as we don't need to email them
+                    certAdmin = "";
+                }
+
+                db.query(sqlQuery, sqlFields, function (error, results, fields) {
+                    if (error) {
+
+                        callback(error);
+                    }
+                    else {
+
+                        callback(null, certAdmin);
+                    }
+                });
+            });
+        });
+    }
+
+    private updateContactInfo(techID: number, mapEntry: any, callback: (error: any) => void) {
+
+        let db = DatabaseManager.getConnection();
+        db.query('SELECT techID FROM tech_contact WHERE techID = ?', [techID], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            let sqlQuery: string;
+            let sqlFields = [{}];
+
+            if (results.length == 0) {
+
+                mapEntry['techID'] = techID;
+                sqlQuery = 'INSERT INTO tech_contact set ?';
+                sqlFields = [mapEntry];
+            }
+            else {
+
+                sqlQuery = 'UPDATE tech_contact set ? where techID = ?';
+                sqlFields = [mapEntry, techID];
+            }
+
+            db.query(sqlQuery, sqlFields, function (error, results, fields) {
+                if (error) {
+
+                    callback(error);
+                }
+                else {
+
+                    callback(null);
+                }
+            });
+        });
+
+    }
+    /* ***************************** */
+
 
     //******** Authentication Methods ***********/
     /**
