@@ -1,0 +1,187 @@
+<div class="view">
+  <div class="view-header">
+    <span>Arrival Condition</span>
+  </div>
+  <div class="view-contents">
+	<div class="section">
+		<div class="section-title"><span>Seat</span></div>
+		<div class="section-element">
+			<label><input value="na" type="checkbox">Seat not installed</label>
+		</div>
+		<div class="section-element">
+			<input class="arrival-seat-row1 arrival-seat-col2" name="arrival-seat-pos" value="1" type="radio">
+			<input class="arrival-seat-row1 arrival-seat-col3" name="arrival-seat-pos" value="2" type="radio">
+			<input class="arrival-seat-row2 arrival-seat-col1" name="arrival-seat-pos" value="3" type="radio">
+			<input class="arrival-seat-row2 arrival-seat-col2" name="arrival-seat-pos" value="4" type="radio">
+			<input class="arrival-seat-row2 arrival-seat-col3" name="arrival-seat-pos" value="5" type="radio">
+			<input class="arrival-seat-row3 arrival-seat-col1" name="arrival-seat-pos" value="6" type="radio">
+			<input class="arrival-seat-row3 arrival-seat-col2" name="arrival-seat-pos" value="7" type="radio">
+			<input class="arrival-seat-row3 arrival-seat-col3" name="arrival-seat-pos" value="8" type="radio">
+		</div>
+		<div class="section-element">
+			<label><input value="ff" type="radio">Forward Facing</label>
+			<select>
+				<option value="Unknown" selected>---</option>
+				<option value="ca">Correct Angle</option>
+				<option value="or" >Over Reclined</option>
+				<option value="tu">Too Upright</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label><input value="rf" type="radio" checked="checked">Rear Facing</label>
+			<select>
+				<option value="Unknown" selected>---</option>
+				<option value="ca">Correct Angle</option>
+				<option value="or" >Over Reclined</option>
+				<option value="tu">Too Upright</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label><input value="b" type="radio">Booster</label>
+		</div>
+		<div class="section-element">
+			<label><input value="snug" type="checkbox">Handle Position Correct (infant only)</label> 			
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Harness/Belt Fit</span></div>
+		<div class="section-element">									
+			<label>Child in seat:</label> 
+			
+			<label><input value="Yes" type="radio" checked="checked">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+		</div>
+		<div class="section-element">									
+			<label>Harness snug:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+		<div class="section-element">									
+			<label>Correct slots:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+		<div class="section-element">
+			<label>Straps flat:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+		<div class="section-element">										
+			<label>Chest clip at armpits:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+		<div class="section-element">									
+			<label>Correct fit (booster):</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Tether</span></div>
+		<div class="section-element">									
+			<label>Choose:</label> 
+			<select>
+				<option value="Unknown" selected="">...</option>
+				<option value="na">N/A</option>
+				<option value="ac">Attached, correct anchor</option>
+				<option value="ai">Attached, incorrect anchor</option>
+				<option value="no">Not attached, anchor available</option>
+				<option value="nn">Not attached, no anchor available</option>
+				<option value="nl">Not attached, loose/dangling</option>
+			</select>
+		</div>
+		<div class="section-element">								
+			<label>Routed Correctly:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+		<div class="section-element">									
+			<label>Tight:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio">No</label> 
+			<label><input value="Unknown" type="radio" checked="checked">Unknown</label> 
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Seat Belt System/UAS</span></div>			
+		<div class="section-element">
+			Installed with: 
+			<select>
+				<option value="Unknown" selected>---</option>
+				<option value="seatbelt">Seatbelt</option>
+				<option value="uas">UAS</option>
+				<option value="both" >Both</option>
+			</select>
+		</div>						
+		<div class="section-element">
+			<label> Seatbelt System:</label> 
+			<select>
+				<option value="eas" selected>ELR/ALR switchable</option>
+				<option value="elr">ELR</option>
+				<option value="alr">ALR</option>
+				<option value="ll" >Locking latchplate</option>
+				<option value="cl">Cinchable latchplate</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label>Belt Type:</label> 
+			<select>
+				<option value="ls" selected>Lap/shoulder belts</option>
+				<option value="lo">Lap belt only</option>
+			</select>
+		</div>
+		<div class="section-element">									
+			<label>Routed correctly:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio" checked="checked">No</label> 
+		</div>
+		<div class="section-element">									
+			<label>Tight (less than 1" movement):</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio" checked="checked">No</label> 
+		</div>
+		<div class="section-element">									
+			<label>Seat belt locked:</label> 
+			
+			<label><input value="Yes" type="radio">Yes</label> 
+			<label><input value="No" type="radio" checked="checked">No</label> 
+		</div>
+		<div class="section-element">									
+			<label>Locking clip used:</label> 
+			<select>
+				<option value="Unknown" selected="Unknown">Choose...</option>
+				<option value="yc">Yes, used correctly</option>
+				<option value="yi">Yes, used incorrectly</option>
+				<option value="nr" >No, but required</option>
+				<option value="nn">No, not necessary</option>
+			</select>
+		</div>
+		<div class="section-element">									
+			<label>Restraint lock offs used:</label> 
+			<select>
+				<option value="Unknown" selected>Choose...</option>
+				<option value="na">Not Applicable</option>
+				<option value="yc">Yes, used correctly</option>
+				<option value="yi">Yes, used incorrectly</option>
+				<option value="nr" >No, but required</option>
+				<option value="nn">No, not required</option>
+			</select>
+		</div>
+	</div>
+</div>

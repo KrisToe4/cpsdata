@@ -14,6 +14,14 @@ import { TechComponent } from './tech.component';
 import { ControlsComponent } from './controls/controls.component';
 
 import { InspectionComponent } from './inspection/inspection.component';
+import { InspectionArrivalComponent } from './inspection/arrival/arrival.component';
+import { InspectionCreateComponent } from './inspection/create/create.component';
+import { InspectionDepartureComponent } from './inspection/departure/departure.component';
+import { InspectionGeneralComponent } from './inspection/general/general.component';
+import { InspectionListComponent } from './inspection/list/list.component';
+import { InspectionRestraintComponent } from './inspection/restraint/restraint.component';
+import { InspectionSummaryComponent } from './inspection/summary/summary.component';
+
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './tech.logout.component';
 import { MenuComponent } from './menu/menu.component';
@@ -33,6 +41,13 @@ import { TechService } from '@services/tech.service';
   declarations: [
     ControlsComponent,
     InspectionComponent,
+    InspectionArrivalComponent,
+    InspectionCreateComponent,
+    InspectionDepartureComponent,
+    InspectionGeneralComponent,
+    InspectionListComponent,
+    InspectionRestraintComponent,
+    InspectionSummaryComponent,
     LoginComponent,
     LogoutComponent,
     MenuComponent,
@@ -49,7 +64,7 @@ import { TechService } from '@services/tech.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TechRoutingModule,
+    TechRoutingModule
   ],
   providers: [
     AuthGuardService,

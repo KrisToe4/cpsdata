@@ -54,7 +54,7 @@ import { TechModule } from './tech/tech.module';
       storageType: 'localStorage'
     }),
     TechModule,
-    AppRoutingModule, // ** Must be imported last for routing to work properly!! **
+    AppRoutingModule, // ** Must be imported last for routing to work properly!! ** //
   ],
   providers: [
     MarkerManager

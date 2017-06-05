@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  constructor() { }
+  // Diagnostic only: inspect router configuration
+  constructor(router: Router) {
+    //console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
+  }
 }

@@ -1,0 +1,38 @@
+.list {
+    height: 100%;
+    width: 100%;
+
+    border: 1px solid black;
+
+    display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	
+	flex-flow: column wrap;
+	justify-content: flex-start;
+}
+
+.list-row {
+    width: 100%;
+
+    display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	
+	flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.list-header {
+    border-bottom: 1px solid black;
+}
+
+.list-col {
+    min-width: 100px;
+    
+    text-align: center;
+}

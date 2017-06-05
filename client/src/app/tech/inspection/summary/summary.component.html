@@ -1,0 +1,120 @@
+<div class="view">
+  <div class="view-header">
+    <span>Post Inspection</span>
+  </div>
+  <div class="view-contents">
+	<div class="section">
+		<div class="section-title"><span>Post Inspection Information</span></div>
+		<div class="section-element">
+			<label for="install-complete" class="post-inspection-question">Was the seat installed successfully?:</label> 
+			<select id="install-complete">
+				<option value="Unknown" selected>---</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label for="post-install" class="post-inspection-question">Was the client able to install the seat themselves by the end of this check?:</label> 
+			<select id="post-install">
+				<option value="Unknown" selected>---</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label class="post-inspection-question">Client’s confidence level installing and using seat correctly:</label> 
+
+			<input id="post-confidence-unk" name="post-confidence-radgrp" value="u" type="radio" checked="checked">
+			<label for="post-confidence-unk">Unknown</label> 
+			<input id="post-confidence-low" name="post-confidence-radgrp" value="l" type="radio">
+			<label for="post-confidence-low">Low</label> 
+			<input id="post-confidence-moderate" name="post-confidence-radgrp" value="m" type="radio">
+			<label for="post-confidence-moderate">Moderate</label> 
+			<input id="post-confidence-high" name="post-confidence-radgrp" value="h" type="radio">
+			<label for="post-confidence-high">High</label> 
+		</div>
+		<div class="section-element">
+			<label for="post-learn" class="post-inspection-question">Did the client learn any new information today?:</label> 
+			<select id="post-learn">
+				<option value="Unknown" selected>---</option>
+				<option value="y">Yes</option>
+				<option value="n">No</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label for="post-comments" class="post-inspection-question">Comments:</label>
+			<textarea id="post-comments"></textarea>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Confirmation/Digital Signature</span></div>
+		<div class="section-element">
+			<label>I understand that this inspection has been provided as a community service and is based on current information about the various systems in use. I am aware that it is my responsibility to see the manufacturer's instructions are followed every time the child restraint is used. I agree not to hold Child Passenger Safety Association of Canada (C.P.S.A.C), any of its volunteers and partner agencies liable for any inadvertent error. I agree to indemnify and save harmless C.P.S.A.C, its employees and agents, and any of its volunteers from any and all liabilities, damages, losses and claims which may arise from this service. I acknowledge that I am aware that the information collected on this form may be used for research purposes. My personal information will not be used.</label>
+		</div>			
+		<div class="section-element">
+			<input id="confirmation-agreement" value="anchor" type="checkbox">
+			<label for="confirmation-agreement">I have read and agree to the above statement</label>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-element">
+			<label for="signature-name">Signed by:</label>
+			<input type="text" id="signature-name">
+		</div>
+		<div class="section-element">
+			<label for="signature-display">Signature:</label>									
+			<canvas id="signature-display" class="noselect" width="220" height="50"></canvas>
+		</div>
+	</div>
+	<div id="signature-popup">
+		<div id="signature-div" class="sigPad">
+			<label for="signature">Sign here:</label>									
+			<canvas id="signature" class="pad" width="440" height="100"></canvas>
+			<input id="signature-output" type="hidden" name="output" class="output">
+		</div>
+		<div id="signature-menu">
+			<div id="signature-save" class="signature-btn"><label>Save</label></div>
+			<div id="signature-clear" class="signature-btn"><label>Clear</label></div>
+			<div id="signature-cancel" class="signature-btn"><label>Cancel</label></div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-element">
+			<label>Date check completed: <input type="date"></label>
+		</div>
+		<div class="section-element">
+			<label>Location:</label>
+			<select>
+				<option value="Unknown" selected>---</option>
+				<option value="AB">AB</option>
+				<option value="BC">BC</option>
+				<option value="MB">MB</option>
+				<option value="NB">NB</option>
+				<option value="NL">NL</option>
+				<option value="NS">NS</option>
+				<option value="ON">ON</option>
+				<option value="PE">PE</option>
+				<option value="QC">QC</option>
+				<option value="SK">SK</option>
+				<option value="NT">NT</option>
+				<option value="NU">NU</option>
+				<option value="YT">YT</option>
+				<option value="US">USA</option>
+				<option value="ZZ">Other</option>
+			</select> 
+			<select>
+				<option value="Unknown" selected>Choose...</option>
+				<option value="PC">Private Check</option>
+				<option value="FP">Fire/Police Hall</option>
+				<option value="CC">Community Check Event</option>
+				<option value="TT">Technician Training Event</option>
+				<option value="RS">Retail Store</option>
+				<option value="RD">Roadside Stop</option>
+				<option value="ZZ">Other</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label for="additional-techs">Additional Techs:<input type="text"></label>
+		</div>
+	</div>
+</div>

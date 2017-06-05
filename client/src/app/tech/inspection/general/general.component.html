@@ -1,0 +1,151 @@
+<div class="view">
+  <div class="view-header">
+    <span>General Information</span>
+  </div>
+  <div class="view-contents">
+	<div class="section">
+		<div class="section-title"><span>Client Information</span></div>
+		<div class="section-element">
+			<label>Name:<input type="text"></label>
+		</div>
+		<div class="section-element">
+			<label>Phone:<input type="tel"></label>
+		</div>
+		<div class="section-element">
+			<label>Email:<input type="email"></label>
+		</div>
+		<div class="section-element">
+			<label><input type="checkbox" disabled="true">Email client this inspection</label>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Child Information</span></div>
+		<div class="section-element">
+			<label>Child:</label>
+			<select>
+				<option value="present" selected>present</option>
+				<option value="absent">absent</option>
+				<option value="unborn">unborn</option>
+			</select>
+		</div>			
+		<div class="section-element">
+			<label>Age:<input type="number"></label>
+			<select>
+				<option value="weeks">weeks</option>
+				<option value="months">months</option>
+				<option value="years" selected>years</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label>Weight:<input type="number"></label>
+			<select>
+				<option value="kg">kg</option>
+				<option value="lbs" selected>lbs</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label>Height:<input type="number"></label>
+			<select>
+				<option value="cm">cm</option>
+				<option value="inches" selected>inches</option>
+			</select>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Vehicle Information</span></div>
+		<div class="section-element">
+			<label>Year:<input type="text"></label> 
+		</div>
+		<div class="section-element">
+			<label>Make:<input type="text"></label>
+		</div>
+		<div class="section-element">
+			<label>Model:<input type="text"></label> 
+		</div>	
+		<div class="section-element">
+			<label>Type:</label>  
+			<select>
+				<option value="" selected>---</option>
+				<option value="sedan">Sedan</option>
+				<option value="coupe">Coupe</option>
+				<option value="hatch">Hatchback</option>
+				<option value="van">Van/Minivan</option>
+				<option value="wagon">Wagon</option>
+				<option value="truck">Truck</option>
+				<option value="suv">SUV</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label>Manual:</label> 
+			<select>
+				<option value="Unknown" selected>Choose...</option>
+				<option value="With Vehicle">With Vehicle</option>
+				<option value="At Home">At Home</option>
+				<option value="No">No</option>
+			</select>
+		</div>	
+		<div class="section-element">									
+			<label>UAS borrowing:</label> 
+			<select>
+				<option value="Unknown" selected>Unknown</option>
+				<option value="Allowed">Allowed</option>
+				<option value="Not Allowed">Not Allowed</option>
+				<option value="N/A">N/A</option>
+			</select>		
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title"><span>Experience</span></div>
+		<div class="section-element">
+			<label>Client confidence installing and using their seat correctly?:</label> 
+			
+			<label><input value="u" type="radio" checked="checked">Unknown</label> 
+			<label><input value="l" type="radio">Low</label> 
+			<label><input value="m" type="radio">Moderate</label> 
+			<label><input value="h" type="radio">High</label> 
+		</div>
+		<div class="section-element">
+			<label>Has client had a seat checked by a technician before?:</label> 
+			<select>
+				<option value="y">Yes</option>
+				<option value="n">No</option>
+				<option value="u" selected>Unknown</option>
+			</select>
+		</div>
+		<div class="section-element">
+			<label>Tech Certification:</label> 
+			<select  id="parent-prev-tech-org"></select> 
+			<select  id="parent-prev-tech-type"></select> 
+		</div>
+		<div class="section-element">
+			<label>Location:</label> 
+			<select>
+				<option value="" selected>---</option>
+				<option value="AB">AB</option>
+				<option value="BC">BC</option>
+				<option value="MB">MB</option>
+				<option value="NB">NB</option>
+				<option value="NL">NL</option>
+				<option value="NS">NS</option>
+				<option value="ON">ON</option>
+				<option value="PE">PE</option>
+				<option value="QC">QC</option>
+				<option value="SK">SK</option>
+				<option value="NT">NT</option>
+				<option value="NU">NU</option>
+				<option value="YT">YT</option>
+				<option value="US">USA</option>
+				<option value="ZZ">Other</option>
+			</select> 
+			<select>
+				<option value="" selected>Choose...</option>
+				<option value="PC">Private Check</option>
+				<option value="FP">Fire/Police Hall</option>
+				<option value="CC">Community Check Event</option>
+				<option value="TT">Technician Training Event</option>
+				<option value="RS">Retail Store</option>
+				<option value="ZZ">Other</option>
+			</select> 
+		</div>
+	</div>
+</div>
