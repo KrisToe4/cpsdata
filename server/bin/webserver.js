@@ -7,7 +7,7 @@ var http = require("http");
 var nodeCleanup = require("node-cleanup");
 
 var server = require("../dist/server");
-var mysql = require('../dist/data-managers/mysql-connection');
+var mysql = require('../dist/data-managers/db-manager');
 
 //create http server
 var httpPort = normalizePort(process.env.PORT || 3000);

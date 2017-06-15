@@ -6,6 +6,9 @@ const Credentials = require('credentials')();
 
 import { DatabaseManager } from './db-manager';
 
+import { Menu,
+         MenuItem } from '../data-classes/menu-model';
+
 import { Tech } from '../data-classes/tech';
 import { TechCredential,
          TechProfile } from '../data-classes/tech-model';
@@ -427,9 +430,9 @@ export class TechManager {
         });
     }
 
-    public generateAuthToken(techID: number, ip: string, callback: (err: any, token?: string) => void) {
+    public generateAuthToken(techID: number, ip: string, callback: (err: any, token?: string, menu?: Menu) => void) {
 
-        console.log("Here");
+        let manager: TechManager = this;
 
         require('crypto').randomBytes(32, function(err: string, buffer: any) {
 
@@ -450,8 +453,6 @@ export class TechManager {
                 "ip": ip
             }
 
-            console.log(authToken);
-
             let db = DatabaseManager.getConnection();
              db.query('INSERT INTO auth_tokens SET ?', authToken, function (error, results, fields) {
 
@@ -459,18 +460,26 @@ export class TechManager {
                      callback(error);
                  }
 
-                 callback(null, authToken.token);
+                 manager.getTechMenu(techID, function(error: string, menu: Menu) {
+                                      
+                     if (error) {
+                         callback(error);
+                     }
+
+                     callback(null, authToken.token , menu);
+                 })
             });
         });
     }
 
-    public validateAuthToken(token: string, ip: string, callback: (err: any, techID?: number) => void) {
+    public validateAuthToken(token: string, ip: string, callback: (err: any, techID?: number, menu?: Menu) => void) {
+
         if (token === undefined) {
             callback("Login required.");
             return;
         }
 
-        console.log("Validating AuthToken. Token: " + token);
+        let manager: TechManager = this;
 
         let db = DatabaseManager.getConnection();
         db.query('SELECT techID, expires, ip FROM auth_tokens where token = ?', [token], function (error, results, fields) {
@@ -492,7 +501,17 @@ export class TechManager {
                 console.log("Token IP is different from remote IP");
             }
 
-            callback(null, results[0].techID);
+            let techID = results[0].techID;
+            manager.getTechMenu(techID, function(error: string, menu: Menu) {
+
+                if (error) {
+
+                    callback(error);
+                    return;
+                }
+                
+                callback(null, results[0].techID, menu);
+            });
         });
     }
 
@@ -511,6 +530,34 @@ export class TechManager {
             }
             else {
                 callback(null);
+            }
+        });
+    }
+
+    private getTechMenu(techID: number, callback: (error: any, menu?: Menu) => void) {
+
+        let db = DatabaseManager.getConnection();
+        db.query('SELECT menu FROM roles r INNER JOIN ' +
+                 'tech_profile p on p.role=r.id where p.id = ?', techID, function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            if (results.length == 0) {
+
+                callback(null, new Menu([new MenuItem("Login","login")]));
+            }
+            else {
+
+                console.log(results[0].menu);
+
+                let menu = new Menu();
+                menu.fromJSON(results[0].menu);
+
+                callback(null, menu);
             }
         });
     }

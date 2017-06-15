@@ -1,19 +1,19 @@
-import { Action,
-         ActionList } from './action';
+import { Menu,
+         MenuItem } from './menu-model';
 
 export class TechModel {
     public authToken: string;
     public profile: TechProfile;
     public mapEntry: TechMapEntry; 
 
-    protected authorizedActions: ActionList; 
+    protected techMenu: Menu; 
 
     constructor()
     {
         this.authToken = "";
         this.profile = new TechProfile();
         this.mapEntry = new TechMapEntry();
-        this.authorizedActions = new ActionList();
+        this.techMenu = new Menu();
     }
 
     public updateFromObject(data: any) {
