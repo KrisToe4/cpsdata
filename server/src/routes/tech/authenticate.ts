@@ -118,7 +118,7 @@ export class AuthenticateRoute extends BaseRoute {
 
             console.log(techID);
 
-            TechManager.Manager().generateAuthToken(techID, credential.ip, function (error: string, token: string, menu: Menu) {
+            TechManager.Manager().generateAuthToken(techID, credential.ip, function (error: string, token: string, menuJSON: string) {
               
               if (error) {
 
@@ -127,7 +127,7 @@ export class AuthenticateRoute extends BaseRoute {
               else {
 
 
-                let data: ResponseData = new ResponseData(null, "Credentials created.", { auth: token, menu: menu });
+                let data: ResponseData = new ResponseData(null, "Credentials created.", { auth: token, menu: menuJSON });
                 route.sendJSON(res, data);
 
                 if (options.trigger == "verify") {
@@ -153,10 +153,10 @@ export class AuthenticateRoute extends BaseRoute {
 
   private tokenAuthorization (credential: TechCredential, res: Response, route: AuthenticateRoute) {
     
-    TechManager.Manager().validateAuthToken(credential.value, credential.ip, function(error: string, techID: number, menu: Menu) {
+    TechManager.Manager().validateAuthToken(credential.value, credential.ip, function(error: string, techID: number, menuJSON: string) {
 
       if (techID >= 0) {
-        let respData: ResponseData = new ResponseData(null, "Token Valid", {menu: menu});
+        let respData: ResponseData = new ResponseData(null, "Token Valid", {menu: menuJSON});
         route.sendJSON(res, respData);
         return;
       }
@@ -177,12 +177,12 @@ export class AuthenticateRoute extends BaseRoute {
           route.sendError(res, "Email or password are not valid.");
         }
         else {
-          TechManager.Manager().generateAuthToken(user, req.connection.remoteAddress, function(error: string, token: string, menu: Menu) {
+          TechManager.Manager().generateAuthToken(user, req.connection.remoteAddress, function(error: string, token: string, menuJSON: string) {
             if (err) {
               route.sendError(res, "Login Successful but authToken failed to generate. Message: " + err);
             } 
             else {
-              let data: ResponseData = new ResponseData(null, "Login Successful.", {auth: token, menu: menu});
+              let data: ResponseData = new ResponseData(null, "Login Successful.", {auth: token, menu: menuJSON});
               route.sendJSON(res, data);
 
             }

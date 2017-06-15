@@ -13,7 +13,7 @@ export class TechComponent {
 
   constructor( private menuService: MenuService ) { 
 
-    this.menuService.getMenuObserver().subscribe(visible => {
+    this.menuService.watchMenuVisibility().subscribe(visible => {
       this.hideMenu = !visible;
     });
   }

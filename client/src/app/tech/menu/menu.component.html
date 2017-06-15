@@ -2,10 +2,19 @@
   <div class="menu-btn" [class.menu-btn-hidden]="showMenuBtn == false" (click)="menuBtnClicked()">
     <img src="/assets/menu-btn.png" alt="menu"/>
   </div>
-  <div class="menu-item" 
-       *ngFor="let Action of actions.authorizedActions" 
-       routerLink="{{Action.route}}" 
-       routerLinkActive="menu-item-active">
-    <span>{{Action.name}}</span>
+  <div class="menu-item" *ngFor="let item of menu.menuItems">
+    <div class="menu-item-btn" 
+         routerLink="{{item.route}}" 
+         routerLinkActive="active"
+         (click)="onClick(item);">
+      <span>{{item.display}}</span>
+    </div>
+    <div *ngIf="item.subItems && currentRoute.includes(item.route)" class="submenu">
+      <div class="menu-subitem" 
+          *ngFor="let subItem of item.subItems" 
+          (click)="onClick(subItem);">
+        <span>{{subItem.display}}</span>
+      </div>
+    </div>
   </div>
 </nav>

@@ -1,9 +1,12 @@
 import { Component,
          OnInit }            from '@angular/core';
-import { Router }            from '@angular/router';
 
-import { Action, 
-         ActionList }        from '@server-src/data-classes/action'
+import { ActivatedRoute,
+         Router,
+         NavigationStart }            from '@angular/router';
+
+import { Menu, 
+         MenuItem }        from '@server-src/data-classes/menu-model'
 import { Tech }              from '../../data-classes/tech';
 
 import { MenuService }       from '@services/menu.service';
@@ -17,28 +20,51 @@ import { TechService }       from '@services/tech.service';
 })
 export class MenuComponent implements OnInit {
 
-  public actions: ActionList;
+  public menu: Menu;
 
+  private currentRoute: string = "";
   private showMenuBtn: boolean = false;
 
-  constructor( private menuService: MenuService,
+  constructor( private route: ActivatedRoute,
+               private menuService: MenuService,
                private techService: TechService,
                private router: Router ) { }
 
   ngOnInit() {
 
-    this.menuService.getMenuBtnObserver().subscribe(showBtn => {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        console.log(event);
+        this.currentRoute = event.url;
+      }
+    });
+
+    this.menuService.watchMenuBtnVisibility().subscribe(showBtn => {
       this.showMenuBtn = showBtn;
     });
 
     // **ksw** We should probably let the menu service handle this but leave for now
-    this.techService.getAuthorizedActions().subscribe(list => {
-      this.actions = list;
+    this.menuService.watchCurrentMenu().subscribe(techMenu => {
+      this.menu = techMenu;
     });
   }
 
   menuBtnClicked() {
     this.menuService.clickMenuBtn();
+  }
+
+  onClick(menuItem: MenuItem) {
+
+    if (menuItem.route) {
+
+      this.router.navigate([menuItem.route], { relativeTo: this.route });
+    }
+    else {
+
+      this.menuService.updateTrigger(menuItem);
+    }
+
+    return false;
   }
 
 }

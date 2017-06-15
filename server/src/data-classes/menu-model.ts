@@ -38,6 +38,11 @@ export class Menu {
         this.menuItems.push(item);
     }
 
+    public append(menu: Menu) {
+
+        this.menuItems = this.menuItems.concat(menu.menuItems);
+    }
+
     public remove(index: number, length?: number) {
 
         let sliceLen: number = length as number || 1;

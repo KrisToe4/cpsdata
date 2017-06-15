@@ -155,8 +155,8 @@ export class TechService extends ApiService {
     return Promise.resolve(TechService.tech.clearAuthData()).then(logoutSucceeded => true);
   }
 
-  public getAuthorizedActions(): Observable<any> {
-    return TechService.tech.getAuthorizedActions();
+  public getTechMenu(): Observable<any> {
+    return TechService.tech.getTechMenu();
   }
 
   public getProfileObserver(): Observable<any> {

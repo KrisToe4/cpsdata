@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Action,
-         ActionList } from '@server-src/data-classes/action';
+import { Menu,
+         MenuItem } from '@server-src/data-classes/menu-model';
 
 import { TechModel,
          TechProfile,
@@ -16,7 +16,7 @@ export class Tech extends TechModel {
         return tech;
     }
 
-    menuSubject: BehaviorSubject<ActionList>; 
+    menuSubject: BehaviorSubject<Menu>; 
     profileSubject: BehaviorSubject<TechProfile>;
     mapEntrySubject: BehaviorSubject<TechMapEntry>;
 
@@ -29,12 +29,12 @@ export class Tech extends TechModel {
 
         this.mapEntrySubject = new BehaviorSubject<TechMapEntry>(this.mapEntry);
 
-        this.authorizedActions.add(new Action("Login", "login"));
-        this.menuSubject = new BehaviorSubject<ActionList>(this.authorizedActions);
+        this.techMenu.add(new MenuItem("Login", "login"));
+        this.menuSubject = new BehaviorSubject<Menu>(this.techMenu);
     }
 
     /* Observables */
-    public getAuthorizedActions(): Observable<ActionList> {
+    public getTechMenu(): Observable<Menu> {
 
         return this.menuSubject.asObservable();
     }
@@ -54,15 +54,15 @@ export class Tech extends TechModel {
 
         this.authToken = authData.auth;
 
-        if (authData.actions) {
+        if (authData.menu) {
 
-            this.authorizedActions.fromJSON(authData.actions)
+            this.techMenu.fromJSON(authData.menu)
         }
         else {
 
-            this.authorizedActions = new ActionList(false, [new Action("Login", "login")]);
+            this.techMenu = new Menu([new MenuItem("Login", "login")]);
         }
-        this.menuSubject.next(this.authorizedActions);
+        this.menuSubject.next(this.techMenu);
 
         callback(this.authToken);
     }
@@ -72,8 +72,8 @@ export class Tech extends TechModel {
         this.profile = new TechProfile();
         this.mapEntry = new TechMapEntry();
 
-        this.authorizedActions = new ActionList(false, [new Action("Login", "login")]);
-        this.menuSubject.next(this.authorizedActions);
+        this.techMenu = new Menu([new MenuItem("Login", "login")]);
+        this.menuSubject.next(this.techMenu);
 
         return true;
     }

@@ -430,7 +430,7 @@ export class TechManager {
         });
     }
 
-    public generateAuthToken(techID: number, ip: string, callback: (err: any, token?: string, menu?: Menu) => void) {
+    public generateAuthToken(techID: number, ip: string, callback: (err: any, token?: string, menuJSON?: string) => void) {
 
         let manager: TechManager = this;
 
@@ -460,19 +460,19 @@ export class TechManager {
                      callback(error);
                  }
 
-                 manager.getTechMenu(techID, function(error: string, menu: Menu) {
+                 manager.getTechMenu(techID, function(error: string, menuJSON: string) {
                                       
                      if (error) {
                          callback(error);
                      }
 
-                     callback(null, authToken.token , menu);
+                     callback(null, authToken.token , menuJSON);
                  })
             });
         });
     }
 
-    public validateAuthToken(token: string, ip: string, callback: (err: any, techID?: number, menu?: Menu) => void) {
+    public validateAuthToken(token: string, ip: string, callback: (err: any, techID?: number, menuJSON?: string) => void) {
 
         if (token === undefined) {
             callback("Login required.");
@@ -502,7 +502,7 @@ export class TechManager {
             }
 
             let techID = results[0].techID;
-            manager.getTechMenu(techID, function(error: string, menu: Menu) {
+            manager.getTechMenu(techID, function(error: string, menuJSON: string) {
 
                 if (error) {
 
@@ -510,7 +510,7 @@ export class TechManager {
                     return;
                 }
                 
-                callback(null, results[0].techID, menu);
+                callback(null, results[0].techID, menuJSON);
             });
         });
     }
@@ -534,7 +534,7 @@ export class TechManager {
         });
     }
 
-    private getTechMenu(techID: number, callback: (error: any, menu?: Menu) => void) {
+    private getTechMenu(techID: number, callback: (error: any, menuJSON?: string) => void) {
 
         let db = DatabaseManager.getConnection();
         db.query('SELECT menu FROM roles r INNER JOIN ' +
@@ -548,16 +548,13 @@ export class TechManager {
 
             if (results.length == 0) {
 
-                callback(null, new Menu([new MenuItem("Login","login")]));
+                callback(null, JSON.stringify({ display: "Login", route: "login" }));
             }
             else {
 
                 console.log(results[0].menu);
 
-                let menu = new Menu();
-                menu.fromJSON(results[0].menu);
-
-                callback(null, menu);
+                callback(null, results[0].menu);
             }
         });
     }
