@@ -4,8 +4,7 @@
   </div>
   <div class="menu-item" *ngFor="let item of menu.menuItems">
     <div class="menu-item-btn" 
-         routerLink="{{item.route}}" 
-         routerLinkActive="active"
+         [class.active]="(item.route != '') && currentRoute.includes(item.route)"
          (click)="onClick(item);">
       <span>{{item.display}}</span>
     </div>

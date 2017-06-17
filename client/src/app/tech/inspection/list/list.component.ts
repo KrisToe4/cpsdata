@@ -18,28 +18,26 @@ export class InspectionListComponent implements OnInit {
 
 
 
-  constructor( private route: ActivatedRoute,
-               private menuService: MenuService,
+  constructor( private menuService: MenuService,
                private router: Router ) { }
 
   ngOnInit() {
 
-    let route = this.route;
     let router = this.router;
 
-    this.menuService.watchForTrigger("create").subscribe(trigger => {
+    this.menuService.watchForTrigger("create").subscribe(newRoute => {
 
-      if (trigger) {
+      if (newRoute) {
         console.log("create");
-        this.router.navigate(["create"], { relativeTo: route });
+        this.router.navigate([newRoute]);
       }
     });
 
-    this.menuService.watchForTrigger("edit").subscribe(trigger => {
+    this.menuService.watchForTrigger("edit").subscribe(newRoute => {
 
-      if (trigger) {
+      if (newRoute) {
         console.log("edit");
-        this.router.navigate(["general"], { relativeTo: route });
+        this.router.navigate([newRoute]);
       }
     });
   }

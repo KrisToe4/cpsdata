@@ -33,12 +33,10 @@ export class MenuService {
       MenuService.menuStack = [];
       MenuService.menuStack.push(menu);
 
-      MenuService.actionTriggers = {};
+      MenuService.actionTriggers = { "back": new Subject<string>() };
 
       // Push the latest version of the current menu (may be the same as before but that's ok)
       MenuService.currentMenuSubject.next(MenuService.menuStack[0]);
-      
-      console.log(JSON.stringify(MenuService.menuStack[0]));
   }
 
   public watchCurrentMenu(): Observable<Menu> {
@@ -56,11 +54,11 @@ export class MenuService {
     return MenuService.menuBtnVisibleSubject.asObservable();
   }
 
-  public watchForTrigger(trigger: string): Observable<boolean> {
+  public watchForTrigger(trigger: string): Observable<string> {
 
     if (MenuService.actionTriggers[trigger] == undefined) {
 
-      MenuService.actionTriggers[trigger] = new Subject<boolean>();
+      MenuService.actionTriggers[trigger] = new Subject<string>();
     }
 
       return MenuService.actionTriggers[trigger].asObservable();
@@ -70,32 +68,46 @@ export class MenuService {
 
     if (menuItem.action == undefined) { return; }
 
-    // Special Case
-    if (menuItem.action == "back") { 
+    if (MenuService.actionTriggers[menuItem.action] == undefined) {
+
+      MenuService.actionTriggers[menuItem.action] = new Subject<string>();
+    }
+
+    let newRoute: string = "";
+    if (menuItem.action == "back") { // Special Case
+
+      // Store the current menu's relative root before popping it off
+      // as we'll use it as a default route if one wasn't supplied
+      newRoute = MenuService.menuStack[0].relativeTo;
 
       MenuService.menuStack.shift();
-      MenuService.currentMenuSubject.next(MenuService.menuStack[0]);
+      MenuService.currentMenuSubject.next(MenuService.menuStack[0]); 
+
+      // If they supplied a route, it is based off the new menu's relative root
+      if (menuItem.route) {
+
+        newRoute = MenuService.menuStack[0].relativeTo + menuItem.route;
+      }
     }
     else {
 
-      if (MenuService.actionTriggers[menuItem.action] == undefined) {
-
-        MenuService.actionTriggers[menuItem.action] = new Subject<boolean>();
-      }
-      else {
-
-        MenuService.actionTriggers[menuItem.action].next(true);
-      }
-
       if (menuItem.subMenu) {
 
-        let subMenu: Menu = new Menu([new MenuItem("Back", null, "back")]);
-        subMenu.append(menuItem.subMenu);
-
-        MenuService.menuStack.unshift(subMenu);
+        MenuService.menuStack.unshift(menuItem.subMenu);
         MenuService.currentMenuSubject.next(MenuService.menuStack[0]);
       }
+
+      newRoute = MenuService.menuStack[0].relativeTo;
+      if (menuItem.route) {
+
+        newRoute += menuItem.route;
+      }
+      else {
+        
+        newRoute += menuItem.action;
+      }
     }
+    MenuService.actionTriggers[menuItem.action].next(newRoute);
   }
 
   public updateViewportWidth(width: number) {

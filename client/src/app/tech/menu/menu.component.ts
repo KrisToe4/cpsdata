@@ -32,6 +32,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
 
+    this.currentRoute = this.router.url;
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         console.log(event);
@@ -43,9 +44,12 @@ export class MenuComponent implements OnInit {
       this.showMenuBtn = showBtn;
     });
 
-    // **ksw** We should probably let the menu service handle this but leave for now
     this.menuService.watchCurrentMenu().subscribe(techMenu => {
       this.menu = techMenu;
+    });
+
+    this.menuService.watchForTrigger("back").subscribe(route => {
+      this.router.navigate([route]);
     });
   }
 
@@ -55,13 +59,16 @@ export class MenuComponent implements OnInit {
 
   onClick(menuItem: MenuItem) {
 
-    if (menuItem.route) {
+    console.log("Router: " + this.router.url + " Menu Root: " + this.menu.relativeTo);
 
-      this.router.navigate([menuItem.route], { relativeTo: this.route });
-    }
-    else {
+ 
+    if (menuItem.action) {
 
       this.menuService.updateTrigger(menuItem);
+    }
+    else if (menuItem.route) {
+
+      this.router.navigate([this.menu.relativeTo + menuItem.route]);
     }
 
     return false;

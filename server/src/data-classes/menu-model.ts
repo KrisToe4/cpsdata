@@ -1,38 +1,33 @@
 export class Menu {
+
+    relativeTo: string;
     menuItems: MenuItem[];
 
-    constructor(initialItems?: MenuItem[]) {
+    constructor(relativeTo?: string, initialItems?: MenuItem[]) {
 
-        if (initialItems) {
-            this.menuItems = initialItems;
-        }
-        else {
-            this.menuItems = [];
-        }
+        this.relativeTo = relativeTo as string || "/";
+        this.menuItems = initialItems as MenuItem[] || [];
     }
 
     public fromJSON(json: string): void {
         
-        let menuObject: any[] = JSON.parse(json) as any[];
-        this.fromObject(menuObject);
+       let menuObject = JSON.parse(json);
+       this.fromObject(menuObject);
     }
 
-    public fromObject(menuObject: any[]) {
+    public fromObject(menuObject: any) {
+
+        this.relativeTo = menuObject.relativeTo;
 
         this.menuItems = [];
-
-        menuObject.forEach((object: any) => {
+        menuObject.menuItems.forEach((object: any) => {
 
             let menuItem = new MenuItem();
             menuItem.fromJSON(object);  
             this.add(menuItem);
         });
     }
-
-    public toJSON(): string {
-        return JSON.stringify(this.menuItems);
-    }
-
+    
     public add(item: MenuItem) {
 
         this.menuItems.push(item);

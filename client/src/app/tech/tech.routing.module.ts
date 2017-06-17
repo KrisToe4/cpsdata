@@ -36,10 +36,10 @@ const techRoutes: Routes = [
         children: [
           { path: '', component: InspectionListComponent },
           { path: 'create', component: InspectionCreateComponent },
-          { path: 'arrival', component: InspectionArrivalComponent },
-          { path: 'departure', component: InspectionDepartureComponent },
           { path: 'general', component: InspectionGeneralComponent },
+          { path: 'arrival', component: InspectionArrivalComponent },
           { path: 'restraint', component: InspectionRestraintComponent },
+          { path: 'departure', component: InspectionDepartureComponent },
           { path: 'summary', component: InspectionSummaryComponent },
         ]
       },

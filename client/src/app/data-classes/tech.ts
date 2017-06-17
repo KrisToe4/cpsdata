@@ -60,7 +60,7 @@ export class Tech extends TechModel {
         }
         else {
 
-            this.techMenu = new Menu([new MenuItem("Login", "login")]);
+            this.techMenu = new Menu(null, [new MenuItem("Login", "login")]);
         }
         this.menuSubject.next(this.techMenu);
 
@@ -72,7 +72,7 @@ export class Tech extends TechModel {
         this.profile = new TechProfile();
         this.mapEntry = new TechMapEntry();
 
-        this.techMenu = new Menu([new MenuItem("Login", "login")]);
+        this.techMenu = new Menu(null, [new MenuItem("Login", "login")]);
         this.menuSubject.next(this.techMenu);
 
         return true;
