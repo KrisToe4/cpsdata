@@ -104,7 +104,7 @@ export class MenuService {
       }
       else {
         
-        newRoute += menuItem.action;
+        newRoute = menuItem.action;
       }
     }
     MenuService.actionTriggers[menuItem.action].next(newRoute);

@@ -18,7 +18,8 @@ export class InspectionListComponent implements OnInit {
 
 
 
-  constructor( private menuService: MenuService,
+  constructor( private route: ActivatedRoute,
+               private menuService: MenuService,
                private router: Router ) { }
 
   ngOnInit() {
@@ -27,16 +28,16 @@ export class InspectionListComponent implements OnInit {
 
     this.menuService.watchForTrigger("create").subscribe(newRoute => {
 
+      // newRoute should be blank here and if it is go to create
       if (newRoute) {
-        console.log("create");
-        this.router.navigate([newRoute]);
+        this.router.navigate([newRoute], {relativeTo: this.route });
       }
+
     });
 
     this.menuService.watchForTrigger("edit").subscribe(newRoute => {
 
       if (newRoute) {
-        console.log("edit");
         this.router.navigate([newRoute]);
       }
     });
