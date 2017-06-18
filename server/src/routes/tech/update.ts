@@ -81,8 +81,6 @@ export class UpdateRoute extends BaseRoute {
         route.sendError(res, "Login required");
         return;
       }
-
-      console.log("Tech authorized. ID:" + authorizedTech);
       //*******************************************************/
 
       //*******************************************************/
@@ -106,8 +104,7 @@ export class UpdateRoute extends BaseRoute {
         }
 
         if (requestedTech != undefined) {
-          
-          console.log("Tech Found. ID:" + requestedTech);
+        
 
           if (authorizedTech != requestedTech) {
             // Eventually we'll provide authority for admin's to load all techs but for now throw an error
@@ -136,7 +133,6 @@ export class UpdateRoute extends BaseRoute {
               certDate: techJSON.certDate
             }
 
-            console.log(certConfirmEmail);
             MailManager.sendCertConfirmation(certConfirmEmail, details);
           }
 

@@ -116,8 +116,6 @@ export class AuthenticateRoute extends BaseRoute {
               return;
             }
 
-            console.log(techID);
-
             TechManager.Manager().generateAuthToken(techID, credential.ip, function (error: string, token: string, menuJSON: string) {
               
               if (error) {

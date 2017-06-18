@@ -75,8 +75,6 @@ export class ProfileRoute extends BaseRoute {
         route.sendError(res, "Login required.");
         return;
       }
-
-      console.log("Tech authorized. ID:" + authorizedTech);
       //*******************************************************/
 
       // Eventually we'll check if the tech being modified is not ours but for now we can skip that part

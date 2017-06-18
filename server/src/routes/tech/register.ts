@@ -81,7 +81,6 @@ export class RegisterRoute extends BaseRoute {
           }
 
           if (techID != undefined) {
-            console.log("Tech created. TechID: " + techID);
 
             // Here we're generating special temporary auth_tokens used for certain functions such as registration.
             // These last an hour instead of 7 days and are sent via email to users

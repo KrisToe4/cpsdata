@@ -80,7 +80,13 @@ export class InspectionGenerateRoute extends BaseRoute {
 
             inspectionManager.addInspection(authorizedTech, req.body.data, function(error: string, inspectionID: number) {
                 
-                let respData: ResponseData = new ResponseData(null, "Inspection generated", null);
+                if (error) {
+
+                    route.sendError(res, "Fatal error. Message: " + err);
+                    return;
+                }
+                
+                let respData: ResponseData = new ResponseData(null, "Inspection generated", inspectionID);
                 route.sendJSON(res, respData);
             })
         });

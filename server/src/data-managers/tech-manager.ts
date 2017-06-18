@@ -46,8 +46,6 @@ export class TechManager {
 
     public findTech(email: string, callback: (err: any, techID?: number) => void) {
 
-        console.log("Checking for Tech. Email: " + email);
-
         let db = DatabaseManager.getConnection();
         db.query('SELECT id from tech_profile where email = ?', [email], function (error, results, fields) {
             if (error) {
@@ -56,7 +54,6 @@ export class TechManager {
 
             if (results.length > 0) {
 
-                console.log("Found Tech. ID: " + results[0].id);
                 callback(null, results[0].id);
             }
             else {
@@ -68,8 +65,6 @@ export class TechManager {
     }
 
     public loadTech(techID: number, callback: (err: any, tech: Tech) => void) {
-
-        console.log("Loading Tech");
 
         let sqlQuery: string = 'SELECT status, email, name, certOrg, certType, certDate ' +
                                'FROM tech_profile p ' +
@@ -88,8 +83,6 @@ export class TechManager {
             if (results.length > 0) {
 
                 let techJSON = results[0];
-
-                console.log('Tech Loaded. ID: ' + techID + ' . Results: ' + JSON.stringify(techJSON));
 
                 db.query('SELECT * from tech_contact where techID = ?', [techID], function (error, mapResults, fields) {
                     if (error) {
@@ -128,18 +121,15 @@ export class TechManager {
                                'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
                                'INNER JOIN certifications c ON tcert.certID = c.id ' +
                                'WHERE p.status = "active" and tcon.public = "true" AND c.certOrg = ? AND tcert.valid = "true"' ;
-        
-        console.log(sqlQuery);
 
         let db = DatabaseManager.getConnection();
         db.query(sqlQuery, [options.org], function (error, results, fields) {
 
             if (error) {
+
                 callback(error);
                 return;
             }
-
-            console.log(results);
 
             if (results.length > 0) {
 
@@ -178,15 +168,15 @@ export class TechManager {
     /* Add/Update Methods */
 
     public addTech(email: string, callback: (err: any, techID?: number) => void) {
-        console.log("Adding tech. email: " + email);
 
         let db = DatabaseManager.getConnection();
         db.query('INSERT into tech_profile set ? ', [{ "email": email }], function (error, results, fields) {
             if (error) {
+
                 callback(error);
             }
             else {
-                console.log("Registration successful. techID: " + results.insertId);
+
                 callback(null, results.insertId);
             }
         });
@@ -391,7 +381,6 @@ export class TechManager {
     * Validate user based on email and password
     */
     public validateLocalCredentials(username: string, password: string, done: any) {
-        console.log("Validating login. Email: " + username + " Password: " + password);
 
         // Make sure the tech exists
         let manager = TechManager.Manager();
@@ -516,12 +505,12 @@ export class TechManager {
     }
 
     public deleteAuthToken(token: string, callback: (err: any) => void) {
+
         if (token === undefined) {
+
             callback(null);
             return;
         }
-
-        console.log("Deleting AuthToken. Token: " + token);
 
         let db = DatabaseManager.getConnection();
         db.query('DELETE FROM auth_tokens where token = ?', [token], function (error, results, fields) {
@@ -551,8 +540,6 @@ export class TechManager {
                 callback(null, JSON.stringify({ display: "Login", route: "login" }));
             }
             else {
-
-                console.log(results[0].menu);
 
                 callback(null, results[0].menu);
             }

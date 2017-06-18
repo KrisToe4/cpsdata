@@ -64,11 +64,10 @@ export class InspectionManager {
         db.query(sqlQuery, [options.techID], function (error, results, fields) {
 
             if (error) {
+
                 callback(error);
                 return;
             }
-
-            console.log(results);
 
             if (results.length > 0) {
 
@@ -101,31 +100,317 @@ export class InspectionManager {
         });
     }
 
+    public addInspection(tech: number, data: any, callback: (error: any, inspectionID?: number) => void) {
 
-    public addInspection(tech: number, json: string, callback: (error: any, inspectionID?: number) => void) {
+        // If we don't have a client just error out. It's the only actual required piece of info
+        if (data.client == undefined) {
 
-        console.log("Generating inspection. Details: " + json);
-        let inspection = JSON.parse(json);
+            callback("Client information is missing");
+            return;
+        }
 
-        console.log("Parsed Object: " + JSON.stringify(inspection));
-
-/*
         let manager: InspectionManager = this;
+        manager.addClient(data.client, function(error: string, clientID: number) {
 
-        let db = DatabaseManager.getConnection();
-        db.query('INSERT into tech_profile set ? ', [{ "email": email }], function (error, results, fields) {
             if (error) {
-                callback(error);
-            }
-            else {
-                console.log("Registration successful. techID: " + results.insertId);
-                callback(null, results.insertId);
-            }
-        });
-        */
 
-        callback(null, 1);
+                callback(error);
+                return;
+            }
+
+            manager.addVehicle(data.vehicle, function(error: string, vehicleID: number) {
+
+                if (error) {
+
+                    callback(error);
+                    return;
+                }
+
+                manager.addRestraint(data.restraint, function(error: string, restraintID: number) {
+
+                    if (error) {
+
+                        callback(error);
+                        return;
+                    }
+
+                    let inspectionInfo = {
+                         client: clientID,
+                         vehicle: vehicleID,
+                         restraint: restraintID,
+                         date: data.date
+                     };
+                    manager.generateInspection(tech, inspectionInfo, function(error: string, inspectionID: number) {
+
+                        if (error) {
+                            
+                            callback(error);
+                        }
+                        else {
+
+                            callback(null, inspectionID);
+                        }
+                    });
+                });
+            });
+        });
     }
 
-    //private 
+    // If we were passed an id, just return immediately. Otherwise we'll check for a 
+    // matching email (if one was provided) and after that just generate a new client record
+    private addClient(info: any, callback: (error: any, clientID?: number) => void) {
+
+        // Sanity checks
+        if (info.id) {
+
+            callback(null, info.id);
+            return;
+        }
+
+        if (info.name == undefined) {
+
+            callback("Client name is required");
+            return;
+        }
+        // *****
+
+        if (info.email == undefined) {
+
+            info.email = "*BLANK";
+        }
+
+        let db = DatabaseManager.getConnection();
+        db.query('SELECT id from clients where email = ? ', [info.email], function (error, results, fields) {
+            
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            if (results.length > 0) {
+
+                callback(null, results[0].id)
+                return;
+            }
+
+            db.query('INSERT INTO clients set ?', [info], function (error, results, fields) {
+                        
+                if (error) {
+
+                    console.log(error);
+                    callback(error);
+                }
+                else {
+
+                    callback(null, results.insertId);
+                }
+            });   
+        });
+    }
+
+    private addVehicle(info: any, callback: (error: any, vehicleID?: number) => void) {
+
+        let manager: InspectionManager = this;
+
+        // Sanity checks
+        if (info.id) {
+
+            callback(null, info.id);
+            return;
+        }
+
+        if ((info.manufacturer == undefined) || 
+            (info.model == undefined) ||
+            (info.year == undefined)) {
+
+            callback("Vehicle information incomplete");
+            return;
+        }
+        // *****
+
+        let db = DatabaseManager.getConnection();
+        db.query('SELECT id from vehicle_manufacturer where name = ? ', [info.manufacturer], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            if (results.length == 0) {
+
+                db.query('INSERT INTO vehicle_manufacturer set ? ', [{ name: info.manufacturer }], function (error, results, fields) {
+
+                    if (error) {
+
+                        callback(error);
+                    }
+                    else {
+
+                        manager.addVehicle(info, callback);
+                    }
+                });
+            }
+            else {
+
+                let queryParms = [
+                    results[0].id,
+                    info.model,
+                    info.year
+                ];
+                db.query('SELECT id from vehicles where manufacturer = ? AND model = ? AND year = ? ', queryParms, function (error, results, fields) {
+
+                    if (error) {
+
+                        callback(error);
+                        return;
+                    }
+
+                     if (results.length > 0) {
+
+                        callback(null, results[0].id)
+                        return;
+                     }
+
+                     let vehicleInfo = {
+                         manufacturer: queryParms[0],
+                         model: queryParms[1],
+                         year: queryParms[2],
+                         added: new Date().toISOString().substring(0, 10)
+                     };
+                     db.query('INSERT INTO vehicles set ? ', [vehicleInfo], function (error, results, fields) {
+            
+                        if (error) {
+
+                            callback(error);
+                            return;
+                        }
+
+                        if (results.length > 0) {
+                        
+                            callback(null, results.insertId)
+                            return;
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    private addRestraint(info: any, callback: (error: any, restraintID?: number) => void) {
+
+        let manager: InspectionManager = this;
+
+        // Sanity checks
+        if (info.id) {
+
+            callback(null, info.id);
+            return;
+        }
+
+        if ((info.manufacturer == undefined) || 
+            (info.model == undefined)) {
+
+            callback("Restraint information incomplete");
+            return;
+        }
+        // *****
+
+        let db = DatabaseManager.getConnection();
+        db.query('SELECT id from restraint_manufacturer where name = ? ', [info.manufacturer], function (error, results, fields) {
+            
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            if (results.length == 0) {
+
+                db.query('INSERT INTO restraint_manufacturer set ? ', [{ name: info.manufacturer }], function (error, results, fields) {
+
+                    if (error) {
+
+                        callback(error);
+                    }
+                    else {
+
+                        manager.addRestraint(info, callback);
+                    }
+                });
+            }
+            else {
+
+                let queryParms = [
+                    results[0].id,
+                    info.model
+                ];
+                db.query('SELECT id from restraints where manufacturer = ? AND model = ? ', queryParms, function (error, results, fields) {
+
+                    if (error) {
+
+                        callback(error);
+                        return;
+                    }
+
+                     if (results.length > 0) {
+
+                        callback(null, results[0].id)
+                        return;
+                     }
+
+                     let restraintInfo = {
+                         manufacturer: queryParms[0],
+                         model: queryParms[1],
+                         added: new Date().toISOString().substring(0, 10)
+                     };
+                     db.query('INSERT INTO restraints set ? ', [restraintInfo], function (error, results, fields) {
+            
+                        if (error) {
+
+                            callback(error);
+                            return;
+                        }
+
+                        if (results.length > 0) {
+                        
+                            callback(null, results.insertId)
+                            return;
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    private generateInspection(tech: number, info: any, callback: (error: any, inspectionID?: number) => void) {
+
+        console.log (info);
+
+        let db = DatabaseManager.getConnection();
+        db.query('INSERT into inspections set ? ', [info], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            let inspectionId: number = results.insertId;
+
+            db.query('INSERT into tech_inspections set ? ', [{ tech: tech, inspection: inspectionId }], function (error, results, fields) {
+
+                if (error) {
+
+                    callback(error);
+                    return;
+                }
+
+                console.log("Inspection generated. Assigned to tech: " + tech);
+
+                callback(null, inspectionId);
+            });
+        });
+    }
 }

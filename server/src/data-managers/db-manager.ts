@@ -25,8 +25,6 @@ export class DatabaseManager {
         config.load('settings.json');
         let db = config.get('db');
 
-        console.log(db);
-
         this.connection = mysql.createConnection(db);
         this.connection.connect();
     }
