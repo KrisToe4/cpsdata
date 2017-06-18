@@ -10,12 +10,16 @@ import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 
 import { IndexRoute } from "./routes/index";
+
 import { AuthenticateRoute } from "./routes/tech/authenticate";
-import { ListRoute } from './routes/tech/list';
+import { TechListRoute } from './routes/tech/list';
 import { LogoutRoute } from "./routes/tech/logout";
 import { ProfileRoute } from "./routes/tech/profile";
 import { RegisterRoute } from "./routes/tech/register";
 import { UpdateRoute } from "./routes/tech/update";
+
+import { InspectionListRoute } from './routes/inspection/list';
+import { InspectionGenerateRoute } from './routes/inspection/generate';
 
 import { TechManager } from "./data-managers/tech-manager";
 
@@ -115,12 +119,18 @@ export class Server {
 
     //Route List
     IndexRoute.create(router);
+
+    // Tech Routes
     AuthenticateRoute.create(router);
-    ListRoute.create(router);
+    TechListRoute.create(router);
     LogoutRoute.create(router);
     ProfileRoute.create(router);
     RegisterRoute.create(router);
     UpdateRoute.create(router);
+
+    // Inspection Routes
+    InspectionListRoute.create(router);
+    InspectionGenerateRoute.create(router);
 
     //use router middleware
     this.app.use('/api', router);

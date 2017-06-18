@@ -22,7 +22,8 @@ export class AuthGuardService implements CanActivate {
     this.techService.requestedUrl = state.url;
 
     // Check our current session
-    if (this.techService.techAuthorized())  {
+    let authToken: string = this.techService.getAuthToken();
+    if (authToken && authToken != "")  {
       return true;
     }
 

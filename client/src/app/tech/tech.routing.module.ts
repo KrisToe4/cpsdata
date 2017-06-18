@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardService } from '@guards/auth-guard.service';
+
+import { InspectionResolverService } from '@resolvers/inspection-resolver.service';
 import { LogoutResolverService } from '@resolvers/logout-resolver.service';
-import { MenuResolverService } from '@resolvers/menu-resolver.service';
 
 import { TechComponent } from './tech.component';
 
@@ -32,7 +33,8 @@ const techRoutes: Routes = [
       { 
         path: 'inspection',
         component: InspectionComponent,
-        //canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
+        resolve: [InspectionResolverService],
         children: [
           { path: '', component: InspectionListComponent },
           { path: 'create', component: InspectionCreateComponent },
@@ -41,6 +43,7 @@ const techRoutes: Routes = [
           { path: 'restraint', component: InspectionRestraintComponent },
           { path: 'departure', component: InspectionDepartureComponent },
           { path: 'summary', component: InspectionSummaryComponent },
+         // { path: '**', redirectTo: '', pathMatch: 'full'}
         ]
       },
       { path: 'login', component: LoginComponent },

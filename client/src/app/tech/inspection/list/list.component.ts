@@ -5,6 +5,8 @@ import { ActivatedRoute,
 
 import { MenuService }       from '@services/menu.service';
 
+import { Inspection } from '@server-src/data-classes/inspection-model';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -16,7 +18,7 @@ import { MenuService }       from '@services/menu.service';
 })
 export class InspectionListComponent implements OnInit {
 
-
+  private list: Inspection[] = [];
 
   constructor( private route: ActivatedRoute,
                private menuService: MenuService,
@@ -24,7 +26,17 @@ export class InspectionListComponent implements OnInit {
 
   ngOnInit() {
 
+    let component: InspectionListComponent = this;
     let router = this.router;
+
+    this.route.data.subscribe(data => {
+
+      console.log(data);
+
+      component.list = data[0];
+
+      console.log(component.list);
+    });
 
     this.menuService.watchForTrigger("create").subscribe(newRoute => {
 

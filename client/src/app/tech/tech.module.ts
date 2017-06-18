@@ -30,9 +30,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 import { AuthGuardService } from '@guards/auth-guard.service';
-import { LogoutResolverService } from '@resolvers/logout-resolver.service';
-import { MenuResolverService } from '@resolvers/menu-resolver.service';
 
+import { InspectionResolverService } from '@resolvers/inspection-resolver.service';
+import { LogoutResolverService } from '@resolvers/logout-resolver.service';
+
+import { InspectionService } from '@services/inspection.service';
 import { MapService } from '@services/map.service';
 import { MenuService } from '@services/menu.service';
 import { TechService } from '@services/tech.service';
@@ -68,9 +70,10 @@ import { TechService } from '@services/tech.service';
   ],
   providers: [
     AuthGuardService,
+    InspectionResolverService,
     LogoutResolverService,
-    MenuResolverService,
     GoogleMapsAPIWrapper,
+    InspectionService,
     MapService,
     MenuService,
     TechService 

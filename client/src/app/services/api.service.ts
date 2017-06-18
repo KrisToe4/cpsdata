@@ -18,7 +18,7 @@ import { TechCredential } from '@server-src/data-classes/tech-model';
 @Injectable()
 export class ApiService extends HttpService {
     
-  protected serverRoute: string = '/api/tech/';
+  protected serverRoute: string = '/api/';
 
   public requestedUrl: string;
 

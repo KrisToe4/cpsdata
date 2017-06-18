@@ -1,18 +1,18 @@
 <div class="view-contents">
   <div class="list">
     <div class="list-row list-header">
-      <div class="list-col">Date</div>
       <div class="list-col">Client</div>
       <div class="list-col">Vehicle</div>
       <div class="list-col">Seat</div>
+      <div class="list-col">Date</div>
       <div class="list-col">Status</div>
     </div>
-    <div class="list-row">
-      <div class="list-col">2017-06-02</div>
-      <div class="list-col">Lindsay Wilson</div>
-      <div class="list-col">Honday Oddessey</div>
-      <div class="list-col">Clek Seat</div>
-      <div class="list-col">Active</div>
+    <div class="list-row" *ngFor="let inspection of list">
+      <div class="list-col">{{inspection.client.name}}</div>
+      <div class="list-col">{{inspection.vehicle.manufacturer}} {{inspection.vehicle.model}}</div>
+      <div class="list-col">{{inspection.restraint.manufacturer}} {{inspection.restraint.model}}</div>
+      <div class="list-col">{{inspection.date}}</div>
+      <div class="list-col">{{inspection.status}}</div>
     </div>
   </div>
 </div>

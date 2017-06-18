@@ -21,6 +21,7 @@ import { RequestData,
 @Injectable()
 export class TechService extends ApiService {
 
+  // Not to be confused with the API, this is the client side angular route
   public loginRoute: string = '/tech/login';
 
   private static tech: Tech = new Tech();
@@ -28,11 +29,14 @@ export class TechService extends ApiService {
   constructor( protected http: Http ) {
     super(http);
 
+    // Subset to the tech api branch
+    this.serverRoute += "tech/";
+
   }
 
-  public techAuthorized(): boolean {
+  public getAuthToken(): string {
 
-    return (TechService.tech.authToken && (TechService.tech.authToken != ""));
+    return TechService.tech.authToken;
   }
 
   /* Authenticate With Token */

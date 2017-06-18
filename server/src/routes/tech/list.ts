@@ -16,22 +16,22 @@ import { TechManager } from "../../data-managers/tech-manager";
  *
  * @class User
  */
-export class ListRoute extends BaseRoute {
+export class TechListRoute extends BaseRoute {
 
   /**
    * Create the routes.
    *
-   * @class ListRoute
+   * @class TechListRoute
    * @method create
    * @static
    */
   public static create(router: Router) {
     //log
-    console.log("[ListRoute::create] Creating tech list route.");
+    console.log("[TechListRoute::create] Creating tech list route.");
 
     //add login route
     router.post('/tech/list', (req: Request, res: Response, next: NextFunction) => {
-      new ListRoute().loadList(req, res, next);
+      new TechListRoute().loadList(req, res, next);
     });
   }
 
