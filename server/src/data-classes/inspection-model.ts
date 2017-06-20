@@ -4,8 +4,15 @@ export class Inspection {
     client: Client;
     vehicle: Vehicle;
     restraint: Restraint;
-    date: Date;
+    date: string;
     status: string;
+
+    constructor() { 
+        this.client = new Client();
+        this.vehicle = new Vehicle();
+        this.restraint = new Restraint();
+        this.date = new Date().toISOString().substring(0, 10);
+    }
 }
 
 export class Client {
@@ -13,6 +20,13 @@ export class Client {
     name: string;
     email: string;
     phone: string;
+
+    constructor() {
+
+        this.name = "";
+        this.email = "";
+        this.phone = "";
+    }
 }
 
 export class Vehicle {
@@ -21,6 +35,13 @@ export class Vehicle {
     manufacturer: string;
     model: string;
     year: string;
+
+    constructor() {
+
+        this.manufacturer = "";
+        this.model = "";
+        this.year = "";
+    }
 }
 
 export const RestraintType = {
@@ -38,4 +59,12 @@ export class Restraint {
     model: string;
     subModel: string;
     type: string;
+
+    constructor() {
+
+        this.manufacturer = "";
+        this.model = "";
+        this.subModel = "";
+        this.type = "";
+    }
 }

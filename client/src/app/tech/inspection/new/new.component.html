@@ -1,0 +1,73 @@
+<div class="view">
+  <div class="view-header">
+    <span>New Inspection</span>
+  </div>
+  <div class="view-contents">
+    <form [formGroup]="form" novalidate>
+      <div class="section">
+        <div class="section-title"><span>Client Information</span></div>
+        <div formGroupName="client">
+          <div class="section-element">
+            <label>Name: <input type="text" id="name" formControlName="name"></label>
+          </div>
+          <div class="section-element">
+            <label>Email: <input type="email" id="email" formControlName="email"></label>
+          </div>
+          <div class="section-element">
+            <label>Phone: <input type="tel" id="phone" placeholder="XXX-XXX-XXXX" formControlName="phone"></label>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><span>Inspection Details</span></div>
+        <div class="section-element">
+          <label>Date: <input type="date" id="date" formControlName="date"></label>
+        </div>
+        <div class="section-element">
+          <label>Location: <input type="text" placeholder="Home" formControlName="location"></label>
+        </div>
+        <div class="section-element">
+          <label>Type: </label>
+          <select>
+            <option value="Unknown" selected>Choose...</option>
+            <option value="PC">Private Check</option>
+            <option value="FP">Fire/Police Hall</option>
+            <option value="CC">Community Check Event</option>
+            <option value="TT">Technician Training Event</option>
+            <option value="RS">Retail Store</option>
+            <option value="RD">Roadside Stop</option>
+            <option value="ZZ">Other</option>
+          </select>
+        </div>
+        <div formGroupName="vehicle">
+          <div class="section-element">
+            <label>Vehicle: <input id="v-year" type="text" placeholder="Year" formControlName="year"></label> 
+            <input id="v-make" type="text" placeholder="Make" formControlName="manufacturer">
+            <input id="v-model" type="text" placeholder="Model" formControlName="model">
+          </div>
+        </div>
+        <div formGroupName="restraint">
+          <div class="section-element">
+            <label>Restraint: <input id="r-make" type="text" placeholder="Make" formControlName="manufacturer"></label> 
+            <input id="r-model" type="text" placeholder="Model" formControlName="model">
+            <input id="r-submodel" type="text" placeholder="Version" formControlName="subModel">
+        </div>	
+      </div>
+    </div>
+  </form>
+  <div class="section section-inline">
+      <div class="section-element">
+        <div class="ctrl-btn">
+          <div class="noselect" [class.ctrl-btn-enabled]="unsavedChanges == true" 
+                                [class.ctrl-btn-disabled]="unsavedChanges == false"
+                                (click)="createBtnClicked()">Create</div>
+        </div>
+      </div>
+      <div class="section-element">
+        <div class="ctrl-btn">
+          <div class="noselect ctrl-btn-enabled" (click)="cancelBtnClicked()">Cancel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

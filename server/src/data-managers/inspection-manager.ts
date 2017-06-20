@@ -102,6 +102,13 @@ export class InspectionManager {
 
     public addInspection(tech: number, data: any, callback: (error: any, inspectionID?: number) => void) {
 
+        console.log(data);
+
+        // Currently don't store the location
+        if (data.location) {
+            delete(data.location);
+        }
+
         // If we don't have a client just error out. It's the only actual required piece of info
         if (data.client == undefined) {
 

@@ -6,6 +6,7 @@ import { ActivatedRoute,
 import { MenuService }       from '@services/menu.service';
 
 import { Inspection } from '@server-src/data-classes/inspection-model';
+import { InspectionService } from '@services/inspection.service';
 
 @Component({
   selector: 'app-list',
@@ -21,6 +22,7 @@ export class InspectionListComponent implements OnInit {
   private list: Inspection[] = [];
 
   constructor( private route: ActivatedRoute,
+               private inspectionService: InspectionService,
                private menuService: MenuService,
                private router: Router ) { }
 
@@ -29,19 +31,15 @@ export class InspectionListComponent implements OnInit {
     let component: InspectionListComponent = this;
     let router = this.router;
 
-    this.route.data.subscribe(data => {
-
-      console.log(data);
-
-      component.list = data[0];
-
-      console.log(component.list);
+    this.inspectionService.watchList().subscribe(list => {
+      component.list = list;
     });
 
-    this.menuService.watchForTrigger("create").subscribe(newRoute => {
+    this.menuService.watchForTrigger("new").subscribe(newRoute => {
 
-      // newRoute should be blank here and if it is go to create
+      // newRoute should be blank here and if it is go to new
       if (newRoute) {
+        
         this.router.navigate([newRoute], {relativeTo: this.route });
       }
 

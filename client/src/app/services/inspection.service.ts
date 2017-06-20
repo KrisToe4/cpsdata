@@ -6,6 +6,7 @@ import { Headers,
          RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -25,6 +26,11 @@ import { RequestData,
 @Injectable()
 export class InspectionService extends ApiService {
 
+  private static activeInspection: Inspection;
+
+  private static inspectionList: Inspection[];
+  public static listSubject: BehaviorSubject<Inspection[]> = new BehaviorSubject<Inspection[]>([]);
+
   constructor( protected http: Http,
                private techService: TechService ) {
     super(http);
@@ -33,27 +39,68 @@ export class InspectionService extends ApiService {
     this.serverRoute += "inspection/";
   }
 
-  public updateList(): Promise<Inspection[]> {
+  public watchList(): Observable<Inspection[]> {
+
+    return InspectionService.listSubject.asObservable();
+  }
+
+  public updateList(): Promise<true> {
 
     let service: InspectionService = this;
 
     return new Promise(resolve => {
 
-        service.getList(function (error: string, list: Inspection[]) {
+        service.getList(function (error: string) {
 
             if (error) {
 
-                resolve([]);
+                resolve(false);
             }
             else {
 
-                resolve(list);
+                resolve(true);
             }
         });
     });
   }
 
-  private getList(callback: (error: string, list?: Inspection[]) => void) {
+  public createInspection(data: any, callback: (error?: string) => void) {
+
+    let service: InspectionService = this;
+
+    let request: RequestData = new RequestData("generate", { 
+      auth: this.techService.getAuthToken(),
+      data: data
+    });
+
+    this.inspectionApi(request).subscribe(
+      (response: ResponseData) => {
+
+        if (response["error"]) {
+          callback(response["error"]);
+        }
+        else {
+
+          console.log(response.data);
+          InspectionService.activeInspection = response.data as Inspection;
+          service.updateList().then(updateSucceeded => {
+
+            if (updateSucceeded) {
+              callback(null);
+            }
+            else {
+              callback("Inspection created but list update failed");
+            }
+          });
+        }
+      },
+      error => alert("Error creating inspection. Message: " + error)
+    );
+  }
+
+  /** Private methods that interface with the API itself **/
+
+  private getList(callback: (error: string) => void) {
 
     let request: RequestData = new RequestData("list", { 
       auth: this.techService.getAuthToken()
@@ -67,16 +114,15 @@ export class InspectionService extends ApiService {
         }
         else {
 
-          let list: Inspection[] = response.data as Inspection[];  
-          callback(null, list);
+          InspectionService.inspectionList = response.data as Inspection[];  
+          InspectionService.listSubject.next(InspectionService.inspectionList);
+          callback(null);
         }
         
       },
       error => alert("Error retrieving inspection list. Message: " + error)
     );
   }
-
-  /** Private methods that interface with the API itself **/
    
   private inspectionApi(request: RequestData): Observable<ResponseData> {
     let headers = new Headers({ 'Content-Type': 'application/json' });

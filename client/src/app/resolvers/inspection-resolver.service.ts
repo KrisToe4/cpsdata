@@ -11,11 +11,11 @@ import { Inspection } from '@server-src/data-classes/inspection-model';
 import { InspectionService } from '@services/inspection.service';
 
 @Injectable()
-export class InspectionResolverService implements Resolve<Inspection[]> {
+export class InspectionResolverService implements Resolve<boolean> {
 
   constructor( private inspectionService: InspectionService ) {  }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Inspection[]> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
     console.log("Inspection resolver");
 

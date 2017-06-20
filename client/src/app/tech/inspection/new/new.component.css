@@ -1,0 +1,44 @@
+.view-contents {
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+}
+
+#name {
+	width: 125px;
+}
+
+#email {
+	width: 175px;
+}
+
+#phone {
+	width: 100px;
+}
+
+#date {
+	width: 125px;
+}
+
+#v-year {
+	width: 30px;
+}
+
+#v-make {
+	width: 100px;
+}
+
+#v-model {
+	width: 100px;
+}
+
+#r-make {
+	width: 100px;
+}
+
+#r-model {
+	width: 100px;
+}
+
+#r-submodel {
+	width: 50px;
+}

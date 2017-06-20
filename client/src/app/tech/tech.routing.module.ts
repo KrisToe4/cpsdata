@@ -11,7 +11,7 @@ import { TechComponent } from './tech.component';
 
 import { InspectionComponent } from './inspection/inspection.component';
 import { InspectionArrivalComponent } from './inspection/arrival/arrival.component';
-import { InspectionCreateComponent } from './inspection/create/create.component';
+import { InspectionNewComponent } from './inspection/new/new.component';
 import { InspectionDepartureComponent } from './inspection/departure/departure.component';
 import { InspectionGeneralComponent } from './inspection/general/general.component';
 import { InspectionListComponent } from './inspection/list/list.component';
@@ -37,7 +37,7 @@ const techRoutes: Routes = [
         resolve: [InspectionResolverService],
         children: [
           { path: '', component: InspectionListComponent },
-          { path: 'create', component: InspectionCreateComponent },
+          { path: 'new', component: InspectionNewComponent },
           { path: 'general', component: InspectionGeneralComponent },
           { path: 'arrival', component: InspectionArrivalComponent },
           { path: 'restraint', component: InspectionRestraintComponent },

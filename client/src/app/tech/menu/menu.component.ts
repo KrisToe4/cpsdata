@@ -58,9 +58,6 @@ export class MenuComponent implements OnInit {
   }
 
   onClick(menuItem: MenuItem) {
-
-    console.log("Router: " + this.router.url + " Menu Root: " + this.menu.relativeTo);
-
  
     if (menuItem.action) {
 

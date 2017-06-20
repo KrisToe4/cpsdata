@@ -9,6 +9,7 @@ import { FormBuilder,
 
 import { AgmCoreModule, 
          GoogleMapsAPIWrapper } from '@agm/core';
+         
 import { MapService } from '@services/map.service';
 import { MapSearchResult } from '../../data-classes/map-api';
 
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
 
   certList = TechCertifications;
 
-  profileForm: FormGroup;
+  form: FormGroup;
   unsavedChanges: boolean = false;
 
   // Map Values
@@ -64,7 +65,7 @@ export class ProfileComponent implements OnInit {
 
   private buildForm() {
 
-    this.profileForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       profile: this.formBuilder.group(new TechProfile()),
       mapEntry: this.formBuilder.group(new TechMapEntry())
     });
@@ -82,7 +83,7 @@ export class ProfileComponent implements OnInit {
         profileInfo.certDate = new Date().toISOString().substring(0, 10);
       }
 
-      this.profileForm.patchValue({
+      this.form.patchValue({
         profile: profileInfo
       });
 
@@ -100,7 +101,7 @@ export class ProfileComponent implements OnInit {
         mapInfo.geoLng = this.currentPosition.lng;
       }
 
-      this.profileForm.patchValue({
+      this.form.patchValue({
         mapEntry: mapInfo
       });
 
@@ -109,7 +110,7 @@ export class ProfileComponent implements OnInit {
       this.currentPosition.lng = mapInfo.geoLng;
     });
 
-    this.profileForm.valueChanges.subscribe(() => {
+    this.form.valueChanges.subscribe(() => {
       this.unsavedChanges = true;
     });
   }
@@ -125,7 +126,7 @@ export class ProfileComponent implements OnInit {
       // Make sure the map update by running in the correct zone
       profileComponent.zone.run(() => {
 
-        profileComponent.profileForm.patchValue({
+        profileComponent.form.patchValue({
           mapEntry: {
             address: mapInfo.address,
             region: mapInfo.region,
@@ -147,7 +148,7 @@ export class ProfileComponent implements OnInit {
     if (this.unsavedChanges) {
 
       // We'll eventually want some validation but for now don't bother
-      this.techService.updateTechProfile(this.profileForm.value, function(error: string) {
+      this.techService.updateTechProfile(this.form.value, function(error: string) {
         if (error) {
 
         }
@@ -162,7 +163,7 @@ export class ProfileComponent implements OnInit {
   private revertBtnClicked() {
 
     // We should at some point give them a warning before resetting the form
-    this.profileForm.setValue(this.techService.getTechProfile());
+    this.form.setValue(this.techService.getTechProfile());
 
     this.unsavedChanges = false;
   }
