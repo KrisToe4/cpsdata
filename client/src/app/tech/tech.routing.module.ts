@@ -37,13 +37,17 @@ const techRoutes: Routes = [
         resolve: [InspectionResolverService],
         children: [
           { path: '', component: InspectionListComponent },
-          { path: 'new', component: InspectionNewComponent },
-          { path: 'general', component: InspectionGeneralComponent },
-          { path: 'arrival', component: InspectionArrivalComponent },
-          { path: 'restraint', component: InspectionRestraintComponent },
-          { path: 'departure', component: InspectionDepartureComponent },
-          { path: 'summary', component: InspectionSummaryComponent },
-         // { path: '**', redirectTo: '', pathMatch: 'full'}
+          { 
+            path: '',
+            children: [
+              { path: 'general', component: InspectionGeneralComponent },
+              { path: 'arrival', component: InspectionArrivalComponent },
+              { path: 'restraint', component: InspectionRestraintComponent },
+              { path: 'departure', component: InspectionDepartureComponent },
+              { path: 'summary', component: InspectionSummaryComponent },
+            ]
+          },
+          { path: 'new', component: InspectionNewComponent }
         ]
       },
       { path: 'login', component: LoginComponent },
@@ -60,7 +64,6 @@ const techRoutes: Routes = [
       },
       { path: 'register/:token', component: RegisterComponent }
     ],
-    //resolve: [MenuResolverService]
   }
 ];
 

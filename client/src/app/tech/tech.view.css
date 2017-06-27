@@ -38,8 +38,8 @@
 	display: -webkit-flex;
 	display: flex;
 	
-	flex-flow: row wrap;
-	justify-content: space-around;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
 }
 
 .view-footer {

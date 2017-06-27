@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute,
+         Router } from '@angular/router';
 
 import { FormBuilder,
          FormControl,
@@ -12,6 +13,8 @@ import { Inspection,
          Vehicle,
          Restraint } from '@server-src/data-classes/inspection-model';
 import { InspectionService } from '@services/inspection.service';
+
+import { MenuService } from '@services/menu.service'; 
 
 @Component({
   selector: 'app-inspection-create',
@@ -27,11 +30,15 @@ export class InspectionNewComponent implements OnInit {
   form: FormGroup;
   unsavedChanges: boolean = false;
 
-  constructor( private formBuilder: FormBuilder,
+  constructor( private route: ActivatedRoute,
+               private formBuilder: FormBuilder,
                private inspectionService: InspectionService,
+               private menuService: MenuService,
                private router: Router ) { }
 
   ngOnInit() {
+
+    let component: InspectionNewComponent = this;
 
     this.buildForm();
   }
@@ -51,13 +58,11 @@ export class InspectionNewComponent implements OnInit {
     });
   }
 
-  private createBtnClicked() {
+  private createInspection(route: string) {
 
     let component = this;
 
     if (this.unsavedChanges) {
-
-      console.log(this.form.value);
 
       // We'll eventually want some validation but for now don't bother
       this.inspectionService.createInspection(this.form.value, function(error: string) {
@@ -68,19 +73,27 @@ export class InspectionNewComponent implements OnInit {
         else {
 
           alert("Inspection Created");
-          component.switchToList();
+          component.navigateAway(route);
         }
       });
     }
   }
 
-  private cancelBtnClicked() {
-    
-    this.switchToList();
+  private navigateAway(route: string) {
+
+    if (route != "") {
+
+      this.router.navigate([route]);
+    }
   }
 
-  private switchToList() {
+  private scheduleBtnClicked() {
 
-    this.router.navigate(["/tech/inspection"]);
+    this.createInspection("/tech/inspection");
+  }
+
+  private startBtnClicked() {
+
+    this.createInspection("/tech/inspection/general");
   }
 }

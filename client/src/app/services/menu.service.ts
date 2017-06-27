@@ -4,7 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 
-import { Menu,
+import { NavigationEnd,
+         Router } from '@angular/router';
+
+import { MenuTree,
+         Menu,
          MenuItem } from '@server-src/data-classes/menu-model';
 
 import { TechService } from '@services/tech.service';
@@ -18,25 +22,77 @@ export class MenuService {
   private static menuVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true); 
   private static menuBtnVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false); 
 
-  private static menuStack: Menu[];
+
+  private static menuTree: MenuTree;
+  private static currentMenu: Menu;
   private static currentMenuSubject: BehaviorSubject<Menu> = new BehaviorSubject<Menu>(new Menu()); 
 
   private static actionTriggers: {};
 
-  constructor(private techService: TechService) { 
+  public static getCurrentMenu(): Menu {
 
-    this.techService.getTechMenu().subscribe((menu: Menu) => { this.loadTechMenu(menu); });
+    return MenuService.currentMenu;
+  }
+
+  constructor( private router: Router,
+               private techService: TechService ) { 
+
+    this.techService.getTechMenuTree().subscribe((menuTree: MenuTree) => { this.loadMenuTree(menuTree); });
+    this.router.events.subscribe(event => {
+
+      if (event instanceof NavigationEnd) {
+        //console.log("Router Event: " + event);
+        this.updateMenu(event.url).then(result => {
+
+          if (result) {
+            console.log("Menu updated");
+          }
+          else {
+            console.log("Menu current");
+          }
+        });
+      }
+    });
+
   }  
 
-  private loadTechMenu(menu: Menu) {
+  private loadMenuTree(tree: MenuTree) {
 
-      MenuService.menuStack = [];
-      MenuService.menuStack.push(menu);
+      MenuService.menuTree = tree;
+      MenuService.currentMenu = tree.getMenu(0);
 
       MenuService.actionTriggers = { "back": new Subject<string>() };
 
-      // Push the latest version of the current menu (may be the same as before but that's ok)
-      MenuService.currentMenuSubject.next(MenuService.menuStack[0]);
+      // Push the main menu
+      MenuService.currentMenuSubject.next(MenuService.getCurrentMenu());
+  }
+
+  private updateMenu(url: string): Promise<true> {
+    
+    return new Promise(resolve => {
+
+      let menu: Menu = MenuService.menuTree.search(url);
+
+      if (MenuService.currentMenu.getRoute() == menu.getRoute()) {
+        resolve(false);
+        return;
+      }
+
+      MenuService.currentMenu = menu;
+      MenuService.currentMenuSubject.next(menu);
+      resolve(true);
+    });
+  }
+
+  private update() {
+
+    // Update the button visibility first
+    let btnVisible: boolean = (MenuService.viewportWidth <= 768);
+    MenuService.menuBtnVisibleSubject.next(btnVisible);
+
+    // Then the menu itself
+    let menuVisible: boolean = !btnVisible || MenuService.menuOpen;
+    MenuService.menuVisibleSubject.next(menuVisible);
   }
 
   public watchCurrentMenu(): Observable<Menu> {
@@ -73,40 +129,18 @@ export class MenuService {
       MenuService.actionTriggers[menuItem.action] = new Subject<string>();
     }
 
-    let newRoute: string = "";
-    if (menuItem.action == "back") { // Special Case
+    let menu: Menu = MenuService.getCurrentMenu();
 
-      // Store the current menu's relative root before popping it off
-      // as we'll use it as a default route if one wasn't supplied
-      newRoute = MenuService.menuStack[0].relativeTo;
+    let newRoute: string;
+    if (menuItem.action == "back") { // Back action is a Special Case
 
-      MenuService.menuStack.shift();
-      MenuService.currentMenuSubject.next(MenuService.menuStack[0]); 
-
-      // If they supplied a route, it is based off the new menu's relative root
-      if (menuItem.route) {
-
-        newRoute = MenuService.menuStack[0].relativeTo + menuItem.route;
-      }
+      newRoute = menu.relativeTo;
     }
     else {
 
-      if (menuItem.subMenu) {
-
-        MenuService.menuStack.unshift(menuItem.subMenu);
-        MenuService.currentMenuSubject.next(MenuService.menuStack[0]);
-      }
-
-      newRoute = MenuService.menuStack[0].relativeTo;
-      if (menuItem.route) {
-
-        newRoute += menuItem.route;
-      }
-      else {
-        
-        newRoute = menuItem.action;
-      }
+      newRoute = menu.getRoute() + menuItem.route;
     }
+
     MenuService.actionTriggers[menuItem.action].next(newRoute);
   }
 
@@ -120,16 +154,5 @@ export class MenuService {
 
     MenuService.menuOpen = !MenuService.menuOpen;
     this.update();
-  }
-
-  private update() {
-
-    // Update the button visibility first
-    let btnVisible: boolean = (MenuService.viewportWidth <= 768);
-    MenuService.menuBtnVisibleSubject.next(btnVisible);
-
-    // Then the menu itself
-    let menuVisible: boolean = !btnVisible || MenuService.menuOpen;
-    MenuService.menuVisibleSubject.next(menuVisible);
   }
 }

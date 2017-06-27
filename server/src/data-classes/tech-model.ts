@@ -1,4 +1,5 @@
-import { Menu,
+import { MenuTree,
+         Menu,
          MenuItem } from './menu-model';
 
 export class TechModel {
@@ -6,14 +7,14 @@ export class TechModel {
     public profile: TechProfile;
     public mapEntry: TechMapEntry; 
 
-    protected techMenu: Menu; 
+    protected techMenu: MenuTree; 
 
     constructor()
     {
         this.authToken = "";
         this.profile = new TechProfile();
         this.mapEntry = new TechMapEntry();
-        this.techMenu = new Menu();
+        this.techMenu = new MenuTree();
     }
 
     public updateFromObject(data: any) {

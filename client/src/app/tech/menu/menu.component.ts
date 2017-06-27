@@ -3,7 +3,7 @@ import { Component,
 
 import { ActivatedRoute,
          Router,
-         NavigationStart }            from '@angular/router';
+         NavigationEnd }            from '@angular/router';
 
 import { Menu, 
          MenuItem }        from '@server-src/data-classes/menu-model'
@@ -34,8 +34,8 @@ export class MenuComponent implements OnInit {
 
     this.currentRoute = this.router.url;
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        console.log(event);
+
+      if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
       }
     });
@@ -44,8 +44,8 @@ export class MenuComponent implements OnInit {
       this.showMenuBtn = showBtn;
     });
 
-    this.menuService.watchCurrentMenu().subscribe(techMenu => {
-      this.menu = techMenu;
+    this.menuService.watchCurrentMenu().subscribe(currentMenu => {
+      this.menu = currentMenu;
     });
 
     this.menuService.watchForTrigger("back").subscribe(route => {

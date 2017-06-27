@@ -1,33 +1,121 @@
+export class MenuTree {
+
+    private tree: Menu[] = [];
+
+    constructor(rootMenu?: Menu) {
+
+        if (rootMenu) {
+
+            this.tree.push(rootMenu);
+        }
+        else {
+
+            this.tree.push(new Menu("*", "/tech/", [new MenuItem("Login", "login")]));
+        }
+    }
+
+    public fromJSON(json: string): void {
+
+       this.tree = []; 
+
+       let list: any[] = JSON.parse(json);
+       console.log(list);
+
+       list.forEach(menuObject => {
+           
+           let menu: Menu = new Menu().fromObject(menuObject);
+           this.tree.push(menu);
+
+           console.log(menu);
+       });
+    }
+
+    public getMenu(index: number): Menu {
+
+        return this.tree[index];
+    }
+
+    public search(url: string): Menu {
+
+        let result: Menu;
+
+        // This is offset by 1 so we include the slash in our substrings
+        let lastSlash: number = url.lastIndexOf('/') + 1;
+
+        let relativeTo: string = url.substring(0, lastSlash);
+        let route: string = url.substring(lastSlash);
+
+        console.log("relativeTo: " + relativeTo + " - route: " + route);
+
+        let reverseTree: Menu[] = this.tree;      
+        reverseTree.reverse().forEach(menu => {
+
+            if (result == undefined) {
+            
+                if ((menu.relativeTo == relativeTo) && (menu.route == route)) {
+
+                    result = menu;
+                    console.log("Found Exact Match!");
+
+                }
+                else if ((menu.relativeTo == relativeTo) && (menu.route == '*')) {
+
+                    result = menu;
+                    console.log("Found Wildcard Match!");
+                }
+            }
+        });
+
+
+        if (result == undefined) {
+
+            result = this.getMenu(0);
+        }
+        return result;
+    }
+}
+
 export class Menu {
 
+    route: string;
     relativeTo: string;
     menuItems: MenuItem[];
 
-    constructor(relativeTo?: string, initialItems?: MenuItem[]) {
+    constructor(route?: string, relativeTo?: string, initialItems?: MenuItem[]) {
 
+        this.route = route as string || "*";
         this.relativeTo = relativeTo as string || "/";
         this.menuItems = initialItems as MenuItem[] || [];
     }
 
-    public fromJSON(json: string): void {
-        
-       let menuObject = JSON.parse(json);
-       this.fromObject(menuObject);
-    }
+    public fromObject(menuObject: any): Menu {
 
-    public fromObject(menuObject: any) {
-
+        this.route = menuObject.route;
         this.relativeTo = menuObject.relativeTo;
 
         this.menuItems = [];
         menuObject.menuItems.forEach((object: any) => {
 
             let menuItem = new MenuItem();
-            menuItem.fromJSON(object);  
+            menuItem.fromObject(object);  
             this.add(menuItem);
         });
+
+        return this;
     }
-    
+
+    public getRoute(): string {
+
+        if (this.route == "*") {
+
+            return this.relativeTo;
+        }
+        else {
+            
+            return this.relativeTo + this.route;
+        }
+    }
+
     public add(item: MenuItem) {
 
         this.menuItems.push(item);
@@ -55,7 +143,6 @@ export class MenuItem {
     action: string;
 
     subItems: MenuItem[];
-    subMenu: Menu;
 
     constructor(displayValue?: string, route?: string, action?: string) {
         this.display = displayValue as string || "";
@@ -63,17 +150,11 @@ export class MenuItem {
         this.action = action as string || "";
     }
 
-    public fromJSON(json: any): void {
+    public fromObject(json: any): void {
 
-        this.display = json.display;
-        this.route = json.route;
-        this.action = json.action;
-
-        if (json.subMenu) {
-
-            this.subMenu = new Menu();
-            this.subMenu.fromObject(json.subMenu);
-        }
+        this.display = json.display as string || "";
+        this.route = json.route as string || "";
+        this.action = json.action as string || "";
 
         if (json.subItems) {
 
@@ -83,7 +164,18 @@ export class MenuItem {
             subItemArray.forEach((subItemJSON: any) => {
 
                 let item: MenuItem = new MenuItem();
-                item.fromJSON(subItemJSON);
+                item.fromObject(subItemJSON);
+
+                // If we weren't given a route assume the action is also the route appended to the current menu items route
+                // Otherwise we need to offset the passed route by the menuItem's route to get to the right place
+                if (item.route == "") {
+
+                    item.route = this.route + "/" + item.action;
+                }
+                else {
+                    item.route = this.route + "/" + item.route;
+                }
+
                 this.subItems.push(item);
             });
         }

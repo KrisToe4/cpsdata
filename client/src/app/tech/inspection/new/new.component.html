@@ -60,14 +60,15 @@
         <div class="ctrl-btn">
           <div class="noselect" [class.ctrl-btn-enabled]="unsavedChanges == true" 
                                 [class.ctrl-btn-disabled]="unsavedChanges == false"
-                                (click)="createBtnClicked()">Create</div>
+                                (click)="scheduleBtnClicked()">Schedule</div>
         </div>
       </div>
       <div class="section-element">
         <div class="ctrl-btn">
-          <div class="noselect ctrl-btn-enabled" (click)="cancelBtnClicked()">Cancel</div>
+          <div class="noselect" [class.ctrl-btn-enabled]="unsavedChanges == true" 
+                                [class.ctrl-btn-disabled]="unsavedChanges == false"
+                                (click)="startBtnClicked()">Start</div>
         </div>
       </div>
-    </div>
   </div>
 </div>

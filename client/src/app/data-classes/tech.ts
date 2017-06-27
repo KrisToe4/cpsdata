@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Menu,
+import { MenuTree,
+         Menu,
          MenuItem } from '@server-src/data-classes/menu-model';
 
 import { TechModel,
@@ -16,7 +17,7 @@ export class Tech extends TechModel {
         return tech;
     }
 
-    menuSubject: BehaviorSubject<Menu>; 
+    menuTreeSubject: BehaviorSubject<MenuTree>; 
     profileSubject: BehaviorSubject<TechProfile>;
     mapEntrySubject: BehaviorSubject<TechMapEntry>;
 
@@ -29,14 +30,14 @@ export class Tech extends TechModel {
 
         this.mapEntrySubject = new BehaviorSubject<TechMapEntry>(this.mapEntry);
 
-        this.techMenu.add(new MenuItem("Login", "login"));
-        this.menuSubject = new BehaviorSubject<Menu>(this.techMenu);
+        this.techMenu = new MenuTree();
+        this.menuTreeSubject = new BehaviorSubject<MenuTree>(this.techMenu);
     }
 
     /* Observables */
-    public getTechMenu(): Observable<Menu> {
+    public getMenuTree(): Observable<MenuTree> {
 
-        return this.menuSubject.asObservable();
+        return this.menuTreeSubject.asObservable();
     }
 
     public getProfileObserver(): Observable<TechProfile> {
@@ -60,9 +61,9 @@ export class Tech extends TechModel {
         }
         else {
 
-            this.techMenu = new Menu(null, [new MenuItem("Login", "login")]);
+            this.techMenu = new MenuTree();
         }
-        this.menuSubject.next(this.techMenu);
+        this.menuTreeSubject.next(this.techMenu);
 
         callback(this.authToken);
     }
@@ -72,8 +73,8 @@ export class Tech extends TechModel {
         this.profile = new TechProfile();
         this.mapEntry = new TechMapEntry();
 
-        this.techMenu = new Menu(null, [new MenuItem("Login", "login")]);
-        this.menuSubject.next(this.techMenu);
+        this.techMenu = new MenuTree();
+        this.menuTreeSubject.next(this.techMenu);
 
         return true;
     }

@@ -4,11 +4,6 @@
 		"view-contents";
 }
 
-.view-contents {
-	flex-flow: column nowrap;
-	justify-content: flex-start;
-}
-
 .section-element input {
 	width: 200px;
 }
