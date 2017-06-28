@@ -1,6 +1,7 @@
 export class MenuTree {
 
     private tree: Menu[] = [];
+    private reverseTree: Menu[] = [];
 
     constructor(rootMenu?: Menu) {
 
@@ -17,14 +18,15 @@ export class MenuTree {
     public fromJSON(json: string): void {
 
        this.tree = []; 
+       this.reverseTree = [];
 
        let list: any[] = JSON.parse(json);
-       console.log(list);
 
        list.forEach(menuObject => {
            
            let menu: Menu = new Menu().fromObject(menuObject);
            this.tree.push(menu);
+           this.reverseTree.unshift(menu);
 
            console.log(menu);
        });
@@ -46,9 +48,8 @@ export class MenuTree {
         let route: string = url.substring(lastSlash);
 
         console.log("relativeTo: " + relativeTo + " - route: " + route);
-
-        let reverseTree: Menu[] = this.tree;      
-        reverseTree.reverse().forEach(menu => {
+   
+        this.reverseTree.forEach(menu => {
 
             if (result == undefined) {
             

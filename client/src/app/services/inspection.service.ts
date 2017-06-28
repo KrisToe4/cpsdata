@@ -26,7 +26,8 @@ import { RequestData,
 @Injectable()
 export class InspectionService extends ApiService {
 
-  private static activeInspection: Inspection;
+  private static activeInspection: Inspection = new Inspection();
+  public static activeSubject: BehaviorSubject<Inspection> = new BehaviorSubject<Inspection>(InspectionService.activeInspection);
 
   private static inspectionList: Inspection[];
   public static listSubject: BehaviorSubject<Inspection[]> = new BehaviorSubject<Inspection[]>([]);
@@ -42,6 +43,11 @@ export class InspectionService extends ApiService {
   public watchList(): Observable<Inspection[]> {
 
     return InspectionService.listSubject.asObservable();
+  }
+
+  public watchActive(): Observable<Inspection> {
+
+    return InspectionService.activeSubject.asObservable();
   }
 
   public updateList(): Promise<true> {
@@ -81,21 +87,24 @@ export class InspectionService extends ApiService {
         }
         else {
 
-          console.log(response.data);
-          InspectionService.activeInspection = response.data as Inspection;
-          service.updateList().then(updateSucceeded => {
-
-            if (updateSucceeded) {
-              callback(null);
-            }
-            else {
-              callback("Inspection created but list update failed");
-            }
-          });
+          service.setActive(response.data as number || 0)
+          callback(null);
         }
       },
       error => alert("Error creating inspection. Message: " + error)
     );
+  }
+
+  public setActive(id: number) {
+
+    this.getInspection(id, function (error: string, inspection: Inspection) {
+
+      if (InspectionService.activeInspection.id != inspection.id) {
+
+        InspectionService.activeInspection = inspection;
+        InspectionService.activeSubject.next(inspection);
+      }
+    });
   }
 
   /** Private methods that interface with the API itself **/
@@ -121,6 +130,35 @@ export class InspectionService extends ApiService {
         
       },
       error => alert("Error retrieving inspection list. Message: " + error)
+    );
+  }
+
+  private getInspection(id: number, callback: (error?: string, inspection?: Inspection) => void) {
+
+    // *** We'll want to check our local store first, but for now load from the server ***
+
+
+    let request: RequestData = new RequestData("load", { 
+      auth: this.techService.getAuthToken(),
+      data: {
+        id: id
+      } 
+    });
+
+    this.inspectionApi(request).subscribe(
+      (response: ResponseData) => {
+
+        if (response["error"]) {
+
+          callback(response["error"]);
+        }
+        else {
+
+          callback(null, response.data as Inspection);
+        }
+        
+      },
+      error => alert("Error retrieving inspection with id: " + id + " Message: " + error)
     );
   }
    

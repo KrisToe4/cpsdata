@@ -8,10 +8,12 @@ export class Inspection {
     status: string;
 
     constructor() { 
+        this.id = -1;
         this.client = new Client();
         this.vehicle = new Vehicle();
         this.restraint = new Restraint();
         this.date = new Date().toISOString().substring(0, 10);
+        this.status = "";
     }
 }
 
@@ -38,6 +40,7 @@ export class Vehicle {
 
     constructor() {
 
+        this.id = -1;
         this.manufacturer = "";
         this.model = "";
         this.year = "";
@@ -62,6 +65,7 @@ export class Restraint {
 
     constructor() {
 
+        this.id = -1;
         this.manufacturer = "";
         this.model = "";
         this.subModel = "";

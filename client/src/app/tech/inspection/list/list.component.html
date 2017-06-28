@@ -7,7 +7,7 @@
       <div class="list-col">Date</div>
       <div class="list-col">Status</div>
     </div>
-    <div class="list-row" *ngFor="let inspection of list">
+    <div class="list-row" *ngFor="let inspection of list" [class.selected]="selected.id == inspection.id" (click)="selectInspection(inspection);">
       <div class="list-col">{{inspection.client.name}}</div>
       <div class="list-col">{{inspection.vehicle.manufacturer}} {{inspection.vehicle.model}}</div>
       <div class="list-col">{{inspection.restraint.manufacturer}} {{inspection.restraint.model}}</div>

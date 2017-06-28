@@ -1,5 +1,8 @@
+.view-contents {
+	height: 100%;
+}
+
 .list {
-    height: 100%;
     width: 100%;
 
     border: 1px solid black;
@@ -27,8 +30,27 @@
 	justify-content: space-around;
 }
 
+.list-row:hover {
+	background-color: #FFDDDD;
+
+	cursor: pointer;
+}
+
+.list-row.selected {
+	background-color: #FFAAAA;
+}
+
+.list-row.selected:hover {
+	cursor: auto;
+}
+
 .list-header {
     border-bottom: 1px solid black;
+}
+
+.list-header:hover {
+	background-color: white;
+	cursor: auto;
 }
 
 .list-col {

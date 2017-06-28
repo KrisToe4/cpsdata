@@ -35,6 +35,7 @@ const techRoutes: Routes = [
         component: InspectionComponent,
         canActivate: [AuthGuardService],
         resolve: [InspectionResolverService],
+        runGuardsAndResolvers: 'always',
         children: [
           { path: '', component: InspectionListComponent },
           { 

@@ -100,6 +100,57 @@ export class InspectionManager {
         });
     }
 
+    public getInspection(options: any, callback: (error: any, inspection?: any) => void) {
+
+        let sqlQuery: string = 'SELECT i.id, c.name as client, ' +
+                                    'vm.name as v_manufacturer, v.model as v_model, v.year, ' +
+                                    'rm.name as r_manufacturer, r.model as r_model, ' +
+                                    'date, ti.status ' +
+                               'FROM inspections i ' +                 
+                                    'INNER JOIN clients c on i.client = c.id ' +
+                                    'INNER JOIN vehicles v ON i.vehicle = v.id ' +
+                                    'INNER JOIN vehicle_manufacturer vm ON v.manufacturer = vm.id ' +
+                                    'INNER JOIN restraints r ON i.restraint = r.id ' +
+                                    'INNER JOIN restraint_manufacturer rm ON r.manufacturer = rm.id ' +
+                                    'INNER JOIN tech_inspections ti on i.id = ti.inspection ' +
+                               'WHERE i.id = ? AND ti.tech = ? AND ti.ownership = "primary"' ;
+
+        let db = DatabaseManager.getConnection();
+        db.query(sqlQuery, [options.id, options.tech], function (error, results, fields) {
+
+            if (error) {
+
+                callback(error);
+                return;
+            }
+
+            if (results.length > 0) {
+
+                let inspection: any = {
+                    id: results[0].id,
+                    client: { name: results[0].client },
+                    vehicle: { 
+                        manufacturer: results[0].v_manufacturer,
+                        model: results[0].v_model,
+                        year: results[0].year
+                    },
+                    restraint: {
+                        manufacturer: results[0].r_manufacturer,
+                        model: results[0].r_model
+                    },
+                    date: results[0].date,
+                    status: results[0].status
+                }
+
+                callback(null, inspection);
+                
+            }
+            else {
+                callback("No Inspection Found.");
+            }
+        });
+    }
+
     public addInspection(tech: number, data: any, callback: (error: any, inspectionID?: number) => void) {
 
         console.log(data);
@@ -168,7 +219,7 @@ export class InspectionManager {
     private addClient(info: any, callback: (error: any, clientID?: number) => void) {
 
         // Sanity checks
-        if (info.id) {
+        if (info.id > 0) {
 
             callback(null, info.id);
             return;
@@ -221,7 +272,7 @@ export class InspectionManager {
         let manager: InspectionManager = this;
 
         // Sanity checks
-        if (info.id) {
+        if (info.id > 0) {
 
             callback(null, info.id);
             return;
@@ -310,7 +361,7 @@ export class InspectionManager {
         let manager: InspectionManager = this;
 
         // Sanity checks
-        if (info.id) {
+        if (info.id > 0) {
 
             callback(null, info.id);
             return;

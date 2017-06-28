@@ -19,6 +19,7 @@ import { RegisterRoute } from "./routes/tech/register";
 import { UpdateRoute } from "./routes/tech/update";
 
 import { InspectionListRoute } from './routes/inspection/list';
+import { InspectionLoadRoute } from './routes/inspection/load';
 import { InspectionGenerateRoute } from './routes/inspection/generate';
 
 import { TechManager } from "./data-managers/tech-manager";
@@ -130,6 +131,7 @@ export class Server {
 
     // Inspection Routes
     InspectionListRoute.create(router);
+    InspectionLoadRoute.create(router);
     InspectionGenerateRoute.create(router);
 
     //use router middleware

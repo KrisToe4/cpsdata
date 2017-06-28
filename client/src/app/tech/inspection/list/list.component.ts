@@ -19,6 +19,7 @@ import { InspectionService } from '@services/inspection.service';
 })
 export class InspectionListComponent implements OnInit {
 
+  private selected: Inspection;
   private list: Inspection[] = [];
 
   constructor( private route: ActivatedRoute,
@@ -35,6 +36,14 @@ export class InspectionListComponent implements OnInit {
       component.list = list;
     });
 
+    this.inspectionService.watchActive().subscribe(inspection => {
+
+      if ((component.selected == undefined) || (component.selected.id != inspection.id)) {
+        component.selected = inspection;
+        console.log(component.selected);
+      }
+    });
+
     this.menuService.watchForTrigger("new").subscribe(newRoute => {
 
       // newRoute should be blank here and if it is go to new
@@ -47,10 +56,16 @@ export class InspectionListComponent implements OnInit {
 
     this.menuService.watchForTrigger("edit").subscribe(newRoute => {
 
-      if (newRoute) {
+      if (newRoute && (component.selected.id > 0)) {
         this.router.navigate([newRoute]);
       }
     });
+  }
+
+  private selectInspection(inspection: Inspection) {
+
+    this.selected = inspection;
+    this.inspectionService.setActive(inspection.id);
   }
 
 }
