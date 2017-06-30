@@ -117,7 +117,7 @@ export class ProfileComponent implements OnInit {
 
 
   // ** Event Handlers ** //
-  private searchAddress(address: string) {
+  searchAddress(address: string) {
 
     let profileComponent = this;
 
@@ -141,7 +141,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  private saveBtnClicked() {
+  saveBtnClicked() {
 
     let component = this;
 
@@ -160,7 +160,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  private revertBtnClicked() {
+  revertBtnClicked() {
 
     // We should at some point give them a warning before resetting the form
     this.form.setValue(this.techService.getTechProfile());

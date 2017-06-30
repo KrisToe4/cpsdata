@@ -28,8 +28,8 @@ import { TechProfile,
 })
 export class MapViewportComponent implements OnInit {
 
-  private markerManager: MarkerManager;
-  private markerList = {};
+  markerManager: MarkerManager;
+  markerList = {};
 
   @Input() techList: TechList;
   @Input() selectedTech: Tech;
@@ -113,7 +113,7 @@ export class MapViewportComponent implements OnInit {
     });
   }
 
-  private searchAddress(address: string) {
+  searchAddress(address: string) {
 
     let component = this;
 
@@ -128,7 +128,7 @@ export class MapViewportComponent implements OnInit {
     })
   }
 
-  private selectTech(tech: Tech) {
+  selectTech(tech: Tech) {
 
     this.techSelected.emit(tech);
   }

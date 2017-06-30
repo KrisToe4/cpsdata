@@ -18,10 +18,10 @@ import { TechService } from '@services/tech.service';
 })
 export class RegisterComponent implements OnInit {
 
-  private authToken: string;
+  authToken: string;
 
-  private passwordValid: boolean = false;
-  private passwordMatch: boolean = false;
+  passwordValid: boolean = false;
+  passwordMatch: boolean = false;
 
   constructor( private route: ActivatedRoute,
                private router: Router,
@@ -41,17 +41,17 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  private isPasswordValid(password: string) {
+  isPasswordValid(password: string) {
 
     this.passwordValid = (password != "");
   }
 
-  private isPasswordMatch(password: string, confirmation: string) {
+  isPasswordMatch(password: string, confirmation: string) {
 
     this.passwordMatch = (password == confirmation);
   }
 
-  private onSubmitClick(password: string, confirmation: string) {
+  onSubmitClick(password: string, confirmation: string) {
 
     if (this.passwordMatch) {
       let route: ActivatedRoute = this.route;
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  private onCancelClick() {
+  onCancelClick() {
 
     console.log("Password update cancelled");
     this.router.navigate(['']);

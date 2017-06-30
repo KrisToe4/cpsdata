@@ -13,8 +13,8 @@ import { TechService } from '@services/tech.service';
 })
 export class MapComponent implements OnInit {
 
-  private techList: TechList = new TechList();
-  private selectedTech: Tech = new Tech();
+  techList: TechList = new TechList();
+  selectedTech: Tech = new Tech();
 
   constructor(private route: ActivatedRoute,
               private techService: TechService) { }
@@ -34,12 +34,12 @@ export class MapComponent implements OnInit {
 
   }
 
-  private techSelectedFromList(tech: Tech) {
+  techSelectedFromList(tech: Tech) {
 
     this.selectedTech = tech;
   }
 
-  private techSelectedFromMap(tech: Tech) {
+  techSelectedFromMap(tech: Tech) {
 
     this.selectedTech = tech;
   }

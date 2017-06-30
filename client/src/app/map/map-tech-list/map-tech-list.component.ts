@@ -16,7 +16,7 @@ import { TechProfile,
 })
 export class MapTechListComponent implements OnInit {
 
-  private sortOptions = ['Name', 'Distance'];
+  sortOptions = ['Name', 'Distance'];
 
   @Input() techList: TechList;
   @Input() selectedTech: Tech;

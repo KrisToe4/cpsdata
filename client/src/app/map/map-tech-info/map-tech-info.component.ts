@@ -11,7 +11,7 @@ import { TechProfile,
 })
 export class MapTechInfoComponent implements OnInit {
 
-  private techDetails: TechMapEntry;
+  techDetails: TechMapEntry;
 
   @Input()
   set selectedTech(tech: Tech) {

@@ -19,8 +19,8 @@ import { InspectionService } from '@services/inspection.service';
 })
 export class InspectionListComponent implements OnInit {
 
-  private selected: Inspection;
-  private list: Inspection[] = [];
+  selected: Inspection;
+  list: Inspection[] = [];
 
   constructor( private route: ActivatedRoute,
                private inspectionService: InspectionService,
@@ -62,7 +62,7 @@ export class InspectionListComponent implements OnInit {
     });
   }
 
-  private selectInspection(inspection: Inspection) {
+  selectInspection(inspection: Inspection) {
 
     this.selected = inspection;
     this.inspectionService.setActive(inspection.id);
