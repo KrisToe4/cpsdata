@@ -9,7 +9,7 @@ import { MenuService } from '@services/menu.service';
 })
 export class TechComponent {
 
-  private hideMenu: boolean = false;
+  hideMenu: boolean = false;
 
   constructor( private menuService: MenuService ) { 
 

@@ -48,6 +48,11 @@ export class LoginComponent implements OnInit {
     return;
   }
 
+  resetPassword() {
+
+    //** Need to enable resetting passwords **
+  }
+
   onRegisterClick(email: string) {
 
     let route: ActivatedRoute = this.route;

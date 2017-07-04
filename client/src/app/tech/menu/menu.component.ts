@@ -20,10 +20,10 @@ import { TechService }       from '@services/tech.service';
 })
 export class MenuComponent implements OnInit {
 
-  public menu: Menu;
+  menu: Menu;
 
-  private currentRoute: string = "";
-  private showMenuBtn: boolean = false;
+  currentRoute: string = "";
+  showMenuBtn: boolean = false;
 
   constructor( private route: ActivatedRoute,
                private menuService: MenuService,

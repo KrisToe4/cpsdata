@@ -87,12 +87,12 @@ export class InspectionNewComponent implements OnInit {
     }
   }
 
-  private scheduleBtnClicked() {
+  scheduleBtnClicked() {
 
     this.createInspection("/tech/inspection");
   }
 
-  private startBtnClicked() {
+  startBtnClicked() {
 
     this.createInspection("/tech/inspection/general");
   }
