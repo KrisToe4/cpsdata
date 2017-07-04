@@ -4,10 +4,11 @@
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
     "paths": {
-      "@server-src/*": ["../../server/src/*"],
-      "@services/*": ["./app/services/*"],
+      "@parts/*": ["./app/parts/*"],
       "@guards/*": ["./app/guards/*"],
-      "@resolvers/*": ["./app/resolvers/*"]
+      "@resolvers/*": ["./app/resolvers/*"],
+      "@server-src/*": ["../../server/src/*"],
+      "@services/*": ["./app/services/*"]
     },
     "sourceMap": true,
     "declaration": false,

@@ -7,6 +7,9 @@ import { NgModule } from '@angular/core';
 import { AgmCoreModule,
          GoogleMapsAPIWrapper } from '@agm/core';
 
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { SignatureFieldComponent } from '@parts/signature-field/signature-field.component';
+
 import { TechRoutingModule } from './tech.routing.module';
 
 import { TechComponent } from './tech.component';
@@ -15,12 +18,13 @@ import { ControlsComponent } from './controls/controls.component';
 
 import { InspectionComponent } from './inspection/inspection.component';
 import { InspectionArrivalComponent } from './inspection/arrival/arrival.component';
-import { InspectionNewComponent } from './inspection/new/new.component';
 import { InspectionDepartureComponent } from './inspection/departure/departure.component';
 import { InspectionGeneralComponent } from './inspection/general/general.component';
 import { InspectionListComponent } from './inspection/list/list.component';
+import { InspectionNewComponent } from './inspection/new/new.component';
 import { InspectionRestraintComponent } from './inspection/restraint/restraint.component';
 import { InspectionSummaryComponent } from './inspection/summary/summary.component';
+import { InspectionWaiverComponent } from './inspection/waiver/waiver.component';
 
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './tech.logout.component';
@@ -50,12 +54,14 @@ import { TechService } from '@services/tech.service';
     InspectionListComponent,
     InspectionRestraintComponent,
     InspectionSummaryComponent,
+    InspectionWaiverComponent,
     LoginComponent,
     LogoutComponent,
     MenuComponent,
     PasswordComponent,
     ProfileComponent,
     RegisterComponent,
+    SignatureFieldComponent,
     TechComponent,
   ],
   imports: [
@@ -66,6 +72,7 @@ import { TechService } from '@services/tech.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SignaturePadModule,
     TechRoutingModule
   ],
   providers: [

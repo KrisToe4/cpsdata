@@ -17,6 +17,7 @@ import { InspectionGeneralComponent } from './inspection/general/general.compone
 import { InspectionListComponent } from './inspection/list/list.component';
 import { InspectionRestraintComponent } from './inspection/restraint/restraint.component';
 import { InspectionSummaryComponent } from './inspection/summary/summary.component';
+import { InspectionWaiverComponent } from './inspection/waiver/waiver.component';
 
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './tech.logout.component';
@@ -46,6 +47,7 @@ const techRoutes: Routes = [
               { path: 'restraint', component: InspectionRestraintComponent },
               { path: 'departure', component: InspectionDepartureComponent },
               { path: 'summary', component: InspectionSummaryComponent },
+              { path: 'waiver', component: InspectionWaiverComponent },
             ]
           },
           { path: 'new', component: InspectionNewComponent }

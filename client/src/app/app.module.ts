@@ -39,7 +39,7 @@ import { TechModule } from './tech/tech.module';
     MapTechInfoComponent,
     MapViewportComponent,
     MapMarkerDirective,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     AgmCoreModule.forRoot({

@@ -1,0 +1,67 @@
+<div class="view">
+  <div class="view-header">
+    <span>Legal Waiver</span>
+  </div>
+  <div class="view-contents">
+	<div class="section">
+		<div class="section-title"><span>Terms and Digital Signature</span></div>
+		<div class="section-element">
+			<label>I understand that this inspection has been provided as a community service and is based on current information about the various systems in use. I am aware that it is my responsibility to see the manufacturer's instructions are followed every time the child restraint is used. I agree not to hold Child Passenger Safety Association of Canada (C.P.S.A.C), any of its volunteers and partner agencies liable for any inadvertent error. I agree to indemnify and save harmless C.P.S.A.C, its employees and agents, and any of its volunteers from any and all liabilities, damages, losses and claims which may arise from this service. I acknowledge that I am aware that the information collected on this form may be used for research purposes. My personal information will not be used.</label>
+		</div>			
+		<div class="section-element">
+			<input id="confirmation-agreement" value="anchor" type="checkbox">
+			<label for="confirmation-agreement">I have read and agree to the above statement</label>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-element">
+			<label for="signature-name">Signed by:</label>
+			<input type="text" id="signature-name">
+		</div>
+		<div class="section-element">
+			<label for="signature-display">Signature:</label>	
+			<div class="sig-container" #sigContainer1>							
+				<signature-field></signature-field>
+			</div>
+			<div>
+				<button type="button" (click)="clear()" [disabled]="false">Clear</button>
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-element">
+			<label>Date check completed: <input type="date"></label>
+		</div>
+		<div class="section-element">
+			<label>Location:</label>
+			<select>
+				<option value="Unknown" selected>---</option>
+				<option value="AB">AB</option>
+				<option value="BC">BC</option>
+				<option value="MB">MB</option>
+				<option value="NB">NB</option>
+				<option value="NL">NL</option>
+				<option value="NS">NS</option>
+				<option value="ON">ON</option>
+				<option value="PE">PE</option>
+				<option value="QC">QC</option>
+				<option value="SK">SK</option>
+				<option value="NT">NT</option>
+				<option value="NU">NU</option>
+				<option value="YT">YT</option>
+				<option value="US">USA</option>
+				<option value="ZZ">Other</option>
+			</select> 
+			<select>
+				<option value="Unknown" selected>Choose...</option>
+				<option value="PC">Private Check</option>
+				<option value="FP">Fire/Police Hall</option>
+				<option value="CC">Community Check Event</option>
+				<option value="TT">Technician Training Event</option>
+				<option value="RS">Retail Store</option>
+				<option value="RD">Roadside Stop</option>
+				<option value="ZZ">Other</option>
+			</select>
+		</div>
+	</div>
+</div>
