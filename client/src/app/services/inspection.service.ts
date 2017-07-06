@@ -26,6 +26,8 @@ import { RequestData,
 @Injectable()
 export class InspectionService extends ApiService {
 
+  public static waiverRoute: string = "/tech/inspection/waiver";
+
   private static activeInspection: Inspection = new Inspection();
   public static activeSubject: BehaviorSubject<Inspection> = new BehaviorSubject<Inspection>(InspectionService.activeInspection);
 
@@ -43,11 +45,6 @@ export class InspectionService extends ApiService {
   public watchList(): Observable<Inspection[]> {
 
     return InspectionService.listSubject.asObservable();
-  }
-
-  public watchActive(): Observable<Inspection> {
-
-    return InspectionService.activeSubject.asObservable();
   }
 
   public updateList(): Promise<true> {
@@ -68,6 +65,26 @@ export class InspectionService extends ApiService {
             }
         });
     });
+  }
+
+  public watchActive(): Observable<Inspection> {
+
+    return InspectionService.activeSubject.asObservable();
+  }
+
+  public checkWaiver(): boolean {
+
+    if (InspectionService.activeInspection.waiver && InspectionService.activeInspection.waiver.signed) {
+
+      return true;
+    }
+
+    return false;
+  }
+
+  public acceptWaiver(name: string, signature: string) {
+
+    InspectionService.activeInspection.waiver.accept(name, signature);
   }
 
   public createInspection(data: any, callback: (error?: string) => void) {

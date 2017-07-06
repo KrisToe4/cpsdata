@@ -34,6 +34,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 import { AuthGuardService } from '@guards/auth-guard.service';
+import { WaiverGuardService } from '@guards/waiver-guard.service';
 
 import { InspectionResolverService } from '@resolvers/inspection-resolver.service';
 import { LogoutResolverService } from '@resolvers/logout-resolver.service';
@@ -83,7 +84,8 @@ import { TechService } from '@services/tech.service';
     InspectionService,
     MapService,
     MenuService,
-    TechService 
+    TechService,
+    WaiverGuardService
   ]
 })
 export class TechModule {}

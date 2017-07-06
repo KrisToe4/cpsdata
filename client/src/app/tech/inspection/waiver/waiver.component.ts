@@ -4,12 +4,18 @@ import { Component,
          QueryList,
          ViewChildren } from '@angular/core';
 
+import { ActivatedRoute,
+         Router }            from '@angular/router';
+
 import { FormBuilder, 
          FormGroup,
          Validators }  from '@angular/forms';
 
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { SignatureFieldComponent } from "@parts/signature-field/signature-field.component";
+
+import { InspectionService } from '@services/inspection.service';
+import { MenuService }       from '@services/menu.service';
 
 @Component({
   templateUrl: './waiver.component.html',
@@ -24,9 +30,29 @@ export class InspectionWaiverComponent implements OnInit {
   @ViewChildren(SignatureFieldComponent) public sigs: QueryList<SignatureFieldComponent>;
   @ViewChildren('sigContainer1') public sigContainer1: QueryList<ElementRef>;
 
-  constructor() { }
+  constructor( private route: ActivatedRoute,
+               private inspectionService: InspectionService,
+               private menuService: MenuService,
+               private router: Router ) { }
 
   ngOnInit() {
+
+    this.menuService.watchForTrigger("accept").subscribe(newRoute => {
+
+      this.inspectionService.acceptWaiver("Test", "Signature");
+      if (newRoute) {
+        
+        this.router.navigate([newRoute], {relativeTo: this.route });
+      }
+
+    });
+
+    this.menuService.watchForTrigger("reject").subscribe(newRoute => {
+
+      if (newRoute) {
+        this.router.navigate([newRoute]);
+      }
+    });
   }
 
   ngAfterViewInit() {

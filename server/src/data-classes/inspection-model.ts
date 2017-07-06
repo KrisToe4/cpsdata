@@ -6,6 +6,8 @@ export class Inspection {
     restraint: Restraint;
     date: string;
     status: string;
+    waiver: Waiver;
+
 
     constructor() { 
         this.id = -1;
@@ -14,6 +16,7 @@ export class Inspection {
         this.restraint = new Restraint();
         this.date = new Date().toISOString().substring(0, 10);
         this.status = "";
+        this.waiver = new Waiver();
     }
 }
 
@@ -70,5 +73,27 @@ export class Restraint {
         this.model = "";
         this.subModel = "";
         this.type = "";
+    }
+}
+
+export class Waiver {
+
+    signed: boolean
+
+    name: string;
+    signature: any;
+
+    constructor() {
+
+        this.signed = false;
+        this.name = "";
+        this.signature = "";
+    }
+
+    public accept(name: string, signature: string) {
+        
+        this.signed = true;
+        this.name = name;
+        this.signature = signature;
     }
 }

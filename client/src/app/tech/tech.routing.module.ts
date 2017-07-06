@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardService } from '@guards/auth-guard.service';
+import { WaiverGuardService } from '@guards/waiver-guard.service';
 
 import { InspectionResolverService } from '@resolvers/inspection-resolver.service';
 import { LogoutResolverService } from '@resolvers/logout-resolver.service';
@@ -42,11 +43,11 @@ const techRoutes: Routes = [
           { 
             path: '',
             children: [
-              { path: 'general', component: InspectionGeneralComponent },
-              { path: 'arrival', component: InspectionArrivalComponent },
-              { path: 'restraint', component: InspectionRestraintComponent },
-              { path: 'departure', component: InspectionDepartureComponent },
-              { path: 'summary', component: InspectionSummaryComponent },
+              { path: 'general', component: InspectionGeneralComponent, canActivate: [WaiverGuardService] },
+              { path: 'arrival', component: InspectionArrivalComponent, canActivate: [WaiverGuardService] },
+              { path: 'restraint', component: InspectionRestraintComponent, canActivate: [WaiverGuardService] },
+              { path: 'departure', component: InspectionDepartureComponent, canActivate: [WaiverGuardService] },
+              { path: 'summary', component: InspectionSummaryComponent, canActivate: [WaiverGuardService] },
               { path: 'waiver', component: InspectionWaiverComponent },
             ]
           },
