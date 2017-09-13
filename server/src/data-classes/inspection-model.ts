@@ -8,6 +8,8 @@ export class Inspection {
     status: string;
     waiver: Waiver;
 
+    state: string;
+
 
     constructor() { 
         this.id = -1;
@@ -17,6 +19,25 @@ export class Inspection {
         this.date = new Date().toISOString().substring(0, 10);
         this.status = "";
         this.waiver = new Waiver();
+        this.state = "server";
+    }
+
+    public fromJSON(json: any) {
+
+        this.id = json.id;
+        this.client = json.client;
+        this.vehicle = json.vehicle;
+        this.restraint = json.restraint;
+        this.date = json.date;
+        this.status = json.status;
+        this.waiver = json.waiver;
+        this.state = json.state;
+    }
+
+    public acceptWaiver(name: string, signature: string) {
+
+        this.waiver = new Waiver();    
+        this.waiver.accept(name, signature);
     }
 }
 

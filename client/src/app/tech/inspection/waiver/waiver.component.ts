@@ -28,7 +28,7 @@ import { MenuService }       from '@services/menu.service';
 export class InspectionWaiverComponent implements OnInit {
 
   @ViewChildren(SignatureFieldComponent) public sigs: QueryList<SignatureFieldComponent>;
-  @ViewChildren('sigContainer1') public sigContainer1: QueryList<ElementRef>;
+  @ViewChildren('sigContainer') public sigContainer1: QueryList<ElementRef>;
 
   constructor( private route: ActivatedRoute,
                private inspectionService: InspectionService,
@@ -42,7 +42,7 @@ export class InspectionWaiverComponent implements OnInit {
       this.inspectionService.acceptWaiver("Test", "Signature");
       if (newRoute) {
         
-        this.router.navigate([newRoute], {relativeTo: this.route });
+        this.router.navigate([newRoute + '/general']);
       }
 
     });

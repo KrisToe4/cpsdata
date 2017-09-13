@@ -39,6 +39,8 @@ import { WaiverGuardService } from '@guards/waiver-guard.service';
 import { InspectionResolverService } from '@resolvers/inspection-resolver.service';
 import { LogoutResolverService } from '@resolvers/logout-resolver.service';
 
+import { InspectionManager } from '@managers/inspection-manager';
+
 import { InspectionService } from '@services/inspection.service';
 import { MapService } from '@services/map.service';
 import { MenuService } from '@services/menu.service';
@@ -81,6 +83,7 @@ import { TechService } from '@services/tech.service';
     InspectionResolverService,
     LogoutResolverService,
     GoogleMapsAPIWrapper,
+    InspectionManager,
     InspectionService,
     MapService,
     MenuService,

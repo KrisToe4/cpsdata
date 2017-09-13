@@ -1,6 +1,7 @@
 <div class="view-contents">
   <div class="list">
     <div class="list-row list-header">
+      <div class="list-col">ID</div>
       <div class="list-col">Client</div>
       <div class="list-col">Vehicle</div>
       <div class="list-col">Seat</div>
@@ -8,6 +9,7 @@
       <div class="list-col">Status</div>
     </div>
     <div class="list-row" *ngFor="let inspection of list" [class.selected]="selected.id == inspection.id" (click)="selectInspection(inspection);">
+      <div class="list-col">{{inspection.id}}</div>
       <div class="list-col">{{inspection.client.name}}</div>
       <div class="list-col">{{inspection.vehicle.manufacturer}} {{inspection.vehicle.model}}</div>
       <div class="list-col">{{inspection.restraint.manufacturer}} {{inspection.restraint.model}}</div>

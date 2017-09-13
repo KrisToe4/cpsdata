@@ -13,7 +13,8 @@ import 'rxjs/add/operator/map';
 import { ApiService } from './api.service';
 import { TechService } from './tech.service';
 
-import { Inspection } from '@server-src/data-classes/inspection-model';
+import { Inspection,
+         Waiver } from '@server-src/data-classes/inspection-model';
 
 import { Tech, 
          TechList } from '../data-classes/tech';
@@ -47,7 +48,7 @@ export class InspectionService extends ApiService {
     return InspectionService.listSubject.asObservable();
   }
 
-  public updateList(): Promise<true> {
+  public updateList(): Promise<boolean> {
 
     let service: InspectionService = this;
 
@@ -82,9 +83,9 @@ export class InspectionService extends ApiService {
     return false;
   }
 
-  public acceptWaiver(name: string, signature: string) {
-
-    InspectionService.activeInspection.waiver.accept(name, signature);
+  public acceptWaiver(name: string, signature: string) { 
+    
+    InspectionService.activeInspection.acceptWaiver(name, signature); 
   }
 
   public createInspection(data: any, callback: (error?: string) => void) {
@@ -125,7 +126,6 @@ export class InspectionService extends ApiService {
   }
 
   /** Private methods that interface with the API itself **/
-
   private getList(callback: (error: string) => void) {
 
     let request: RequestData = new RequestData("list", { 
@@ -150,6 +150,8 @@ export class InspectionService extends ApiService {
     );
   }
 
+  //private update()
+
   private getInspection(id: number, callback: (error?: string, inspection?: Inspection) => void) {
 
     // *** We'll want to check our local store first, but for now load from the server ***
@@ -171,7 +173,10 @@ export class InspectionService extends ApiService {
         }
         else {
 
-          callback(null, response.data as Inspection);
+          let inspection: Inspection = new Inspection();
+          inspection.fromJSON(response.data);
+          
+          callback(null, inspection);
         }
         
       },

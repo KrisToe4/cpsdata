@@ -6,7 +6,7 @@ import { ActivatedRoute,
 import { MenuService }       from '@services/menu.service';
 
 import { Inspection } from '@server-src/data-classes/inspection-model';
-import { InspectionService } from '@services/inspection.service';
+import { InspectionManager } from '@managers/inspection-manager';
 
 @Component({
   selector: 'app-list',
@@ -23,7 +23,7 @@ export class InspectionListComponent implements OnInit {
   list: Inspection[] = [];
 
   constructor( private route: ActivatedRoute,
-               private inspectionService: InspectionService,
+               private inspectionManager: InspectionManager,
                private menuService: MenuService,
                private router: Router ) { }
 
@@ -32,11 +32,11 @@ export class InspectionListComponent implements OnInit {
     let component: InspectionListComponent = this;
     let router = this.router;
 
-    this.inspectionService.watchList().subscribe(list => {
+    this.inspectionManager.watchList().subscribe((list: Inspection[]) => {
       component.list = list;
     });
 
-    this.inspectionService.watchActive().subscribe(inspection => {
+    this.inspectionManager.watchActive().subscribe(inspection => {
 
       if ((component.selected == undefined) || (component.selected.id != inspection.id)) {
         component.selected = inspection;
@@ -65,7 +65,7 @@ export class InspectionListComponent implements OnInit {
   selectInspection(inspection: Inspection) {
 
     this.selected = inspection;
-    this.inspectionService.setActive(inspection.id);
+    this.inspectionManager.setActive(inspection.id);
   }
 
 }

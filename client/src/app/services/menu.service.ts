@@ -67,7 +67,7 @@ export class MenuService {
       MenuService.currentMenuSubject.next(MenuService.getCurrentMenu());
   }
 
-  private updateMenu(url: string): Promise<true> {
+  private updateMenu(url: string): Promise<boolean> {
     
     return new Promise(resolve => {
 
@@ -132,7 +132,9 @@ export class MenuService {
     let menu: Menu = MenuService.getCurrentMenu();
 
     let newRoute: string;
-    if (menuItem.action == "back") { // Back action is a Special Case
+    if ((menuItem.action == "back") || 
+        (menuItem.route == "*")) { // Back action or action with * route 
+                                   // are special cases
 
       newRoute = menu.relativeTo;
     }

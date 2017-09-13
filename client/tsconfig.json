@@ -6,6 +6,7 @@
     "paths": {
       "@parts/*": ["./app/parts/*"],
       "@guards/*": ["./app/guards/*"],
+      "@managers/*": ["./app/data-managers/*"],
       "@resolvers/*": ["./app/resolvers/*"],
       "@server-src/*": ["../../server/src/*"],
       "@services/*": ["./app/services/*"]
