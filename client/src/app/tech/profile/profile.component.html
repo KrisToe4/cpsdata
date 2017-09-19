@@ -13,24 +13,27 @@
             <label>Name: <input type="text" id="name" formControlName="name"></label>
           </div>
         </div>
-        <div class="section">
+        <div class="section" formGroupName="cert">
           <div class="section-title"><span>Certification</span></div>
           <div class="section-element">
             <label> Organization:
-              <select formControlName="certOrg">
+              <select formControlName="org">
                 <option *ngFor="let org of certList.orgs" [value]="org">{{org}}</option>
               </select>
             </label>
           </div>
           <div class="section-element">
             <label>Certificate:
-              <select formControlName="certType">
+              <select formControlName="type">
                 <option *ngFor="let type of certList.types" [value]="type">{{type}}</option>
               </select>
             </label>
           </div>
           <div class="section-element">
             <label>Expiry Date:<input type="date" formControlName="certDate"></label>
+          </div>
+          <div class="section-element" *ngIf="certValid == false">
+            <span class="cert-verification-msg">{{certVerificationMsg}}</span>
           </div>
         </div>
       </div>

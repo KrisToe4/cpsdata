@@ -66,14 +66,8 @@ export class TechManager {
 
     public loadTech(techID: number, callback: (err: any, tech: Tech) => void) {
 
-        let sqlQuery: string = 'SELECT status, email, name, certOrg, certType, certDate ' +
-                               'FROM tech_profile p ' +
-                               'LEFT JOIN (tech_certification tc  ' +
-                               'INNER JOIN certifications c ON tc.certID = c.id) ON p.id = tc.techID ' +
-                               'WHERE p.id = ?' ;
-
         let db = DatabaseManager.getConnection();
-        db.query(sqlQuery, [techID], function (error, results, fields) {
+        db.query('SELECT status, email, name from tech_profile where id = ?', [techID], function (error, results, fields) {
             
             if (error) {
                 callback(error, new Tech());
@@ -83,22 +77,44 @@ export class TechManager {
             if (results.length > 0) {
 
                 let techJSON = results[0];
+    
+                let sqlQuery: string = 'SELECT org, type, certDate, valid ' +
+                                        'FROM tech_certification tc  ' +
+                                        'INNER JOIN certifications c ON tc.certID = c.id ' +
+                                        'WHERE tc.techID = ?' ;             
 
-                db.query('SELECT * from tech_contact where techID = ?', [techID], function (error, mapResults, fields) {
+                db.query(sqlQuery, [techID], function (error, certResults, fields) {
+
                     if (error) {
                         callback(error, new Tech());
                         return;
                     }
 
                     // If we have map entry details add them to the JSON object
-                    if (mapResults.length > 0) {
+                    if (certResults.length > 0) {
 
-                        techJSON.mapEntry = mapResults[0];                    
-                    }
+                        techJSON.cert = certResults[0];  
+                    }     
+                        
+                    db.query('SELECT * from tech_contact where techID = ?', [techID], function (error, mapResults, fields) {
+                        if (error) {
+                            callback(error, new Tech());
+                            return;
+                        }
+    
+                        // If we have map entry details add them to the JSON object
+                        if (mapResults.length > 0) {
+    
+                            techJSON.mapEntry = mapResults[0];                    
+                        }
 
-                    let tech: Tech = new Tech();
-                    tech.storeProfile(techJSON);
-                    callback(null, tech);
+                        console.log(techJSON);
+    
+                        let tech: Tech = new Tech();
+                        tech.storeProfile(techJSON);
+                        callback(null, tech);
+                    });
+                    
                 });
             }
             else {
@@ -115,12 +131,12 @@ export class TechManager {
 
         }
 
-        let sqlQuery: string = 'SELECT name, certType, tcon.* ' +
+        let sqlQuery: string = 'SELECT name, type, tcon.* ' +
                                'FROM tech_profile p ' +
                                'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
                                'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
                                'INNER JOIN certifications c ON tcert.certID = c.id ' +
-                               'WHERE p.status = "active" and tcon.public = "true" AND c.certOrg = ? AND tcert.valid = "true"' ;
+                               'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true"' ;
 
         let db = DatabaseManager.getConnection();
         db.query(sqlQuery, [options.org], function (error, results, fields) {
@@ -138,7 +154,9 @@ export class TechManager {
                 results.forEach((result: any) => {
                     techList.push({
                         name: result.name,
-                        certType: result.certType,
+                        cert: {
+                            type: result.type
+                        },
                         mapEntry: {
                             geoLat: result.geoLat,
                             geoLng: result.geoLng,
@@ -213,11 +231,8 @@ export class TechManager {
                 return;
             }
 
-            let cert = { 
-                org: techJSON.certOrg, 
-                type: techJSON.certType, 
-                date: techJSON.certDate 
-            };
+            let cert = techJSON.cert;
+
             manager.updateCertifications(techID, cert, function(error: string, certAdmin: string) {
 
                 if (error) {
@@ -246,7 +261,7 @@ export class TechManager {
         // Check if this tech already has the indicated certification. If they do update the certDate otherwise insert
         let db = DatabaseManager.getConnection();
         db.query('SELECT id, adminEmail FROM certifications ' +
-                 'WHERE certOrg = ? and certType = ?',
+                 'WHERE org = ? and type = ?',
                  [cert.org, cert.type], function (error, results, fields) {
 
             if (error) {
@@ -272,7 +287,7 @@ export class TechManager {
                     return;
                 }
 
-                let certDate = new Date(cert.date);
+                let certDate = new Date(cert.certDate);
 
                 let sqlQuery = "";
                 let sqlFields = [{}];

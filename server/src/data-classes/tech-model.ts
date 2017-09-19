@@ -24,9 +24,10 @@ export class TechModel {
 
             this.profile.email = profile.email;
             this.profile.name = profile.name;
-            this.profile.certOrg = profile.certOrg;
-            this.profile.certType = profile.certType;
-            this.profile.certDate = profile.certDate;
+
+            if (profile.cert) {
+                this.profile.cert = profile.cert;
+            }
         }
 
         let mapEntry = data.mapEntry;
@@ -54,12 +55,13 @@ export class TechModel {
 
         this.profile = new TechProfile(json.email);
         this.profile.name = json.name;
-        this.profile.certOrg = json.certOrg;
-        this.profile.certType = json.certType;
-        this.profile.certDate = json.certDate;
-        if (this.profile.certDate && (this.profile.certDate.length > 10))
-        {
-            this.profile.certDate = this.profile.certDate.substring(0, 10);
+        
+        if (json.cert) {
+            let certValid = (json.cert.valid == "true") ? true : false;
+            this.profile.cert = new TechCertification(json.cert.org, json.cert.type, json.cert.certDate, certValid)
+        }
+        else {
+            this.profile.cert = new TechCertification();
         }
 
         if (json.mapEntry) {
@@ -90,9 +92,11 @@ export class TechModel {
         let json = {
             "email": this.profile.email,
             "name": this.profile.name,
-            "certOrg": this.profile.certOrg,
-            "certType": this.profile.certType,
-            "certDate": this.profile.certDate,
+            "cert": {
+                "org": this.profile.cert.org,
+                "type": this.profile.cert.type,
+                "certDate": this.profile.cert.certDate
+            },
             "mapEntry": {
                 "public": "",
                 "address": this.mapEntry.address,
@@ -113,6 +117,7 @@ export class TechModel {
         };
 
         // Now fill those in here
+        json["cert"]["valid"] = this.profile.cert.valid ? "true" : "false";
         json["mapEntry"]["public"] = this.mapEntry.public ? "true" : "false";
         json["mapEntry"]["displayEmail"] = this.mapEntry.displayEmail ? "true" : "false";
         json["mapEntry"]["displayPhone"] = this.mapEntry.displayPhone ? "true" : "false";
@@ -125,17 +130,13 @@ export class TechModel {
 export class TechProfile {
     email: string; 
     name: string; 
-    certOrg: string; 
-    certType: string; 
-    certDate: string; // Formatted as "yyyy-MM-dd"
+    cert: TechCertification;
 
     constructor(email?: string)
     {
         this.email = email && email || "";
         this.name = "";
-        this.certOrg = "";
-        this.certType = "";
-        this.certDate = new Date().toISOString().substring(0, 10);
+        this.cert = new TechCertification();
     }
 }
 
@@ -176,10 +177,31 @@ export class TechMapEntry {
     }
 }
 
-export const TechCertifications = {
+export const TechCertTypes = {
     // ** For R&D Purposes Only. This list should be loaded from api ** //
-    orgs: ["CPSAC"],
-    types: ["CPST", "CPST-I", "CPST-IT"]
+    orgs: ["*None", "CPSAC"],
+    types: ["*None", "CPST", "CPST-I", "CPST-IT"]
+}
+
+export class TechCertification {
+    org: string; 
+    type: string; 
+    certDate: string; // Formatted as "yyyy-MM-dd"
+    valid: boolean;
+
+    constructor(org?: string, type?: string, certDate?: string, valid?: boolean)
+    {
+        this.org = org && org || TechCertTypes.orgs[0];
+        this.type = type && type || TechCertTypes.types[0];
+
+        this.certDate = certDate && certDate || new Date().toISOString().substring(0, 10);
+        if (this.certDate.length > 10)
+        {
+            this.certDate = this.certDate.substring(0, 10);
+        }
+
+        this.valid = valid && valid || false;
+    }
 }
 
 export class TechCredential {

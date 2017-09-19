@@ -16,7 +16,8 @@ import { MapSearchResult } from '../../data-classes/map-api';
 import { TechService } from '@services/tech.service';
 import { TechProfile,
          TechMapEntry,
-         TechCertifications } from '@server-src/data-classes/tech-model';
+         TechCertification,
+         TechCertTypes } from '@server-src/data-classes/tech-model';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -29,7 +30,10 @@ import { TechProfile,
 
 export class ProfileComponent implements OnInit {
 
-  certList = TechCertifications;
+  certList = TechCertTypes;
+
+  certValid: boolean = false;
+  certVerificationMsg: string = "";
 
   form: FormGroup;
   unsavedChanges: boolean = false;
@@ -66,7 +70,11 @@ export class ProfileComponent implements OnInit {
   private buildForm() {
 
     this.form = this.formBuilder.group({
-      profile: this.formBuilder.group(new TechProfile()),
+      profile: this.formBuilder.group({
+        email: [""],
+        name: [""],
+        cert: this.formBuilder.group(new TechCertification())
+      }),
       mapEntry: this.formBuilder.group(new TechMapEntry())
     });
   }
@@ -75,13 +83,24 @@ export class ProfileComponent implements OnInit {
 
     this.techService.getProfileObserver().subscribe((profileInfo: TechProfile) => {
 
-      // Set up default values
-      if (profileInfo.certOrg == null) {
+      // Disable the map entry group if they don't have a valid certification
+      if (profileInfo.cert.valid) {
 
-        profileInfo.certOrg = TechCertifications.orgs[0];
-        profileInfo.certType = TechCertifications.types[0];
-        profileInfo.certDate = new Date().toISOString().substring(0, 10);
+        this.certValid = true;
       }
+      else {
+        
+        this.certValid = false;
+        if (profileInfo.cert.org == TechCertTypes.orgs[0]) {
+
+          this.certVerificationMsg = "*Certification UNREGISTERED (required for adding a map entry)";
+        }
+        else {
+
+          this.certVerificationMsg = "*Certification UNVERIFIED (required for adding a map entry).";
+        }
+        this.form.controls['mapEntry'].disable();
+    }
 
       this.form.patchValue({
         profile: profileInfo
@@ -110,8 +129,19 @@ export class ProfileComponent implements OnInit {
       this.currentPosition.lng = mapInfo.geoLng;
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.subscribe((data) => {
+
       this.unsavedChanges = true;
+
+      // Need to handle individual formcontrol state but its proving difficult....
+
+      /*
+      if (data.mapEntry.public == false) {
+
+        //this.form.get('mapEntry.displayEmail').disable({emitEvent: false});
+      }
+      */
+
     });
   }
 
@@ -139,6 +169,14 @@ export class ProfileComponent implements OnInit {
         profileComponent.currentPosition = mapInfo;
       });
     })
+  }
+
+  invalidCert() {
+
+    let invalidCert = true;
+
+
+    return invalidCert;
   }
 
   saveBtnClicked() {
