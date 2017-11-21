@@ -1,21 +1,7 @@
 .menu {
 	height: 100%;
+	width: 100px;
 	background-color: #CC5555;
-}
-
-.menu-btn {
-	position: absolute;
-	top: 50px;
-	left: 5px
-}
-
-.menu-btn-hidden {
-	display: none;
-}
-
-.menu-btn img {
-	max-height: 20px;
-	max-width: 20px;
 }
 
 .menu-item {

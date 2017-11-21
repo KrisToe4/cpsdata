@@ -1,7 +1,4 @@
 <nav class="menu">
-  <div class="menu-btn" [class.menu-btn-hidden]="showMenuBtn == false" (click)="menuBtnClicked()">
-    <img src="/assets/menu-btn.png" alt="menu"/>
-  </div>
   <div class="menu-item" *ngFor="let item of menu.menuItems">
     <div class="menu-item-btn" 
          [class.active]="(item.route != '') && currentRoute.includes(item.route)"
