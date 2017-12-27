@@ -7,6 +7,8 @@ import { NgModule } from '@angular/core';
 import { AgmCoreModule,
          GoogleMapsAPIWrapper } from '@agm/core';
 
+import { SidebarModule } from 'ng-sidebar';
+
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { SignatureFieldComponent } from '@parts/signature-field/signature-field.component';
 
@@ -75,6 +77,7 @@ import { TechService } from '@services/tech.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SidebarModule.forRoot(),
     SignaturePadModule,
     TechRoutingModule
   ],

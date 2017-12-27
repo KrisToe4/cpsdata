@@ -23,7 +23,6 @@ export class MenuComponent implements OnInit {
   menu: Menu;
 
   currentRoute: string = "";
-  showMenuBtn: boolean = false;
 
   constructor( private route: ActivatedRoute,
                private menuService: MenuService,
@@ -40,10 +39,6 @@ export class MenuComponent implements OnInit {
       }
     });
 
-    this.menuService.watchMenuBtnVisibility().subscribe(showBtn => {
-      this.showMenuBtn = showBtn;
-    });
-
     this.menuService.watchCurrentMenu().subscribe(currentMenu => {
       this.menu = currentMenu;
     });
@@ -51,10 +46,6 @@ export class MenuComponent implements OnInit {
     this.menuService.watchForTrigger("back").subscribe(route => {
       this.router.navigate([route]);
     });
-  }
-
-  menuBtnClicked() {
-    this.menuService.clickMenuBtn();
   }
 
   onClick(menuItem: MenuItem) {

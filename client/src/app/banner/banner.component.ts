@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MenuService }       from '@services/menu.service';
+
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -7,11 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BannerComponent implements OnInit {
 
-  
+  constructor(private menuService: MenuService) { }
 
-  constructor() { }
+  ngOnInit() { }
 
-  ngOnInit() {
+  menuBtnClicked() {
+    this.menuService.clickMenuBtn();
   }
 
 }

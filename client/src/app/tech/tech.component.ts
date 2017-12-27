@@ -1,6 +1,8 @@
 import { Component,
          HostListener } from '@angular/core';
 
+import { SidebarModule } from 'ng-sidebar';
+
 import { MenuService } from '@services/menu.service';
 
 @Component({
@@ -9,22 +11,17 @@ import { MenuService } from '@services/menu.service';
 })
 export class TechComponent {
 
-  hideMenu: boolean = false;
+  private _opened: boolean = true;
+  private _mode: string = "push";
+  private _dock: boolean = false;
+  private _autoCollapseWidth: number = 768;
 
+  hideMenu: boolean = false;
+  
   constructor( private menuService: MenuService ) { 
 
     this.menuService.watchMenuVisibility().subscribe(visible => {
-      this.hideMenu = !visible;
+      this._opened = visible;
     });
-  }
-
-      /*
-  * Adding even listener for resize window using the decorator HostListener
-  * This will set the property innerWidth and decide wether or not we will
-  * show the menu without button click
-  */
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.menuService.updateViewportWidth(event.target.innerWidth);
   }
 }

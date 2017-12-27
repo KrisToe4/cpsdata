@@ -18,3 +18,8 @@ body {
 	overflow: hidden;
 	background-color: #000000;
 }
+
+.app-content > div {
+	height: 100%;
+	background-color: white
+}
