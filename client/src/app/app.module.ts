@@ -4,6 +4,9 @@ import { FormsModule,
          ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '@modules/material.module';
+
 import { AgmCoreModule,
          MarkerManager } from '@agm/core';
 
@@ -46,6 +49,8 @@ import { TechModule } from './tech/tech.module';
       apiKey: 'AIzaSyC-86oRgcmLww9IEG_6fGD0yblWQFVQrPA' // This google API Key needs to be locked down in production in https://console.developers.google.com
     }),
     BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,

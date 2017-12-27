@@ -7,6 +7,7 @@
       "@parts/*": ["./app/parts/*"],
       "@guards/*": ["./app/guards/*"],
       "@managers/*": ["./app/data-managers/*"],
+      "@modules/*": ["./app/modules/*"],
       "@resolvers/*": ["./app/resolvers/*"],
       "@server-src/*": ["../../server/src/*"],
       "@services/*": ["./app/services/*"]

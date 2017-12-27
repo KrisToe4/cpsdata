@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* Generic Classes */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 .noselect {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
