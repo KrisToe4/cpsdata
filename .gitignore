@@ -42,3 +42,4 @@ e2e/*.map
 # System Files
 .DS_Store
 Thumbs.db
+client/1.0.0
