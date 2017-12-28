@@ -1,14 +1,14 @@
-<div class="full">
+<mat-card class="full">
   <div class="org-logo">
     <img src="/assets/map/cpsac-logo.png" alt="CPSAC Logo" />
   </div>
-  <div class="filter">
-    <app-map-controls></app-map-controls>
-  </div>
-  <div class="list">
-    <app-map-tech-list [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromList($event)"></app-map-tech-list>
-  </div>
-  <div class="right">
-    <app-map-viewport [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromMap($event)"></app-map-viewport>
-  </div>
-</div>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened="true">
+      <app-map-controls></app-map-controls>
+      <app-map-tech-list [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromList($event)"></app-map-tech-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-map-viewport [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromMap($event)"></app-map-viewport>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</mat-card>

@@ -1,15 +1,19 @@
-<div class="title">Filter</div>
-<div class="filter">
-  <label>Type:
-    <select>
-      <option *ngFor="let type of certTypes" [value]="type">{{type}}</option>
-    </select>
-  </label>
-</div>
-<div class="filter">
-  <label>Radius:
-    <select>
-      <option *ngFor="let radius of radiusOptions" [value]="radius">{{radius}}</option>
-    </select>
-  </label>
-</div>
+<mat-card>
+  <mat-toolbar>Filter</mat-toolbar>
+  <mat-list>
+    <mat-list-item>
+      <label>Type:
+        <select>
+          <option *ngFor="let type of certTypes" [value]="type">{{type}}</option>
+        </select>
+      </label>
+    </mat-list-item>
+    <mat-list-item>
+      <label>Radius:
+        <select>
+          <option *ngFor="let radius of radiusOptions" [value]="radius">{{radius}}</option>
+        </select>
+      </label>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
