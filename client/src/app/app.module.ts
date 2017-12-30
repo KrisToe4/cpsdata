@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { BannerComponent } from './banner/banner.component';
+import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
 
 // Map Components
@@ -36,6 +37,7 @@ import { TechModule } from './tech/tech.module';
   declarations: [
     AppComponent,
     BannerComponent,
+    MenuComponent,
     MapComponent,
     MapControlsComponent,
     MapTechListComponent,

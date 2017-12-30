@@ -1,0 +1,8 @@
+<div *ngIf="activeMenu.menuItems.length > 1">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let item of activeMenu.menuItems" (click)="onClick(item);">{{item.display}}</button>
+  </mat-menu>
+</div>

@@ -17,7 +17,7 @@ import { MenuService }       from '@services/menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  menu: Menu;
+  activeMenu: Menu;
 
   currentRoute: string = "";
 
@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
     });
 
     this.menuService.watchCurrentMenu().subscribe(currentMenu => {
-      this.menu = currentMenu;
+      this.activeMenu = currentMenu;
     });
 
     this.menuService.watchForTrigger("back").subscribe(route => {
@@ -54,7 +54,7 @@ export class MenuComponent implements OnInit {
     }
     else if (menuItem.route) {
 
-      this.router.navigate([this.menu.relativeTo + menuItem.route]);
+      this.router.navigate([this.activeMenu.relativeTo + menuItem.route]);
     }
 
     return false;

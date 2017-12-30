@@ -31,7 +31,6 @@ import { InspectionWaiverComponent } from './inspection/waiver/waiver.component'
 
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './tech.logout.component';
-import { MenuComponent } from './menu/menu.component';
 import { PasswordComponent } from './password/password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
@@ -62,7 +61,6 @@ import { TechService } from '@services/tech.service';
     InspectionWaiverComponent,
     LoginComponent,
     LogoutComponent,
-    MenuComponent,
     PasswordComponent,
     ProfileComponent,
     RegisterComponent,
