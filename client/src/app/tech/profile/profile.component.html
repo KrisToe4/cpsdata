@@ -1,96 +1,96 @@
-<div class="view">
-  <div class="view-header">
-    <span>General Information</span>
-  </div>
-  <div class="view-contents">
-    <form [formGroup]="form" novalidate>
-      <div formGroupName="profile">
-        <div class="section">
-          <div class="section-element">
-            <label>Email: <input type="email" id="email" formControlName="email"></label>
-          </div>
-          <div class="section-element">
-            <label>Name: <input type="text" id="name" formControlName="name"></label>
-          </div>
+<mat-card>
+  <form [formGroup]="form" novalidate>
+    <div formGroupName="profile">
+      <mat-card>
+        <h2>General Information</h2>
+        <div>
+          <label>Email:
+            <input type="email" id="email" formControlName="email">
+          </label>
         </div>
-        <div class="section" formGroupName="cert">
-          <div class="section-title"><span>Certification</span></div>
-          <div class="section-element">
+        <div>
+          <label>Name:
+            <input type="text" id="name" formControlName="name">
+          </label>
+        </div>
+        <div formGroupName="cert">
+          <h3>Certification</h3>
+          <div>
             <label> Organization:
               <select formControlName="org">
                 <option *ngFor="let org of certList.orgs" [value]="org">{{org}}</option>
               </select>
             </label>
           </div>
-          <div class="section-element">
+          <div>
             <label>Certificate:
               <select formControlName="type">
                 <option *ngFor="let type of certList.types" [value]="type">{{type}}</option>
               </select>
             </label>
           </div>
-          <div class="section-element">
-            <label>Expiry Date:<input type="date" formControlName="certDate"></label>
+          <div>
+            <label>Expiry Date:
+              <input type="date" formControlName="certDate">
+            </label>
           </div>
-          <div class="section-element" *ngIf="certValid == false">
+          <div *ngIf="certValid == false">
             <span class="cert-verification-msg">{{certVerificationMsg}}</span>
           </div>
         </div>
-      </div>
-      <div formGroupName="mapEntry">
-        <div class="section">
-          <div class="section-title"><span>Map Entry</span></div>
-          <div class="section-element">
-            <input type="checkbox" formControlName="public">
-            <label>Display on Map:</label>   
-          </div>
-          <div class="section-element section-element-indented">
-            <input type="checkbox" formControlName="displayEmail">
-            <label>Email: <input id="map_email" type="text" formControlName="email"></label>
-          </div>
-          <div class="section-element section-element-indented">
-            <input type="checkbox" formControlName="displayPhone">
-            <label>Phone: <input id="phone" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone"></label>
-            <label>Alt:<input id="phone2" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone2"></label>
-          </div>
-          <div class="section-element section-element-indented">
-            <div>
-              <input type="checkbox" formControlName="displayWebsite">
-              <label>Website: <input id="website" type="url" formControlName="websiteURL"></label>
-            </div>
-            <div id="website-name-div">
-              <label>Site Name: <input id="website-name" type="text" formControlName="websiteName"></label>
-            </div>
-          </div>
-          <div class="section">
-            <div class="section-element">
-              <label>Location: 
-                <input #mapSearch id="profile-map-address" type="textbox" placeholder="Search" (keyup.enter)="searchAddress(mapSearch.value)">
-              </label> 
-              <input type="button" value="Go!" (click)="searchAddress(mapSearch.value)">
-            </div>
-            <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
-              <agm-marker [latitude]="currentPosition.lat" [longitude]="currentPosition.lng"></agm-marker>
-            </agm-map>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="view-footer">
-    <div class="section section-inline">
-      <div class="section-element">
-        <div class="ctrl-btn">
-          <div class="noselect" [class.ctrl-btn-enabled]="unsavedChanges == true" 
-                                [class.ctrl-btn-disabled]="unsavedChanges == false"
-                                (click)="saveBtnClicked()">Save</div>
-        </div>
-      </div>
-      <div class="section-element">
-        <div class="ctrl-btn">
-          <div class="noselect ctrl-btn-enabled" (click)="revertBtnClicked()">Revert</div>
-        </div>
-      </div>
+      </mat-card>
     </div>
-  </div>
-</div>
+    <mat-card formGroupName="mapEntry">
+      <h2>Map Entry</h2>
+      <div>
+        <input type="checkbox" formControlName="public">
+        <label>Display on Map:</label>
+      </div>
+      <mat-card>
+        <div>
+          <input type="checkbox" formControlName="displayEmail">
+          <label>Email:
+            <input id="map_email" type="text" formControlName="email">
+          </label>
+        </div>
+        <div>
+          <input type="checkbox" formControlName="displayPhone">
+          <label>Phone:
+            <input id="phone" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone">
+          </label>
+          <label>Alt:
+            <input id="phone2" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone2">
+          </label>
+        </div>
+        <div>
+          <div>
+            <input type="checkbox" formControlName="displayWebsite">
+            <label>Website:
+              <input id="website" type="url" formControlName="websiteURL">
+            </label>
+          </div>
+          <div id="website-name-div">
+            <label>Site Name:
+              <input id="website-name" type="text" formControlName="websiteName">
+            </label>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card>
+        <div>
+          <input #mapSearch id="profile-map-address" type="textbox" placeholder="Search" (keyup.enter)="searchAddress(mapSearch.value)">
+          <button mat-button (click)="searchAddress(mapSearch.value)">Go!</button>
+        </div>
+        <div>
+          <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
+            <agm-marker [latitude]="currentPosition.lat" [longitude]="currentPosition.lng"></agm-marker>
+          </agm-map>
+        </div>
+      </mat-card>
+    </mat-card>
+  </form>
+  <mat-card>
+    <button mat-button [disabled]="unsavedChanges == false" (click)="saveBtnClicked()">Save</button>
+    <button mat-button (click)="revertBtnClicked()">Revert</button>
+  </mat-card>
+</mat-card>

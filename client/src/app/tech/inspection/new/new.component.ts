@@ -19,11 +19,7 @@ import { MenuService } from '@services/menu.service';
 @Component({
   selector: 'app-inspection-create',
   templateUrl: './new.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../../tech.view.css',
-    './new.component.css'
-  ]
+  styleUrls: ['./new.component.css']
 })
 export class InspectionNewComponent implements OnInit {
 

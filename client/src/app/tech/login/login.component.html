@@ -1,36 +1,14 @@
-<div class="view">
-  <div class="view-contents">
-    <div class="section">
-      <div class="section-title"><span>Sign In</span></div>
-      <div class="section-element">
-        <input #email id="email" type="email" placeholder="Email">
-      </div>
-      <div class="section-element">
-        <input #password id="password" type="password" placeholder="Password" (keyup.enter)="onLoginClick(email.value, password.value)">
-      </div>
-    </div>
-    <div class="section section-inline">
-      <div class="section-element">
-        <div class="ctrl-btn ctrl-btn-enabled">
-          <div class="noselect" (click)="onLoginClick(email.value, password.value)">Log In</div>
-        </div>
-      </div>
-      <div class="section-element">
-          <div id="forgot-lnk" (click)="resetPassword()">Forgot Password</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><span>Or Register</span></div>
-      <div class="section-element">
-        <input #regEmail id="login-email" type="email" placeholder="Email" (keyup.enter)="onRegisterClick(regEmail.value)">
-      </div>
-      <div class="section-element">
-        <div class="ctrl-btn ctrl-btn-enabled">
-          <div class="noselect" (click)="onRegisterClick(regEmail.value)">Submit</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
+<mat-card>
+  <h2>Sign In</h2>
+  <mat-card>
+    <div><input #email id="email" type="email" placeholder="Email"></div>
+    <div><input #password id="password" type="password" placeholder="Password" (keyup.enter)="onLoginClick(email.value, password.value)"></div>
+    <button mat-button (click)="onLoginClick(email.value, password.value);">Log In</button>
+    <button mat-button (click)="resetPassword();">Forgot Password</button>
+  </mat-card>
+  <mat-card>
+    <h3>Or Register</h3>
+    <div><input #regEmail id="login-email" type="email" placeholder="Email" (keyup.enter)="onRegisterClick(regEmail.value)"></div>
+    <button mat-button (click)="onRegisterClick(regEmail.value)">Submit</button>
+  </mat-card>
+</mat-card>

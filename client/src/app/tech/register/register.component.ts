@@ -10,11 +10,7 @@ import { TechService } from '@services/tech.service';
 
 @Component({
   templateUrl: './register.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../tech.view.css',
-    './register.component.css'
-  ]
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
 

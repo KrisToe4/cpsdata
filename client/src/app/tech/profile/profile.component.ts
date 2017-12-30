@@ -21,11 +21,7 @@ import { TechProfile,
 
 @Component({
   templateUrl: './profile.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../tech.view.css',
-    './profile.component.css'
-  ]
+  styleUrls: ['./profile.component.css']
 })
 
 export class ProfileComponent implements OnInit {

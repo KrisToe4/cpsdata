@@ -4,6 +4,9 @@ import { FormsModule,
          ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '@modules/material.module';
+
 import { AgmCoreModule,
          GoogleMapsAPIWrapper } from '@agm/core';
 
@@ -15,8 +18,6 @@ import { SignatureFieldComponent } from '@parts/signature-field/signature-field.
 import { TechRoutingModule } from './tech.routing.module';
 
 import { TechComponent } from './tech.component';
-
-import { ControlsComponent } from './controls/controls.component';
 
 import { InspectionComponent } from './inspection/inspection.component';
 import { InspectionArrivalComponent } from './inspection/arrival/arrival.component';
@@ -50,7 +51,6 @@ import { TechService } from '@services/tech.service';
 
 @NgModule({
   declarations: [
-    ControlsComponent,
     InspectionComponent,
     InspectionArrivalComponent,
     InspectionNewComponent,
@@ -74,6 +74,8 @@ import { TechService } from '@services/tech.service';
       apiKey: 'AIzaSyC-86oRgcmLww9IEG_6fGD0yblWQFVQrPA' // This google API Key needs to be locked down in production in https://console.developers.google.com
     }),
     BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

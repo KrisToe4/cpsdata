@@ -1,19 +1,10 @@
-<!-- Container for sidebar(s) + page content -->
-<ng-sidebar-container [contentClass]="'app-content'">
-
-    <!-- A sidebar -->
-    <ng-sidebar [(opened)]="_opened"
-                [mode]="_mode"
-                [dock]="_dock"
-                [sidebarClass]="'app-sidebar'"
-                [autoCollapseWidth]="_autoCollapseWidth">
-
-        <app-menu></app-menu>
-
-    </ng-sidebar>
-    <!-- Page content -->
-    <div ng-sidebar-content>
-        <router-outlet></router-outlet>
-    </div>
-
-</ng-sidebar-container>
+<mat-card>
+    <mat-sidenav-container>
+        <mat-sidenav mode="side" opened="true">
+            <app-menu></app-menu>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>        
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</mat-card>

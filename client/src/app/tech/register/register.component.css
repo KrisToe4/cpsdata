@@ -1,13 +1,3 @@
-.view {
-	grid-template-rows: auto;
-	grid-template-areas: 
-		"view-contents";
-}
-
-.section-element input {
-	width: 200px;
-}
-
 .indicator {
 	content: url("/assets/red-light.png");
 

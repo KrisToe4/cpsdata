@@ -3,49 +3,6 @@
 	color: red;
 }
 
-#email {
-	width: 175px;
-}
-
-#name {
-	width: 125px;
-}
-
-#phone {
-	width: 100px;
-}
-
-#phone2 {
-	width: 100px;
-}
-
-#website {
-	width: 250px;
-}
-#website-name-div {
-	margin: 2px 0 0 25px;
-}
-
-#website-name {
-	width: 233px;
-}
-
-#address {
-	width: 200px;
-}
-
-#postalcode {
-	width: 50px;
-}
-
-#map-div {	
-	width: 350px;
-}
-
-#map-address { 
-	width:200px; 
-}
-
 .sebm-google-map-container {
   height: 300px;
 }

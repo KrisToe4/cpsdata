@@ -9,11 +9,7 @@ import { TechService } from '@services/tech.service';
 
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../tech.view.css',
-    './login.component.css'
-  ]
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 

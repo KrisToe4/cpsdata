@@ -6,11 +6,8 @@ import { ActivatedRoute,
          NavigationEnd }            from '@angular/router';
 
 import { Menu, 
-         MenuItem }        from '@server-src/data-classes/menu-model'
-import { Tech }              from '../../data-classes/tech';
-
+         MenuItem }        from '@server-src/data-classes/menu-model';
 import { MenuService }       from '@services/menu.service';
-import { TechService }       from '@services/tech.service';
 
 
 @Component({
@@ -26,7 +23,6 @@ export class MenuComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
                private menuService: MenuService,
-               private techService: TechService,
                private router: Router ) { }
 
   ngOnInit() {
@@ -47,6 +43,8 @@ export class MenuComponent implements OnInit {
       this.router.navigate([route]);
     });
   }
+
+  
 
   onClick(menuItem: MenuItem) {
  

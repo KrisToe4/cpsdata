@@ -10,11 +10,7 @@ import { TechService } from '@services/tech.service';
 
 @Component({
   templateUrl: './password.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../tech.view.css',
-    './password.component.css'
-  ]
+  styleUrls: ['./password.component.css']
 })
 export class PasswordComponent implements OnInit {
 

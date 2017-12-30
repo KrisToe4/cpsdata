@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  template: '<div class="view-header"><span>Logout Failed!</span></div>',
-  styleUrls: ['./tech.view.css']
+  template: '<mat-card>Logout Failed!</mat-card>'
 })
 export class LogoutComponent {
 

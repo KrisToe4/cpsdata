@@ -1,14 +1,3 @@
-.view {
-	grid-template-rows: auto;
-	grid-template-areas: 
-		"view-contents";
-}
-
-.section-element input {
-	width: 200px;
-}
-
-
 #forgot-lnk {
 	margin-left: 15px;
 

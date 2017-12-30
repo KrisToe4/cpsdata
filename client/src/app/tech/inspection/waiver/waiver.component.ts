@@ -19,11 +19,7 @@ import { MenuService }       from '@services/menu.service';
 
 @Component({
   templateUrl: './waiver.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../../tech.view.css',
-    './waiver.component.css'
-  ]
+  styleUrls: ['./waiver.component.css']
 })
 export class InspectionWaiverComponent implements OnInit {
 

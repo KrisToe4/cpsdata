@@ -11,11 +11,7 @@ import { InspectionManager } from '@managers/inspection-manager';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: [
-    // The Order here is important for proper layering of the flex-flow attribute
-    '../../tech.view.css',
-    './list.component.css'
-  ]
+  styleUrls: ['./list.component.css']
 })
 export class InspectionListComponent implements OnInit {
 

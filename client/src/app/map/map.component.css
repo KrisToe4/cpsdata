@@ -1,8 +1,3 @@
-.full {
-	height: 100%;
-	background-color: #FFFFFF;
-}
-
 .org-logo {
 	position: absolute;
 	right: 25px;
@@ -11,16 +6,4 @@
 
 .org-logo img {
 	max-height: 50px;
-}
-
-.filter {
-	grid-area: filter;
-}
-
-.list {
-	grid-area: list;
-}
-
-.right {
-	grid-area: right;
 }

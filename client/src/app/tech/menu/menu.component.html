@@ -1,16 +1,11 @@
-<nav class="menu">
-  <div class="menu-item" *ngFor="let item of menu.menuItems">
-    <div class="menu-item-btn" 
-         [class.active]="(item.route != '') && currentRoute.includes(item.route)"
-         (click)="onClick(item);">
-      <span>{{item.display}}</span>
-    </div>
-    <div *ngIf="item.subItems && currentRoute.includes(item.route)" class="submenu">
-      <div class="menu-subitem" 
-          *ngFor="let subItem of item.subItems" 
-          (click)="onClick(subItem);">
-        <span>{{subItem.display}}</span>
-      </div>
-    </div>
-  </div>
-</nav>
+<mat-list>
+  <mat-list-item *ngFor="let item of menu.menuItems">
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="item.subItems; else simpleBlock;" (click)="onClick(item);">{{item.display}}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let subItem of item.subItems" (click)="onClick(subItem);">{{subItem.display}}</button>
+    </mat-menu>
+    <ng-template #simpleBlock>
+      <button mat-button (click)="onClick(item);">{{item.display}}</button>
+    </ng-template>
+  </mat-list-item>
+</mat-list>

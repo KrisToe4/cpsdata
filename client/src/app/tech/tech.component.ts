@@ -1,8 +1,6 @@
 import { Component,
          HostListener } from '@angular/core';
 
-import { SidebarModule } from 'ng-sidebar';
-
 import { MenuService } from '@services/menu.service';
 
 @Component({
