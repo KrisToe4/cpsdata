@@ -1,6 +1,8 @@
-<div *ngIf="techDetails.displayEmail"><span>{{techDetails.email}}</span></div>
-<div *ngIf="techDetails.displayPhone">
-  <span>{{techDetails.phone}}</span>
-  <span *ngIf="techDetails.phone2 != ''">({{techDetails.phone2}})</span>
-</div>
-<div *ngIf="techDetails.displayWebsite"><span>{{techDetails.websiteURL}}</span></div>
+<mat-list>
+  <mat-list-item *ngIf="techDetails.displayEmail">{{techDetails.email}}</mat-list-item>
+  <mat-list-item *ngIf="techDetails.displayPhone">
+    {{techDetails.phone}}
+    <span *ngIf="techDetails.phone2 != ''">({{techDetails.phone2}})</span>
+  </mat-list-item>
+  <mat-list-item *ngIf="techDetails.displayWebsite">{{techDetails.websiteURL}}</mat-list-item>
+</mat-list>

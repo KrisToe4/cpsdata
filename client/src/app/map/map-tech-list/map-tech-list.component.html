@@ -1,13 +1,9 @@
-<mat-card>
-  <mat-toolbar>
-    Tech List
-  </mat-toolbar>
-  <mat-accordion>
-    <mat-expansion-panel *ngFor="let tech of techList.techs" (click)="selectTech(tech);">
-      <mat-expansion-panel-header>
-        <mat-panel-title>{{tech.profile.name}}</mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-map-tech-info [selectedTech]="selectedTech"></app-map-tech-info>
-    </mat-expansion-panel>
-  </mat-accordion>
-</mat-card>
+<h2>Techs</h2>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let tech of techList.techs" (click)="selectTech(tech);">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{tech.profile.name}}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-map-tech-info [selectedTech]="selectedTech"></app-map-tech-info>
+  </mat-expansion-panel>
+</mat-accordion>

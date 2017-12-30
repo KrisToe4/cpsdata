@@ -1,9 +1,8 @@
-.org-logo {
-	position: absolute;
-	right: 25px;
-	top: -65px;
+.sidenav-container {
+    width: 100%;
 }
 
-.org-logo img {
-	max-height: 50px;
+.sidenav-drawer {
+    width: 200px;
 }
+  
