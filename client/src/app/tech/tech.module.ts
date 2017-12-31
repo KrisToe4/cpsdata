@@ -29,10 +29,13 @@ import { InspectionRestraintComponent } from './inspection/restraint/restraint.c
 import { InspectionSummaryComponent } from './inspection/summary/summary.component';
 import { InspectionWaiverComponent } from './inspection/waiver/waiver.component';
 
-import { LoginComponent } from './login/login.component';
+import { LoginComponent,
+         LoginRegisterDialog } from './login/login.component';
+
 import { LogoutComponent } from './tech.logout.component';
 import { PasswordComponent } from './password/password.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent,
+         ProfileSaveDialog } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 import { AuthGuardService } from '@guards/auth-guard.service';
@@ -60,12 +63,18 @@ import { TechService } from '@services/tech.service';
     InspectionSummaryComponent,
     InspectionWaiverComponent,
     LoginComponent,
+    LoginRegisterDialog,
     LogoutComponent,
     PasswordComponent,
     ProfileComponent,
+    ProfileSaveDialog,
     RegisterComponent,
     SignatureFieldComponent,
     TechComponent,
+  ],
+  entryComponents: [
+    LoginRegisterDialog,
+    ProfileSaveDialog
   ],
   imports: [
     AgmCoreModule.forRoot({

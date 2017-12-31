@@ -1,6 +1,8 @@
 import { Component, 
          NgZone,
          OnInit } from '@angular/core';
+import { MatDialog, 
+         MatDialogRef }      from '@angular/material';
 
 import { FormBuilder,
          FormControl,
@@ -37,7 +39,8 @@ export class ProfileComponent implements OnInit {
   // Map Values
   currentPosition: MapSearchResult = new MapSearchResult(0, 0);
 
-  constructor( private formBuilder: FormBuilder,
+  constructor( public dialog: MatDialog,
+               private formBuilder: FormBuilder,
                private mapService: MapService,
                private techService: TechService,
                private zone: NgZone) { }
@@ -187,8 +190,15 @@ export class ProfileComponent implements OnInit {
 
         }
         else {
-          alert("Profile Updated");
           component.unsavedChanges = false;
+
+          let dialogRef = component.dialog.open(ProfileSaveDialog, {
+            width: '250px'
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+          });
         }
       });
     }
@@ -202,4 +212,18 @@ export class ProfileComponent implements OnInit {
     this.unsavedChanges = false;
   }
   // *************************** //
+}
+
+@Component({
+  selector: 'app-profile-save-dialog',
+  templateUrl: 'profile.save.dialog.html',
+})
+export class ProfileSaveDialog {
+
+  constructor( public dialogRef: MatDialogRef<ProfileSaveDialog> ) { }
+
+  onClick(): void {
+    this.dialogRef.close();
+  }
+
 }

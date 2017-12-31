@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, 
+         OnInit }            from '@angular/core';
 import { ActivatedRoute,
          Router }            from '@angular/router';
+import { MatDialog, 
+         MatDialogRef }      from '@angular/material';
 
 import { LocalStorageModule } from 'angular-2-local-storage';
 
@@ -13,7 +16,8 @@ import { TechService } from '@services/tech.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor( private techService: TechService,
+  constructor( public dialog: MatDialog,
+               private techService: TechService,
                private route: ActivatedRoute,
                private router: Router ) { }
 
@@ -51,6 +55,7 @@ export class LoginComponent implements OnInit {
 
   onRegisterClick(email: string) {
 
+    let component: LoginComponent = this;
     let route: ActivatedRoute = this.route;
     let router: Router = this.router;
 
@@ -60,10 +65,30 @@ export class LoginComponent implements OnInit {
         //Display the error somehow
       }
       else {
-
         console.log("Registration sent");
-        alert("Registration sent. Verify your email to complete registration process")
+
+        let dialogRef = component.dialog.open(LoginRegisterDialog, {
+          width: '250px'
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
       }
     })
   }
+}
+
+@Component({
+  selector: 'app-login-register-dialog',
+  templateUrl: 'login.register.dialog.html',
+})
+export class LoginRegisterDialog {
+
+  constructor( public dialogRef: MatDialogRef<LoginRegisterDialog> ) { }
+
+  onClick(): void {
+    this.dialogRef.close();
+  }
+
 }
