@@ -1,9 +1,16 @@
 <h2>Techs</h2>
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let tech of techList.techs" (click)="selectTech(tech);">
+  <mat-expansion-panel *ngFor="let tech of techList.techs" [expanded]="selectedTech === tech" (opened)="selectTech(tech)">
     <mat-expansion-panel-header>
       <mat-panel-title>{{tech.profile.name}}</mat-panel-title>
     </mat-expansion-panel-header>
-    <app-map-tech-info [selectedTech]="selectedTech"></app-map-tech-info>
+    <mat-list>
+        <mat-list-item *ngIf="tech.mapEntry.displayEmail">{{tech.mapEntry.email}}</mat-list-item>
+        <mat-list-item *ngIf="tech.mapEntry.displayPhone">
+          {{tech.mapEntry.phone}}
+          <span *ngIf="tech.mapEntry.phone2 != ''">({{tech.mapEntry.phone2}})</span>
+        </mat-list-item>
+        <mat-list-item *ngIf="tech.mapEntry.displayWebsite">{{tech.mapEntry.websiteURL}}</mat-list-item>
+      </mat-list>
   </mat-expansion-panel>
 </mat-accordion>

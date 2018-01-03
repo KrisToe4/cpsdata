@@ -4,6 +4,7 @@ import { MenuTree,
 
 export class TechModel {
     public authToken: string;
+    public id: number;
     public profile: TechProfile;
     public mapEntry: TechMapEntry; 
 
@@ -12,6 +13,7 @@ export class TechModel {
     constructor()
     {
         this.authToken = "";
+        this.id = 0;
         this.profile = new TechProfile();
         this.mapEntry = new TechMapEntry();
         this.techMenu = new MenuTree();
@@ -53,6 +55,8 @@ export class TechModel {
 
     protected fromJSON(json: any): void {
 
+        this.id = json.id;
+        
         this.profile = new TechProfile(json.email);
         this.profile.name = json.name;
         
@@ -90,6 +94,7 @@ export class TechModel {
 
         // Build all but boolean values
         let json = {
+            "id": this.id,
             "email": this.profile.email,
             "name": this.profile.name,
             "cert": {

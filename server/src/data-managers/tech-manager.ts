@@ -131,7 +131,7 @@ export class TechManager {
 
         }
 
-        let sqlQuery: string = 'SELECT name, type, tcon.* ' +
+        let sqlQuery: string = 'SELECT p.id, name, type, tcon.* ' +
                                'FROM tech_profile p ' +
                                'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
                                'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
@@ -153,6 +153,7 @@ export class TechManager {
 
                 results.forEach((result: any) => {
                     techList.push({
+                        id: result.id,
                         name: result.name,
                         cert: {
                             type: result.type

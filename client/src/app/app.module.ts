@@ -25,7 +25,6 @@ import { PageNotFoundComponent } from './not-found/not-found.component';
 import { MapComponent } from './map/map.component';
 import { MapControlsComponent } from './map/map-controls/map-controls.component';
 import { MapTechListComponent } from './map/map-tech-list/map-tech-list.component';
-import { MapTechInfoComponent } from './map/map-tech-info/map-tech-info.component';
 import { MapViewportComponent } from './map/map-viewport/map-viewport.component';
 import { MapMarkerDirective } from './map/map-viewport/map-marker.directive';
 
@@ -41,7 +40,6 @@ import { TechModule } from './tech/tech.module';
     MapComponent,
     MapControlsComponent,
     MapTechListComponent,
-    MapTechInfoComponent,
     MapViewportComponent,
     MapMarkerDirective,
     PageNotFoundComponent

@@ -76,8 +76,10 @@ export class MapViewportComponent implements OnInit {
 
           if (techMarker != undefined) {
 
-            techMarker.iconUrl = 'assets/map/red.png';
+            techMarker.iconUrl = this.getIcon(change.currentValue);
             this.markerManager.updateIcon(techMarker);
+            this.currentPosition = new MapSearchResult(change.currentValue.mapEntry.geoLat, 
+                                                       change.currentValue.mapEntry.geoLng);
           }
 
           //Then update the previously selected tech
@@ -87,7 +89,7 @@ export class MapViewportComponent implements OnInit {
             if (techMarker != undefined) {
 
               // This may eventually have different value depending on the tech
-              techMarker.iconUrl = 'assets/map/pale_blue.png';
+              techMarker.iconUrl = this.getIcon(change.currentValue);
               this.markerManager.updateIcon(techMarker);
             }
           }
@@ -126,6 +128,15 @@ export class MapViewportComponent implements OnInit {
         component.currentPosition = mapInfo;
       });
     })
+  }
+
+  getIcon(tech: Tech) {
+    if (this.selectedTech !== tech) {
+      return 'assets/map/pale_blue.png';
+    }
+    else {
+      return 'assets/map/red.png';
+    }
   }
 
   selectTech(tech: Tech) {

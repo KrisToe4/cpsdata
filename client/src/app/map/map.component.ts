@@ -30,6 +30,14 @@ export class MapComponent implements OnInit {
       }
 
       component.techList = list;
+
+      if (component.selectedTech.id === 0) {
+        list.techs.forEach(tech => {
+          if (tech.id == component.route.snapshot.queryParams['tech']) {
+            component.selectedTech = tech;
+          }
+        });
+      }
     });
 
   }

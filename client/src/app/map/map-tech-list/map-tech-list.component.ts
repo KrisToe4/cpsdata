@@ -1,8 +1,10 @@
 import { Component, 
          EventEmitter,
-         Input, 
+         Input,
          Output,
-         OnInit } from '@angular/core';
+         OnInit,
+         OnChanges,
+         SimpleChanges } from '@angular/core';
 
 import { Tech,
          TechList } from '../../data-classes/tech';
@@ -20,12 +22,29 @@ export class MapTechListComponent implements OnInit {
 
   @Input() techList: TechList;
   @Input() selectedTech: Tech;
-
   @Output() techSelected = new EventEmitter<Tech>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {
+
+      let change = changes[propName];
+
+      switch (propName) {
+        case "techList": 
+
+          // Not sure what to do here yet
+
+          break;
+        case "selectedTech":
+
+          break;
+      }
+    }
   }
 
   selectTech(tech: Tech) {

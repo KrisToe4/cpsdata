@@ -10,7 +10,7 @@
       <map-markers (markerManager)="setMarkerManager($event)" (markers)="setMarkers($event)">
         <agm-marker *ngFor="let tech of techList.techs" [latitude]="tech.mapEntry.geoLat" 
                                                         [longitude]="tech.mapEntry.geoLng" 
-                                                        [iconUrl]="'assets/map/pale_blue.png'" 
+                                                        [iconUrl]="getIcon(tech)" 
                                                         [title]="tech.profile.name" 
                                                         (markerClick)="selectTech(tech);">
         </agm-marker>
