@@ -1,16 +1,16 @@
-<h2>Techs</h2>
-<mat-accordion>
+<h3>Techs</h3>
+<mat-accordion class="tech-list">
   <mat-expansion-panel *ngFor="let tech of techList.techs" [expanded]="selectedTech === tech" (opened)="selectTech(tech)">
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header collapsedHeight="32px" expandedHeight="48px">
       <mat-panel-title>{{tech.profile.name}}</mat-panel-title>
     </mat-expansion-panel-header>
     <mat-list>
-        <mat-list-item *ngIf="tech.mapEntry.displayEmail">{{tech.mapEntry.email}}</mat-list-item>
+        <mat-list-item *ngIf="tech.mapEntry.displayEmail"><a href="mailto:{{tech.mapEntry.email}}">{{tech.mapEntry.email}}</a></mat-list-item>
         <mat-list-item *ngIf="tech.mapEntry.displayPhone">
           {{tech.mapEntry.phone}}
           <span *ngIf="tech.mapEntry.phone2 != ''">({{tech.mapEntry.phone2}})</span>
         </mat-list-item>
-        <mat-list-item *ngIf="tech.mapEntry.displayWebsite">{{tech.mapEntry.websiteURL}}</mat-list-item>
+        <mat-list-item *ngIf="tech.mapEntry.displayWebsite"><a href="{{tech.mapEntry.websiteURL}}">{{tech.mapEntry.websiteName}}</a></mat-list-item>
       </mat-list>
   </mat-expansion-panel>
 </mat-accordion>

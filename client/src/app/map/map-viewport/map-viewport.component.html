@@ -1,20 +1,13 @@
-<mat-card>
-  <mat-toolbar>
-    <span>Location: 
-      <input #search id="address" type="textbox" placeholder="Search" (keyup.enter)="searchAddress(search.value)">
-    </span>
-    <button mat-button (click)="searchAddress(search.value)">Go!</button>
-  </mat-toolbar>
-  <mat-card class="map">
-    <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
-      <map-markers (markerManager)="setMarkerManager($event)" (markers)="setMarkers($event)">
-        <agm-marker *ngFor="let tech of techList.techs" [latitude]="tech.mapEntry.geoLat" 
-                                                        [longitude]="tech.mapEntry.geoLng" 
-                                                        [iconUrl]="getIcon(tech)" 
-                                                        [title]="tech.profile.name" 
-                                                        (markerClick)="selectTech(tech);">
-        </agm-marker>
-      </map-markers>
-    </agm-map>
-  </mat-card>
+<mat-card class="main-container">
+  <mat-form-field>
+    <input matInput #search placeholder="Search" (keyup.enter)="searchAddress(search.value)">
+  </mat-form-field>
+  <button mat-mini-fab (click)="searchAddress(search.value)">Go!</button>
+  <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
+    <map-markers (markerManager)="setMarkerManager($event)" (markers)="setMarkers($event)">
+      <agm-marker *ngFor="let tech of techList.techs" [latitude]="tech.mapEntry.geoLat" [longitude]="tech.mapEntry.geoLng" [iconUrl]="getIcon(tech)"
+        [title]="tech.profile.name" (markerClick)="selectTech(tech);">
+      </agm-marker>
+    </map-markers>
+  </agm-map>
 </mat-card>

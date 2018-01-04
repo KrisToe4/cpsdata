@@ -14,7 +14,7 @@ import { TechProfile,
 @Component({
   selector: 'app-map-tech-list',
   templateUrl: './map-tech-list.component.html',
-  styleUrls: ['./map-tech-list.component.css']
+  styleUrls: ['./map-tech-list.component.scss']
 })
 export class MapTechListComponent implements OnInit {
 

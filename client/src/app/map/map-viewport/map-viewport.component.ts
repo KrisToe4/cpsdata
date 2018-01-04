@@ -24,7 +24,7 @@ import { TechProfile,
 @Component({
   selector: 'app-map-viewport',
   templateUrl: './map-viewport.component.html',
-  styleUrls: ['./map-viewport.component.css']
+  styleUrls: ['./map-viewport.component.scss']
 })
 export class MapViewportComponent implements OnInit {
 
