@@ -1,3 +1,7 @@
+.mat-input-label {
+	padding-right: 5px;
+}
+
 .cert-verification-msg {
 	font-size: 12px;
 	color: red;

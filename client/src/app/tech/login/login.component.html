@@ -1,14 +1,26 @@
 <mat-card>
-  <h2>Sign In</h2>
-  <mat-card>
-    <div><input #email id="email" type="email" placeholder="Email"></div>
-    <div><input #password id="password" type="password" placeholder="Password" (keyup.enter)="onLoginClick(email.value, password.value)"></div>
-    <button mat-button (click)="onLoginClick(email.value, password.value);">Log In</button>
-    <button mat-button (click)="resetPassword();">Forgot Password</button>
-  </mat-card>
-  <mat-card>
-    <h3>Or Register</h3>
-    <div><input #regEmail id="login-email" type="email" placeholder="Email" (keyup.enter)="onRegisterClick(regEmail.value)"></div>
-    <button mat-button (click)="onRegisterClick(regEmail.value)">Submit</button>
-  </mat-card>
+  <mat-card-title>Sign In</mat-card-title>
+    <mat-list>
+      <mat-list-item>
+          <mat-form-field>
+              <input matInput #email placeholder="Email">
+            </mat-form-field>
+      </mat-list-item>
+      <mat-list-item>
+    <mat-form-field>
+      <input matInput #password type="password" placeholder="Password" (keyup.enter)="onLoginClick(email.value, password.value)">
+    </mat-form-field>
+      </mat-list-item>
+    </mat-list>
+    <mat-card-actions>
+      <button mat-raised-button (click)="onLoginClick(email.value, password.value);">Log In</button>
+      <button mat-button (click)="resetPassword();">Forgot Password</button>
+    </mat-card-actions>
+</mat-card>
+<mat-card>
+  <mat-card-title>Or Register</mat-card-title>
+    <mat-form-field>
+      <input matInput #regEmail type="email" placeholder="Email" (keyup.enter)="onRegisterClick(regEmail.value)">
+    </mat-form-field>
+    <button mat-mini-fab (click)="onRegisterClick(regEmail.value)">Go!</button>
 </mat-card>

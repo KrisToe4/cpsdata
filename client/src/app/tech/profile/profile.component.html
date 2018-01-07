@@ -1,96 +1,99 @@
-<mat-card>
-  <form [formGroup]="form" novalidate>
-    <div formGroupName="profile">
-      <mat-card>
-        <h2>General Information</h2>
-        <div>
-          <label>Email:
-            <input type="email" id="email" formControlName="email">
-          </label>
-        </div>
-        <div>
-          <label>Name:
-            <input type="text" id="name" formControlName="name">
-          </label>
-        </div>
-        <div formGroupName="cert">
-          <h3>Certification</h3>
-          <div>
-            <label> Organization:
-              <select formControlName="org">
-                <option *ngFor="let org of certList.orgs" [value]="org">{{org}}</option>
-              </select>
-            </label>
-          </div>
-          <div>
-            <label>Certificate:
-              <select formControlName="type">
-                <option *ngFor="let type of certList.types" [value]="type">{{type}}</option>
-              </select>
-            </label>
-          </div>
-          <div>
-            <label>Expiry Date:
-              <input type="date" formControlName="certDate">
-            </label>
-          </div>
-          <div *ngIf="certValid == false">
+<form [formGroup]="form" novalidate>
+  <mat-card class="main-card">
+    <mat-card formGroupName="profile">
+      <mat-card-title>General Information</mat-card-title>
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field>
+            <input matInput type="email" placeholder="Email" formControlName="email" required>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Name" formControlName="name" required>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+      <section formGroupName="cert">
+        <h3>Certification</h3>
+        <mat-list>
+          <mat-list-item>
+            <mat-form-field>
+              <mat-select formControlName="org" placeholder="Organization">
+                <mat-option *ngFor="let org of certList.orgs" [value]="org">{{org}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-form-field>
+              <mat-select formControlName="type" placeholder="Certificate">
+                <mat-option *ngFor="let type of certList.types" [value]="type">{{type}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-form-field>
+              <input matInput type="date" formControlName="certDate" placeholder="Expiry Date">
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item *ngIf="certValid == false">
             <span class="cert-verification-msg">{{certVerificationMsg}}</span>
-          </div>
-        </div>
-      </mat-card>
-    </div>
-    <mat-card formGroupName="mapEntry">
-      <h2>Map Entry</h2>
-      <div>
-        <input type="checkbox" formControlName="public">
-        <label>Display on Map:</label>
-      </div>
-      <mat-card>
-        <div>
-          <input type="checkbox" formControlName="displayEmail">
-          <label>Email:
-            <input id="map_email" type="text" formControlName="email">
-          </label>
-        </div>
-        <div>
-          <input type="checkbox" formControlName="displayPhone">
-          <label>Phone:
-            <input id="phone" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone">
-          </label>
-          <label>Alt:
-            <input id="phone2" type="tel" placeholder="XXX-XXX-XXXX" formControlName="phone2">
-          </label>
-        </div>
-        <div>
-          <div>
-            <input type="checkbox" formControlName="displayWebsite">
-            <label>Website:
-              <input id="website" type="url" formControlName="websiteURL">
-            </label>
-          </div>
-          <div id="website-name-div">
-            <label>Site Name:
-              <input id="website-name" type="text" formControlName="websiteName">
-            </label>
-          </div>
-        </div>
-      </mat-card>
-      <mat-card>
-        <div>
-          <input #mapSearch id="profile-map-address" type="textbox" placeholder="Search" (keyup.enter)="searchAddress(mapSearch.value)">
-          <button mat-button (click)="searchAddress(mapSearch.value)">Go!</button>
-        </div>
-        <div>
-          <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
-            <agm-marker [latitude]="currentPosition.lat" [longitude]="currentPosition.lng"></agm-marker>
-          </agm-map>
-        </div>
-      </mat-card>
+          </mat-list-item>
+        </mat-list>
+      </section>
     </mat-card>
-  </form>
-  <mat-card>
-    <button mat-button [disabled]="unsavedChanges == false" (click)="saveBtnClicked()">Save</button>
-    <button mat-button (click)="revertBtnClicked()">Revert</button>
+    <mat-card formGroupName="mapEntry">
+      <mat-card-title>Map Entry</mat-card-title>
+      <mat-checkbox formControlName="public">Public Entry</mat-checkbox>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-checkbox formControlName="displayEmail">
+              <mat-form-field>
+                <input matInput type="email" placeholder="Email" formControlName="email">
+              </mat-form-field>
+            </mat-checkbox>
+          </mat-list-item>
+          <mat-list-item>
+
+            <mat-checkbox formControlName="displayPhone">
+
+              <mat-form-field>
+                <input matInput type="tel" placeholder="Phone" formControlName="phone">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="tel" placeholder="Alternate" formControlName="phone2">
+              </mat-form-field>
+            </mat-checkbox>
+          </mat-list-item>
+          <mat-list-item>
+
+            <mat-checkbox formControlName="displayWebsite">
+              <mat-form-field>
+                <input matInput type="url" placeholder="Website" formControlName="websiteURL">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" placeholder="Title" formControlName="websiteName">
+              </mat-form-field>
+            </mat-checkbox>
+          </mat-list-item>
+        </mat-list>
+        <section>
+          <mat-form-field>
+            <input matInput #mapSearch type="text" placeholder="Pin Location" (keyup.enter)="searchAddress(mapSearch.value)">
+          </mat-form-field>
+          <button mat-mini-fab (click)="searchAddress(mapSearch.value)">Go!</button>
+          <div>
+            <agm-map [latitude]="currentPosition.lat" [longitude]="currentPosition.lng">
+              <agm-marker [latitude]="currentPosition.lat" [longitude]="currentPosition.lng"></agm-marker>
+            </agm-map>
+          </div>
+        </section>
+      </mat-card-content>
+    </mat-card>
+    <mat-card-actions>
+      <button mat-raised-button [disabled]="unsavedChanges == false" (click)="saveBtnClicked()">Save</button>
+      <button mat-raised-button (click)="revertBtnClicked()">Revert</button>
+    </mat-card-actions>
   </mat-card>
-</mat-card>
+</form>

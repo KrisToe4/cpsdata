@@ -1,19 +1,22 @@
 <mat-card>
-  <mat-card>
-    <h2>Set Password</h2>
-    <div>
-      <input #password type="password" placeholder="Password" (keyup)="isPasswordValid(password.value)">
+  <mat-card-title>Set Password</mat-card-title>
+  <mat-list>
+    <mat-list-item>
+      <mat-form-field>
+        <input matInput #password type="password" placeholder="Password" (keyup)="isPasswordValid(password.value)">
+      </mat-form-field>
       <img class="indicator" [class.valid]="passwordValid" alt="Password Indicator" />
-    </div>
-    <div>
-      <input #confirmation type="password" placeholder="Confirm Password" 
-              (keyup)="isPasswordMatch(password.value, confirmation.value)"
-              (keyup.enter)="onSubmitClick(password.value, confirmation.value)">
+    </mat-list-item>
+    <mat-list-item>
+      <mat-form-field>
+        <input matInput #confirmation type="password" placeholder="Confirm Password" (keyup)="isPasswordMatch(password.value, confirmation.value)"
+          (keyup.enter)="onSubmitClick(password.value, confirmation.value)">
+      </mat-form-field>
       <img class="indicator" [class.valid]="passwordMatch" alt="Confirmation Indicator" />
-    </div>
-    <div>
-      <button mat-button [disabled]="!passwordMatch" (click)="onSubmitClick(password.value, confirmation.value)">Submit</button>
-      <button mat-button (click)="onCancelClick()">Cancel</button>
-    </div>
-  </mat-card>
+    </mat-list-item>
+  </mat-list>
+  <mat-card-actions>
+    <button mat-raised-button [disabled]="!passwordMatch" (click)="onSubmitClick(password.value, confirmation.value)">Submit</button>
+    <button mat-raised-button (click)="onCancelClick()">Cancel</button>
+  </mat-card-actions>
 </mat-card>
