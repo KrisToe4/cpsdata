@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         router.navigate([redirectUrl], { relativeTo: route });
       }
       else {
-        router.navigate(['profile']);
+        router.navigate(['']);
       }
     });
 
