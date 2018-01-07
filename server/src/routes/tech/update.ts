@@ -115,7 +115,7 @@ export class UpdateRoute extends BaseRoute {
           }
           */
 
-      manager.updateTech(authorizedTech, techJSON, function (error: string, certConfirmEmail: string) {
+      manager.updateTech(authorizedTech, techJSON, function (error: string, certConfirmEmail?: string) {
         if (error) {
 
           route.sendError(res, "Update failed. Message: " + error);
@@ -133,7 +133,9 @@ export class UpdateRoute extends BaseRoute {
               certDate: techJSON.certDate
             }
 
-            MailManager.sendCertConfirmation(certConfirmEmail, details);
+            // *Note: the email address has already been checked so the syntax 'email || ""'  
+            //        is a result of using the conditional for the generic functions return signature
+            MailManager.sendCertConfirmation(certConfirmEmail || "", details);
           }
 
           let respData: ResponseData = new ResponseData(null, "Profile updated");

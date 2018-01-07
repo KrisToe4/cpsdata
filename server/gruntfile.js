@@ -20,9 +20,7 @@ module.exports = function(grunt) {
           src: ["src/\*\*/\*.ts", "!src/.baseDir.ts"],
           dest: "./dist"
         }],
-        options: {
-          tsconfig: true
-        }
+        tsconfig: true
       }
     },
     watch: {

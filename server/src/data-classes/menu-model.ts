@@ -17,19 +17,19 @@ export class MenuTree {
 
     public fromJSON(json: string): void {
 
-       this.tree = []; 
-       this.reverseTree = [];
+        this.tree = [];
+        this.reverseTree = [];
 
-       let list: any[] = JSON.parse(json);
+        let list: any[] = JSON.parse(json);
 
-       list.forEach(menuObject => {
-           
-           let menu: Menu = new Menu().fromObject(menuObject);
-           this.tree.push(menu);
-           this.reverseTree.unshift(menu);
+        list.forEach(menuObject => {
 
-           console.log(menu);
-       });
+            let menu: Menu = new Menu().fromObject(menuObject);
+            this.tree.push(menu);
+            this.reverseTree.unshift(menu);
+
+            console.log(menu);
+        });
     }
 
     public getMenu(index: number): Menu {
@@ -39,8 +39,6 @@ export class MenuTree {
 
     public search(url: string): Menu {
 
-        let result: Menu;
-
         // This is offset by 1 so we include the slash in our substrings
         let lastSlash: number = url.lastIndexOf('/') + 1;
 
@@ -48,31 +46,24 @@ export class MenuTree {
         let route: string = url.substring(lastSlash);
 
         console.log("relativeTo: " + relativeTo + " - route: " + route);
-   
+
         this.reverseTree.forEach(menu => {
 
-            if (result == undefined) {
-            
-                if ((menu.relativeTo == relativeTo) && (menu.route == route)) {
+            if ((menu.relativeTo == relativeTo) && (menu.route == route)) {
 
-                    result = menu;
-                    console.log("Found Exact Match!");
-
-                }
-                else if ((menu.relativeTo == relativeTo) && (menu.route == '*')) {
-
-                    result = menu;
-                    console.log("Found Wildcard Match!");
-                }
+                console.log("Found Exact Match!");
+                return menu;
             }
+            else if ((menu.relativeTo == relativeTo) && (menu.route == '*')) {
+
+                console.log("Found Wildcard Match!");
+                return menu;
+            }
+
         });
 
-
-        if (result == undefined) {
-
-            result = this.getMenu(0);
-        }
-        return result;
+        // If we don't find any other matching menu, return the base menu (if one exists)
+        return this.getMenu(0);
     }
 }
 
@@ -98,7 +89,7 @@ export class Menu {
         menuObject.menuItems.forEach((object: any) => {
 
             let menuItem = new MenuItem();
-            menuItem.fromObject(object);  
+            menuItem.fromObject(object);
             this.add(menuItem);
         });
 
@@ -112,7 +103,7 @@ export class Menu {
             return this.relativeTo;
         }
         else {
-            
+
             return this.relativeTo + this.route;
         }
     }

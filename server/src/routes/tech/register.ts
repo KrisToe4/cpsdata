@@ -63,7 +63,7 @@ export class RegisterRoute extends BaseRoute {
     let route = this;
 
     let manager = TechManager.Manager();
-    manager.findTech(req.body.email, function (error: any, techID: number) {
+    manager.findTech(req.body.email, function (error: any, techID?: number) {
       if (error == null) {
         route.sendError(res, "Email address already registered");
         return;
@@ -84,7 +84,7 @@ export class RegisterRoute extends BaseRoute {
 
             // Here we're generating special temporary auth_tokens used for certain functions such as registration.
             // These last an hour instead of 7 days and are sent via email to users
-            manager.generateAuthToken(techID, "*", function (error: string, token: string) {
+            manager.generateAuthToken(techID, "*", function (error: string, token?: string) {
 
               if (err) {
 
@@ -92,7 +92,9 @@ export class RegisterRoute extends BaseRoute {
                 return;
               }
 
-              MailManager.sendVerification(techEmail, token);    
+              // *Note: the token at this point is almost for sure going to be valid. The "x || 0" syntax
+              //        is a result of using the conditional for the generic functions return signature
+              MailManager.sendVerification(techEmail, token || "");    
 
               // For now send back confirmation to user with token for R&D
               let respData: ResponseData = new ResponseData(null, "Profile Created");

@@ -96,7 +96,7 @@ export class AuthenticateRoute extends BaseRoute {
 
     let manager = TechManager.Manager();
 
-    manager.validateAuthToken(options.token, "*", function (error: string, techID: number) {
+    manager.validateAuthToken(options.token, "*", function (error: string, techID?: number) {
 
       if (error) {
         route.sendError(res, "Authentication Token invalid.");
@@ -109,14 +109,18 @@ export class AuthenticateRoute extends BaseRoute {
       switch (credential.type) {
 
         case "local":
-          manager.generateLocalCredentials(techID, credential, function (error: string) {
+          // *Note: the tech ID at this point is almost for sure going to be valid. The "x || 0" syntax
+          //        is a result of using the conditional for the generic functions return signature
+          manager.generateLocalCredentials(techID || 0, credential, function (error: string) {
 
             if (error) {
               route.sendError(res, "Failed to generate credentials.");
               return;
             }
 
-            TechManager.Manager().generateAuthToken(techID, credential.ip, function (error: string, token: string, menuJSON: string) {
+            // *Note: the tech ID at this point is almost for sure going to be valid. The "x || 0" syntax
+            //        is a result of using the conditional for the generic functions return signature
+            TechManager.Manager().generateAuthToken(techID || 0, credential.ip, function (error: string, token?: string, menuJSON?: string) {
               
               if (error) {
 
@@ -130,7 +134,9 @@ export class AuthenticateRoute extends BaseRoute {
 
                 if (options.trigger == "verify") {
                   
-                  TechManager.Manager().verifyTech(techID, function(error: string) {
+                  // *Note: the tech ID at this point is almost for sure going to be valid. The "x || 0" syntax
+                  //        is a result of using the conditional for the generic functions return signature
+                  TechManager.Manager().verifyTech(techID || 0, function(error: string) {
 
                     if (error) {
 
@@ -151,9 +157,9 @@ export class AuthenticateRoute extends BaseRoute {
 
   private tokenAuthorization (credential: TechCredential, res: Response, route: AuthenticateRoute) {
     
-    TechManager.Manager().validateAuthToken(credential.value, credential.ip, function(error: string, techID: number, menuJSON: string) {
+    TechManager.Manager().validateAuthToken(credential.value, credential.ip, function(error: string, techID?: number, menuJSON?: string) {
 
-      if (techID >= 0) {
+      if (techID && techID >= 0) {
         let respData: ResponseData = new ResponseData(null, "Token Valid", {menu: menuJSON});
         route.sendJSON(res, respData);
         return;
@@ -175,7 +181,7 @@ export class AuthenticateRoute extends BaseRoute {
           route.sendError(res, "Email or password are not valid.");
         }
         else {
-          TechManager.Manager().generateAuthToken(user, req.connection.remoteAddress, function(error: string, token: string, menuJSON: string) {
+          TechManager.Manager().generateAuthToken(user, req.connection.remoteAddress, function(error: string, token?: string, menuJSON?: string) {
             if (err) {
               route.sendError(res, "Login Successful but authToken failed to generate. Message: " + err);
             } 

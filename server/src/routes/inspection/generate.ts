@@ -78,7 +78,7 @@ export class InspectionGenerateRoute extends BaseRoute {
                 return;
             }
 
-            inspectionManager.addInspection(authorizedTech, req.body.data, function(error: string, inspectionID: number) {
+            inspectionManager.addInspection(authorizedTech, req.body.data, function(error: string, inspectionID?: number) {
                 
                 if (error) {
 

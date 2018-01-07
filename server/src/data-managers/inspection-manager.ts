@@ -168,7 +168,7 @@ export class InspectionManager {
         }
 
         let manager: InspectionManager = this;
-        manager.addClient(data.client, function(error: string, clientID: number) {
+        manager.addClient(data.client, function(error: string, clientID?: number) {
 
             if (error) {
 
@@ -176,7 +176,7 @@ export class InspectionManager {
                 return;
             }
 
-            manager.addVehicle(data.vehicle, function(error: string, vehicleID: number) {
+            manager.addVehicle(data.vehicle, function(error: string, vehicleID?: number) {
 
                 if (error) {
 
@@ -184,7 +184,7 @@ export class InspectionManager {
                     return;
                 }
 
-                manager.addRestraint(data.restraint, function(error: string, restraintID: number) {
+                manager.addRestraint(data.restraint, function(error: string, restraintID?: number) {
 
                     if (error) {
 
@@ -198,7 +198,7 @@ export class InspectionManager {
                          restraint: restraintID,
                          date: data.date
                      };
-                    manager.generateInspection(tech, inspectionInfo, function(error: string, inspectionID: number) {
+                    manager.generateInspection(tech, inspectionInfo, function(error: string, inspectionID?: number) {
 
                         if (error) {
                             

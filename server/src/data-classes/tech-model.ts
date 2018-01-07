@@ -93,7 +93,7 @@ export class TechModel {
     public toJSON(): any {
 
         // Build all but boolean values
-        let json = {
+        let json:{ [key:string] : any} = {
             "id": this.id,
             "email": this.profile.email,
             "name": this.profile.name,

@@ -234,7 +234,7 @@ export class TechManager {
 
             let cert = techJSON.cert;
 
-            manager.updateCertifications(techID, cert, function(error: string, certAdmin: string) {
+            manager.updateCertifications(techID, cert, function(error: string, certAdmin?: string) {
 
                 if (error) {
 
@@ -465,7 +465,7 @@ export class TechManager {
                      callback(error);
                  }
 
-                 manager.getTechMenu(techID, function(error: string, menuJSON: string) {
+                 manager.getTechMenu(techID, function(error: string, menuJSON?: string) {
                                       
                      if (error) {
                          callback(error);
@@ -507,7 +507,7 @@ export class TechManager {
             }
 
             let techID = results[0].techID;
-            manager.getTechMenu(techID, function(error: string, menuJSON: string) {
+            manager.getTechMenu(techID, function(error: string, menuJSON?: string) {
 
                 if (error) {
 
