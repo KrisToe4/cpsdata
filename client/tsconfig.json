@@ -4,13 +4,27 @@
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
     "paths": {
-      "@parts/*": ["./app/parts/*"],
-      "@guards/*": ["./app/guards/*"],
-      "@managers/*": ["./app/data-managers/*"],
-      "@modules/*": ["./app/modules/*"],
-      "@resolvers/*": ["./app/resolvers/*"],
-      "@server-src/*": ["../../server/src/*"],
-      "@services/*": ["./app/services/*"]
+      "@parts/*": [
+        "./app/parts/*"
+      ],
+      "@guards/*": [
+        "./app/guards/*"
+      ],
+      "@managers/*": [
+        "./app/data-managers/*"
+      ],
+      "@modules/*": [
+        "./app/modules/*"
+      ],
+      "@resolvers/*": [
+        "./app/resolvers/*"
+      ],
+      "@server-src/*": [
+        "../../server/src/*"
+      ],
+      "@services/*": [
+        "./app/services/*"
+      ]
     },
     "sourceMap": true,
     "declaration": false,
@@ -24,6 +38,7 @@
     "lib": [
       "es2016",
       "dom"
-    ]
+    ],
+    "module": "es2015"
   }
 }

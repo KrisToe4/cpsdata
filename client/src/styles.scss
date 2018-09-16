@@ -9,6 +9,8 @@
 // **Be sure that you only ever include this mixin once!**
 @include mat-core();
 
+$config: mat-typography-config();
+
 // Default theme
 $dft-primary: mat-palette($mat-purple, 800);
 $dft-accent:  mat-palette($mat-purple, 500, A200, A400);
@@ -33,7 +35,7 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 }
 
 body {
-    font-family: $mat-font-family;
+    font-family: mat-font-family($config);
     font-weight: normal;
 }
 
