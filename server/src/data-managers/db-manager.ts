@@ -7,8 +7,8 @@ var config = require('config-json');
  */
 export class DatabaseManager {
 
-  private static connection: mysql.IConnection;
-  private static legacyConn: mysql.IConnection;
+  private static connection: mysql.Connection;
+  private static legacyConn: mysql.Connection;
 
   /**
    * Create connection to our Database if not already connected
@@ -16,9 +16,9 @@ export class DatabaseManager {
    * @class MySqlConnection
    * @method getConnection
    * @static
-   * @return {mysql.IConnection} Returns the mysql connection
+   * @return {mysql.Connection} Returns the mysql connection
    */
-  public static getConnection(): mysql.IConnection {
+  public static getConnection(): mysql.Connection {
 
     if (this.connection == null) {
 
@@ -38,9 +38,9 @@ export class DatabaseManager {
    * @class MySqlConnection
    * @method getArchiveConnection
    * @static
-   * @return {mysql.IConnection} Returns the mysql connection
+   * @return {mysql.Connection} Returns the mysql connection
    */
-  public static getArchiveConnection(): mysql.IConnection {
+  public static getArchiveConnection(): mysql.Connection {
     if (this.connection == null) {
         this.connection = mysql.createConnection({
           host     : 'localhost',
