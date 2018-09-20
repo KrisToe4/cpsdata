@@ -149,7 +149,7 @@ export class TechManager {
                        ' + sin ( radians(' + options.location.geoLat + ') )' +
                        ' * sin ( radians( tcon.geoLat ) )' +
                        ' ) ' +
-                       ') AS distance'
+                       ') AS distance ' +
                        'FROM tech_profile p ' +
                        'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
                        'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +

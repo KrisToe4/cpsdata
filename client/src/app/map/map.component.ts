@@ -23,7 +23,7 @@ export class MapComponent implements OnInit {
 
     let component: MapComponent = this;
 
-    this.techService.getTechList(this.route.snapshot.params['org'], function(error: string, list: TechList) {
+    this.techService.getTechList(this.route.snapshot.params['org'], { geoLat: 48.66188, geoLng: -123.60642 }, function(error: string, list: TechList) {
       if (error) {
         // ** WIP: Error needs to be handled here ** //
         return;
