@@ -53,7 +53,7 @@ export class MapViewportComponent implements OnInit {
       }
       else {
         component.currentPosition = coordinates;
-        component.searchLocation.emit(coordinates);
+        component.searchLocation.emit({geoLat: coordinates.lat, geoLng: coordinates.lng});
       }
     });
   }
@@ -126,7 +126,7 @@ export class MapViewportComponent implements OnInit {
 
         // Update the map coordinates as well to reposition
         component.currentPosition = mapInfo;
-        component.searchLocation.emit(mapInfo);
+        component.searchLocation.emit({geoLat: mapInfo.lat, geoLng: mapInfo.lng});
       });
     })
   }
