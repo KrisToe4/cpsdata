@@ -4,7 +4,6 @@ import { Component,
          Output,
          NgZone, 
          OnInit,
-         OnChanges,
          SimpleChanges } from '@angular/core';
 
 import { AgmCoreModule, 
@@ -34,6 +33,7 @@ export class MapViewportComponent implements OnInit {
   @Input() techList: TechList;
   @Input() selectedTech: Tech;
   @Output() techSelected = new EventEmitter<Tech>();
+  @Output() searchLocation = new EventEmitter<any>();
 
     // Map Values
   currentPosition: MapSearchResult = new MapSearchResult(0, 0);
@@ -52,8 +52,8 @@ export class MapViewportComponent implements OnInit {
         console.log("Map API: Error: " + error);
       }
       else {
-
         component.currentPosition = coordinates;
+        this.searchLocation.emit(coordinates);
       }
     });
   }

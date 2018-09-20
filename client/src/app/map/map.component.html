@@ -4,7 +4,7 @@
       <app-map-tech-list [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromList($event)"></app-map-tech-list>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
-      <app-map-viewport [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromMap($event)"></app-map-viewport>
+      <app-map-viewport [techList]="techList" [selectedTech]="selectedTech" (techSelected)="techSelectedFromMap($event)" (searchLocation)="searchLocation($event)"></app-map-viewport>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </mat-card>

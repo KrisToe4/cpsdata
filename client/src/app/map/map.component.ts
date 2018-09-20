@@ -42,6 +42,20 @@ export class MapComponent implements OnInit {
 
   }
 
+  searchLocation(location: any)
+  {
+    let component: MapComponent = this;
+
+    this.techService.getTechList(this.route.snapshot.params['org'], location, function(error: string, list: TechList) {
+      if (error) {
+        // ** WIP: Error needs to be handled here ** //
+        return;
+      }
+
+      component.techList = list;
+    });
+  }
+
   techSelectedFromList(tech: Tech) {
 
     this.selectedTech = tech;
