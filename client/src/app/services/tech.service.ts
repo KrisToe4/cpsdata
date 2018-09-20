@@ -209,7 +209,7 @@ export class TechService extends ApiService {
     // Max Radius is calculated in KM
     let request: RequestData = new RequestData("list", {
       org: org,
-      maxRadius: 25,
+      maxRadius: 100,
       location: location
     });
 
