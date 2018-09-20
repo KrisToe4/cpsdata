@@ -206,8 +206,14 @@ export class TechService extends ApiService {
 
   public getTechList(org: string, callback: (error: string, list?: TechList) => void) {
 
+    // Max Radius is calculated in KM
     let request: RequestData = new RequestData("list", {
-      org: org
+      org: org,
+      maxRadius: 25,
+      location: {
+        geoLat: 48.66188,
+        geoLng: -123.60642
+      }
     });
 
     this.techApi(request).subscribe(

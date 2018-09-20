@@ -131,12 +131,41 @@ export class TechManager {
 
         }
 
-        let sqlQuery: string = 'SELECT p.id, name, type, tcon.* ' +
-                               'FROM tech_profile p ' +
-                               'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
-                               'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
-                               'INNER JOIN certifications c ON tcert.certID = c.id ' +
-                               'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true"' ;
+        // The query depends on whether they are filtering on location or not
+        let sqlQuery: string = '';
+        if (options.maxRadius && options.location)
+        {
+            // To calculate the right radius we need a magic number
+            // KM = 6371
+            // Miles = 3959
+            // Not really magic, just mathy wathy
+            let magicNumber = 6371
+
+            sqlQuery = 'SELECT p.id, name, type, tcon.*, ' +
+                       '(' + magicNumber + ' * acos (' +
+                       ' cos ( radians(' + options.location.geoLat + ') )' +
+                       ' * cos ( radians( tcon.geoLat ) ) ' + 
+                       ' * cos ( radians( tcon.geoLng ) - radians(' + options.location.geoLng + ') )' +
+                       ' + sin ( radians(' + options.location.geoLat + ') )' +
+                       ' * sin ( radians( tcon.geoLat ) )' +
+                       ' ) ' +
+                       ') AS distance'
+                       'FROM tech_profile p ' +
+                       'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
+                       'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
+                       'INNER JOIN certifications c ON tcert.certID = c.id ' +
+                       'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true" ' +
+                       'HAVING distance < ' + options.maxRadius;
+        }
+        else
+        {
+            sqlQuery = 'SELECT p.id, name, type, tcon.* ' +
+                       'FROM tech_profile p ' +
+                       'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
+                       'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
+                       'INNER JOIN certifications c ON tcert.certID = c.id ' +
+                       'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true"' ;
+        }
 
         let db = DatabaseManager.getConnection();
         db.query(sqlQuery, [options.org], function (error, results, fields) {
