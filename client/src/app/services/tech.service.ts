@@ -184,6 +184,22 @@ export class TechService extends ApiService {
     this.updateProfile(callback);
   }
 
+  public lostPassword(email: string, callback: (error: string) => void) {
+
+    let request: RequestData = new RequestData("credentials", {
+      email: email
+    });
+
+    this.techApi(request).subscribe((response: ResponseData) => {
+        if (response["error"]) {
+          callback(response["error"]);
+        }
+        else {
+          callback(null);
+        }
+    });
+  }
+
   public register(email: string, callback: (error: string) => void) {
 
     let request: RequestData = new RequestData("register", {

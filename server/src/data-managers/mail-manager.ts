@@ -60,6 +60,36 @@ export class MailManager {
       });
   }
 
+  public static sendPasswordReset(emailAddress: string, token: string) {
+      
+    config.load('settings.json');
+    let url: string = config.get("server") + '/tech/password/';
+
+    let emailText: string = 'Lost password reset requested. Copy and paste  ' + url + token + '  into a web-browser to complete registration';
+    let emailHtml: string = 'If you requested a password reset for CPS-DATA, please <a href="' + url + token + '">Click Here</a> to enter a new password.';
+
+    let emailOptions = {
+        from: 'no-reply@cps-data.com',
+        to: emailAddress,
+        subject: 'CPS-Data Tech lost password',
+        text: emailText,
+        html: emailHtml
+    };
+
+    let smtp = this.getClient();
+    smtp.sendMail(emailOptions, (error, info) => {
+
+        if (error) {
+
+            console.log(error);
+        }
+        else {
+
+            console.log("Email sent. Id: %s Msg: %s", info.messageId, info.response);
+        }
+    });
+}
+
   public static sendVerification(emailAddress: string, token: string) {
       
       config.load('settings.json');

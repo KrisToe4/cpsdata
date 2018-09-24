@@ -4,8 +4,6 @@ import { ActivatedRoute,
          Router, 
          Params } from '@angular/router';
 
-import { LocalStorageModule } from 'angular-2-local-storage';
-
 import { TechService } from '@services/tech.service';
 
 @Component({

@@ -4,13 +4,10 @@ import {
   Response,
   Router
 } from "express";
-import * as passport from 'passport';
 
 import { BaseRoute } from "../route";
 import { ResponseData } from '../../data-classes/api-model';
 
-import { Tech } from '../../data-classes/tech';
-import { TechCredential } from '../../data-classes/tech-model';
 import { TechManager } from "../../data-managers/tech-manager";
 
 import { MailManager } from "../../data-managers/mail-manager";

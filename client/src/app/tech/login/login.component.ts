@@ -48,16 +48,26 @@ export class LoginComponent implements OnInit {
     return;
   }
 
-  resetPassword() {
+  resetPassword(email: string) {
 
-    //** Need to enable resetting passwords **
+    let component: LoginComponent = this;
+
+    this.techService.lostPassword(email, function(error: string) {
+      console.log("Lost password request sent");
+
+      let dialogRef = component.dialog.open(LoginLostPasswordDialog, {
+        width: '250px'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    });
   }
 
   onRegisterClick(email: string) {
 
     let component: LoginComponent = this;
-    let route: ActivatedRoute = this.route;
-    let router: Router = this.router;
 
     this.techService.register(email, function(error: string) {
       if (error) {
@@ -86,6 +96,20 @@ export class LoginComponent implements OnInit {
 export class LoginRegisterDialog {
 
   constructor( public dialogRef: MatDialogRef<LoginRegisterDialog> ) { }
+
+  onClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-login-lostpassword-dialog',
+  templateUrl: 'login.lostpassword.dialog.html',
+})
+export class LoginLostPasswordDialog {
+
+  constructor( public dialogRef: MatDialogRef<LoginLostPasswordDialog> ) { }
 
   onClick(): void {
     this.dialogRef.close();

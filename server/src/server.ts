@@ -12,6 +12,7 @@ import methodOverride = require("method-override");
 import { IndexRoute } from "./routes/index";
 
 import { AuthenticateRoute } from "./routes/tech/authenticate";
+import { CredentialsRoute } from "./routes/tech/credentials";
 import { TechListRoute } from './routes/tech/list';
 import { LogoutRoute } from "./routes/tech/logout";
 import { ProfileRoute } from "./routes/tech/profile";
@@ -123,6 +124,7 @@ export class Server {
 
     // Tech Routes
     AuthenticateRoute.create(router);
+    CredentialsRoute.create(router);
     TechListRoute.create(router);
     LogoutRoute.create(router);
     ProfileRoute.create(router);

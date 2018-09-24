@@ -14,7 +14,7 @@
     </mat-list>
     <mat-card-actions>
       <button mat-raised-button (click)="onLoginClick(email.value, password.value);">Log In</button>
-      <button mat-button (click)="resetPassword();">Forgot Password</button>
+      <button mat-button (click)="resetPassword(email.value);">Forgot Password</button>
     </mat-card-actions>
 </mat-card>
 <mat-card>
