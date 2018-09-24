@@ -155,7 +155,8 @@ export class TechManager {
                        'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
                        'INNER JOIN certifications c ON tcert.certID = c.id ' +
                        'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true" ' +
-                       'HAVING distance < ' + options.maxRadius;
+                       'HAVING distance < ' + options.maxRadius + ' ' +
+                       'ORDER BY name';
         }
         else
         {
@@ -164,7 +165,8 @@ export class TechManager {
                        'INNER JOIN tech_contact tcon on p.id = tcon.techID ' +
                        'INNER JOIN tech_certification tcert on p.id = tcert.techID ' +
                        'INNER JOIN certifications c ON tcert.certID = c.id ' +
-                       'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true"' ;
+                       'WHERE p.status = "active" and tcon.public = "true" AND c.org = ? AND tcert.valid = "true" ' +
+                       'ORDER BY name';
         }
 
         let db = DatabaseManager.getConnection();
