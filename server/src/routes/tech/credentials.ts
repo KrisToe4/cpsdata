@@ -29,7 +29,7 @@ export class CredentialsRoute extends BaseRoute {
    */
   public static create(router: Router) {
     //log
-    console.log("[RegisterRoute::create] Creating credentials route.");
+    console.log("[CredentialsRoute::create] Creating credentials route.");
 
     //add credentials route
     router.post('/tech/credentials', (req: Request, res: Response, next: NextFunction) => {
