@@ -1,0 +1,9 @@
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\obj\Debug\netstandard2.0\CpsData.Data.csprojAssemblyReference.cache
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\obj\Debug\netstandard2.0\CpsData.Data.csproj.CoreCompileInputs.cache
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\obj\Debug\netstandard2.0\CpsData.Data.AssemblyInfoInputs.cache
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\obj\Debug\netstandard2.0\CpsData.Data.AssemblyInfo.cs
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\bin\Debug\netstandard2.0\CpsData.Data.deps.json
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\bin\Debug\netstandard2.0\CpsData.Data.dll
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\bin\Debug\netstandard2.0\CpsData.Data.pdb
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\obj\Debug\netstandard2.0\CpsData.Data.dll
+D:\Work\Angular\cps-data\trunk\core-server\CpsData.Data\obj\Debug\netstandard2.0\CpsData.Data.pdb

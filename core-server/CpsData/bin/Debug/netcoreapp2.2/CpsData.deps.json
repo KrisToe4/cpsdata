@@ -24,10 +24,10 @@
     ".NETCoreApp,Version=v2.2": {
       "CpsData/1.0.0": {
         "dependencies": {
+          "CpsData.Data": "1.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
-          "Microsoft.NETCore.App": "2.2.0",
-          "mongocsharpdriver": "2.7.2"
+          "Microsoft.NETCore.App": "2.2.0"
         },
         "runtime": {
           "CpsData.dll": {}
@@ -601,6 +601,17 @@
         "dependencies": {
           "System.Runtime": "4.3.0",
           "System.Runtime.Handles": "4.3.0"
+        }
+      },
+      "CpsData.Data/1.0.0": {
+        "dependencies": {
+          "mongocsharpdriver": "2.7.2"
+        },
+        "runtime": {
+          "CpsData.Data.dll": {}
+        },
+        "compile": {
+          "CpsData.Data.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3819,6 +3830,11 @@
       "sha512": "sha512-k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw==",
       "path": "system.threading.threadpool/4.3.0",
       "hashPath": "system.threading.threadpool.4.3.0.nupkg.sha512"
+    },
+    "CpsData.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",

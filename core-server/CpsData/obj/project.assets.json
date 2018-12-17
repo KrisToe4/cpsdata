@@ -13297,8 +13297,7 @@
       "CpsData.Data >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
-      "Microsoft.NETCore.App >= 2.2.0",
-      "mongocsharpdriver >= 2.7.2"
+      "Microsoft.NETCore.App >= 2.2.0"
     ]
   },
   "packageFolders": {
@@ -13308,11 +13307,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData\\CpsData.csproj",
+      "projectUniqueName": "D:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData\\CpsData.csproj",
       "projectName": "CpsData",
-      "projectPath": "d:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData\\CpsData.csproj",
+      "projectPath": "D:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData\\CpsData.csproj",
       "packagesPath": "C:\\Users\\Kristofor\\.nuget\\packages\\",
-      "outputPath": "d:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData\\obj\\",
+      "outputPath": "D:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13332,8 +13331,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "d:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData.Data\\CpsData.Data.csproj": {
-              "projectPath": "d:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData.Data\\CpsData.Data.csproj"
+            "D:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData.Data\\CpsData.Data.csproj": {
+              "projectPath": "D:\\Work\\Angular\\cps-data\\trunk\\core-server\\CpsData.Data\\CpsData.Data.csproj"
             }
           }
         }
@@ -13363,10 +13362,6 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
-          },
-          "mongocsharpdriver": {
-            "target": "Package",
-            "version": "[2.7.2, )"
           }
         },
         "imports": [

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CpsData.Data.Repositories.Contracts;
+namespace CpsData.Data.Repositories.Contracts
 {
     public interface ITechRepository
     {

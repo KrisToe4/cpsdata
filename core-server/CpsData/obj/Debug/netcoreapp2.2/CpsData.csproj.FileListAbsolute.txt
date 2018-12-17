@@ -28,3 +28,5 @@ D:\Work\Angular\cps-data\trunk\core-server\CpsData\obj\Debug\netcoreapp2.2\CpsDa
 D:\Work\Angular\cps-data\trunk\core-server\CpsData\obj\Debug\netcoreapp2.2\CpsData.dll
 D:\Work\Angular\cps-data\trunk\core-server\CpsData\obj\Debug\netcoreapp2.2\CpsData.pdb
 D:\Work\Angular\cps-data\trunk\core-server\CpsData\obj\Debug\netcoreapp2.2\CpsData.csproj.CopyComplete
+D:\Work\Angular\cps-data\trunk\core-server\CpsData\bin\Debug\netcoreapp2.2\CpsData.Data.dll
+D:\Work\Angular\cps-data\trunk\core-server\CpsData\bin\Debug\netcoreapp2.2\CpsData.Data.pdb
