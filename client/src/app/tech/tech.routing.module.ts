@@ -26,6 +26,7 @@ import { PasswordComponent } from './password/password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
+/*
 const techRoutes: Routes = [
   {
     path: 'tech',
@@ -69,6 +70,10 @@ const techRoutes: Routes = [
       { path: 'register/:token', component: RegisterComponent }
     ],
   }
+];
+*/
+const techRoutes: Routes = [
+  { path: '',   redirectTo: '/', pathMatch: 'prefix' }
 ];
 
 @NgModule({

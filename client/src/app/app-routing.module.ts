@@ -5,10 +5,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { MapComponent } from './map/map.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
 
+/*
 const appRoutes: Routes = [
   { path: '',   redirectTo: '/tech/profile', pathMatch: 'full' },
   { path: 'map/:org',  component: MapComponent },
   { path: '**', component: PageNotFoundComponent }
+];
+*/
+const appRoutes: Routes = [
+  { path: '',   redirectTo: '/', pathMatch: 'prefix' },
+  { path: '',  component: PageNotFoundComponent },
 ];
 
 @NgModule({
